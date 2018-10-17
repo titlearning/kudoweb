@@ -4,10 +4,14 @@ import {
     Route,
   } from 'react-router-dom';
 import Home from '../views/Home'
+import LeaderBoard from '../views/result/LeaderBoard'
 
 const AppRouter = () =>
   <Router >
-    <Route exact path='/' component={Home}/>
+    <div>
+      <Route exact path='/' component={Home}/>
+      <Route path='/leaderboard' component={LeaderBoard}/>
+    </div>
   </Router>
 
 export default AppRouter;
