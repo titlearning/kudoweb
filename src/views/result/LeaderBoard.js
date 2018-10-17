@@ -15,34 +15,39 @@ class LeaderBoard extends Component {
                     </div>
                </Navbar>
                <div style={{backgroundColor: '#FF9900', height: '75vh'}}>
-                    <div style={{height: '10vh', padding: '1vh'}}>
-                        <Button color="primary" style={{float: 'right', height: '5vh'}}>Câu hỏi tiếp theo</Button>
+                    <div style={{height: '10vh', padding: '2vh'}}>
+                        <Button color="primary" style={{float: 'right', height: '40px'}}>Câu hỏi tiếp theo</Button>
                     </div>
-                    <div style={{width: '30vw', margin: '0 auto'}}>
-                        <Table borderless>
+                    <div style={{width: '60vw', margin: '0 auto', height: '55vh'}}>
+                        <Table borderless style={{height: '55vh'}}>
                             <tbody>
-                                <tr style={{backgroundColor: '#F5F5F5',  borderBottom: 'solid 3px #DCDCDC'}}>
-                                    <td>Ahihi</td>
+                                <tr style={style_first_row}>
+                                    <td style={{float: 'left'}}>Ahihi</td>
                                     <td style={{float: 'right'}}>Ahoho</td>
                                 </tr>
                                 <tr style={style}>
-                                    <td>Ahihi</td>
+                                    <td style={{float: 'left'}}>Ahihi</td>
                                     <td style={{float: 'right'}}>Ahoho</td>
                                 </tr>
                                 <tr style={style}>
-                                    <td>Ahihi</td>
+                                    <td style={{float: 'left'}}>Ahihi</td>
                                     <td style={{float: 'right'}}>Ahoho</td>
                                 </tr>
                                 <tr style={style}>
-                                    <td>Ahihi</td>
+                                    <td style={{float: 'left'}}>Ahihi</td>
                                     <td style={{float: 'right'}}>Ahoho</td>
                                 </tr>
                                 <tr style={style}>
-                                    <td>Ahihi</td>
+                                    <td style={{float: 'left'}}>Ahihi</td>
                                     <td style={{float: 'right'}}>Ahoho</td>
                                 </tr>
                             </tbody>
                         </Table>
+                    </div>
+                    <div style={{height: '10vh', padding: '2vh'}}>
+                        <div style={{float: 'right', height: '10vh'}}>
+                            <a href="/" style={{fontSize: '15px', color: 'white', fontWeight: 600}} >Kết thúc</a>
+                        </div>
                     </div>
                </div>
                <div style={{backgroundColor: '#660099', height: '15vh'}}>
@@ -61,7 +66,32 @@ export default LeaderBoard;
  * @type {React.CSSProperties}
  */
 var style = {
-    borderLeft: 'solid 1px #9C9C9C',
-    borderRight: 'solid 1px #9C9C9C',
-    borderBottom: 'solid 3px #9C9C9C'
+    borderLeft: 'solid 1px #EE9A00',
+    borderRight: 'solid 1px #EE9A00',
+    backgroundColor: '#EE9A00',  
+    boxShadow: '0px 3px 3px #CD8500',
+    MozBoxShadow: '0px 3px 3px #CD8500',
+    WebkitBoxShadow: '0px 3px 3px #CD8500',
+    borderBottom: 'solid 3px #CD8500',
+    lineHeight: '5vh',
+    fontSize: '20px',
+    fontWeight: 700,
+    color: 'white'
 }
+
+/**
+ * @type {React.CSSProperties}
+ */
+var style_first_row = {
+    borderLeft: 'solid 1px #F5F5F5',
+    borderRight: 'solid 1px #F5F5F5',
+    backgroundColor: '#F5F5F5',  
+    borderBottom: 'solid 3px #DCDCDC',
+    boxShadow: '0px 3px 3px #CD8500',
+    MozBoxShadow: '0px 3px 3px #CD8500',
+    WebkitBoxShadow: '0px 3px 3px #CD8500',
+    lineHeight: '5vh',
+    fontSize: '20px',
+    fontWeight: 700
+}
+
