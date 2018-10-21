@@ -12,7 +12,7 @@ const AppRouter = () =>
     <div>
       <Route exact path='/' component={Home}/>
       <Route path='/leaderboard' component={LeaderBoard}/>
-      <Route path='/finalresult' component={FinalResult}/>
+      <Route path='/finalresult/:userid' component={FinalResult}/>
     </div>
   </Router>
 
