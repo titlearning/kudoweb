@@ -7,12 +7,12 @@ class LoginContainer extends Component{
 
     render(){
         return(
-            <div class="layout layout--login layout--new-topbar-active">
-                <div class="layout__circle"></div>
-                <div class="layout__half-circle"></div>
-                <div id="layout" class="layout__inner">
-                    <div class="layout__sidebar"></div>
-                    <div class="layout__body-wrapper">
+            <div className="layout layout--login layout--new-topbar-active">
+                <div className="layout__circle"></div>
+                <div className="layout__half-circle"></div>
+                <div id="layout" className="layout__inner">
+                    <div className="layout__sidebar"></div>
+                    <div className="layout__body-wrapper">
                         <LoginHeader/>
                         <LoginBody/>
                     </div>

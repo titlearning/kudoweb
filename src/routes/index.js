@@ -6,10 +6,6 @@ import {
 import Home from '../views/Home'
 import Login from '../views/Login'
 
-function(){
-  alert("dkm");
-}
-
 const AppRouter = () =>
   <Router >
     <div>
