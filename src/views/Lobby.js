@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
-import HomeContainer from '../containers/HomeContainer'
+import LobbyContainer from '../containers/LobbyContainer'
 
-class Home extends Component {
+class Lobby extends Component {
     constructor(props) {
         super(props)
     }
     
     render() {
         return(
-            <HomeContainer />
+            <LobbyContainer />
         )
     }
 }
 
-export default withRouter(Home)
+export default withRouter(Lobby)
