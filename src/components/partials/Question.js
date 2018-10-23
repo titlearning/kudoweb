@@ -3,7 +3,11 @@ import {withStyles} from '@material-ui/core/styles';
 
 
 class Question extends React.Component {
+    constructor(props) {
+        super(props)
+    }
     render() {
+        console.log(this.props.data)
         return (
             <div className="search-result-kahoot-card"
                  data-functional-selector="search-result-kahoot-card">

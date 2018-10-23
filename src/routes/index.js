@@ -3,11 +3,20 @@ import {
     BrowserRouter as Router,
     Route,
   } from 'react-router-dom';
-import Home from '../views/Home'
+import Home from '../views/ListQuestion'
+import Lobby from '../views/Lobby'
+import GetReady from '../views/GetReady'
+import GameBlock from '../views/GameBlock'
+
 
 const AppRouter = () =>
   <Router >
-    <Route exact path='/' component={Home}/>
+    <div>
+      <Route exact path='/' component={Home}/>
+      <Route exact path='/lobby' component={Lobby}/>
+      <Route exact path='/getready' component={GetReady}/>
+      <Route exact path='/gameblock' component={GameBlock}/>
+    </div>
   </Router>
 
 export default AppRouter;

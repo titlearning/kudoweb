@@ -4,22 +4,25 @@ import Question from "../components/partials/Question"
 
 
 class ListQuestions extends React.Component {
+    constructor(props) {
+        super(props)
+    }
 
     render() {
         return (
+
             <div className="search-results-result-list" data-functional-selector="search-results-result-list">
                 <div className="search-results-result-list__content">
                     <div className="search-results-number-of-results">
                         <b>2,204</b><span>results</span>
                     </div>
-                    {/*cau hoi*/}
-                    <Question/>
-                    <Question/>
-                    <Question/>
+                    {
+                        this.props.data && this.props.data.map((object, i) => <Question data={object} key={i}/>)
+                    }
                 </div>
                 <button type="button" role="button" data-functional-selector="load-more-button"
-                        className="button button--flat search-results-result-list__load-more-button">See
-                    more results</button>
+                        className="button button--flat search-results-result-list__load-more-button">Xem thêm câu hỏi
+                </button>
             </div>
         );
     }

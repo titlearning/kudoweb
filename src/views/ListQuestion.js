@@ -3,19 +3,33 @@ import {withRouter} from 'react-router'
 import Header from '../components/partials/Header'
 import SearchArea from '../components/partials/SearchArea'
 import ListQuestions from '../components/ListQuestions'
+import {database} from "../config/firebase";
+
 
 class ListQuestion extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            data : null
+        };
+    }
+
+    componentDidMount() {
+        database.ref("/").on('value', (snapshot) => {
+            var questionList = snapshot.val().questionGroups;
+            this.setState({
+                data: questionList
+            });
+        })
     }
 
     render() {
         return (
             <div>
                 <Header/>
-                <main role="main" className="layout__body layout__body--discover" >
+                <main role="main" className="layout__body layout__body--discover">
                     <SearchArea/>
-                    <ListQuestions/>
+                    <ListQuestions data={this.state.data}/>
                 </main>
             </div>
         )
@@ -34,7 +48,7 @@ const styles = {
         margin: 'auto'
     },
     main_padding: {
-        "padding-top":"56px"
+        "padding-top": "56px"
     }
 }
 
