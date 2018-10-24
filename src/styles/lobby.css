@@ -1,0 +1,102 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* .header {
+    flex: 1;
+    height: 100vh;
+    align-items: center;
+    justify-content: center
+} */
+
+
+.mydiv {
+    flex: 5;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    color: black;
+    font-weight: bold;
+    animation: myanimation 10s infinite;
+}
+
+.playerCount {
+    height: 30px;
+    position: absolute;
+    z-index: 100;
+    left: 30px;
+}
+
+.buttonStart {
+    position: absolute;
+    top: 20px;
+    right: -1200px;
+    z-index: 100;
+}
+
+
+/* .col {
+    flex: 1;
+    margin-left: 200px;
+    justify-content: center;
+    align-items: center
+} */
+
+.title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px
+}
+
+.waiting {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #1368ce;
+    flex: 1;
+    height: 100vh;
+}
+
+.wating-text {
+    padding-left: 20px;
+    font-size: 28px;
+    line-height: 34px;
+    color: #fff;
+}
+
+.number {
+    font-size: 56px;
+    line-height: 70px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.countLabel {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+}
+
+@keyframes myanimation {
+    0% {
+        background-color: red;
+    }
+
+    25% {
+        background-color: yellow;
+    }
+
+    50% {
+        background-color: green;
+    }
+
+    75% {
+        background-color: brown;
+    }
+
+    100% {
+        background-color: red;
+    }
+}

@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
-import firebase from "firebase";
+import firebase from 'firebase'
+import firebaseApp from '../containers/firebase';
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
-
-const config = {
-    apiKey: 'AIzaSyDm-vMajj41Voz10nhjdDZKieT8VbRLSO0',
-    authDomain: 'hoangvadong-491f0.firebaseapp.com',
-    // ...
-  };
-  firebase.initializeApp(config);
 
   const uiConfig = {
     // Popup signin flow rather than redirect flow.
@@ -16,8 +10,8 @@ const config = {
     signInSuccessUrl: '/',
     // We will display Google and Facebook as auth providers.
     signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.FacebookAuthProvider.PROVIDER_ID
     ]
   };
 
@@ -38,7 +32,7 @@ export class LoginBody extends Component {
     }
 
     componentDidMount = () => {
-        firebase.auth().onAuthStateChanged(user => {
+        firebaseApp.auth().onAuthStateChanged(user => {
             user.getIdToken().then(function(idToken){
                 localStorage.setItem('accessToken',idToken);
             });
@@ -64,7 +58,7 @@ export class LoginBody extends Component {
                                     </svg>
                                 </span>
                             </button> */}
-                            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+                            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseApp.auth()}/>
                         </div>
                         {/* <button type="button" role="button" data-functional-selector="sign-in-microsoft-button" className="auth-button auth-button--microsoft-auth">
                             <span className="auth-button__text">Log in with Microsoft</span>
