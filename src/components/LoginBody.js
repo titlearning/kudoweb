@@ -10,8 +10,8 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
     signInSuccessUrl: '/',
     // We will display Google and Facebook as auth providers.
     signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.FacebookAuthProvider.PROVIDER_ID
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID
     ]
   };
 
@@ -58,7 +58,7 @@ export class LoginBody extends Component {
                                     </svg>
                                 </span>
                             </button> */}
-                            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebaseApp.auth()}/>
+                            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
                         </div>
                         {/* <button type="button" role="button" data-functional-selector="sign-in-microsoft-button" className="auth-button auth-button--microsoft-auth">
                             <span className="auth-button__text">Log in with Microsoft</span>
