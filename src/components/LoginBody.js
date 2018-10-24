@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import GoogleLogin from 'react-google-login';
 import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
-import {Redirect} from 'react-router-dom'
 
 const config = {
     apiKey: 'AIzaSyDm-vMajj41Voz10nhjdDZKieT8VbRLSO0',
@@ -33,6 +31,12 @@ export class LoginBody extends Component {
         isSignedIn: false,
     }
 
+    componentWillMount= () => {
+        if(localStorage.getItem("accessToken") !== null){
+            window.location='/';
+        }
+    }
+
     componentDidMount = () => {
         firebase.auth().onAuthStateChanged(user => {
             user.getIdToken().then(function(idToken){
@@ -44,9 +48,6 @@ export class LoginBody extends Component {
     }    
     
     render() {
-        if(this.state.isSignedIn){
-            return (<Redirect to={'/'}/>)
-        }
         return (
             <main role="main" className="layout__body layout__body--login">
                 <div className="gutter-1">

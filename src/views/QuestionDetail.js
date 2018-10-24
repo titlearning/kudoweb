@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import LoginContainer from '../containers/LoginContainer' 
-import '../styles/login.css'
+import {QuestionDetailContainer} from '../containers/QuestionDetailContainer' 
+import '../styles/questionDetail.css'
 
-export default class Login extends Component{
+export default class QuestionDetail extends Component{
 
     constructor(props){
         super(props)
@@ -11,7 +11,7 @@ export default class Login extends Component{
     render(){
         return(
             <div data-reactroot="" data-functional-selector="login-app">
-                <LoginContainer/>
+                <QuestionDetailContainer/>
             </div>
             
         )        

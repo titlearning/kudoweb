@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { LoginHeader } from '../components/LoginHeader'
 import { LoginBody } from '../components/LoginBody'
 

@@ -1,0 +1,287 @@
+.layout__head {
+    position: fixed;
+    top: 0;
+    z-index: 30;
+    width: 100%;
+}
+.layout__head, .layout__inner {
+    left: 0;
+    transition: left .5s;
+}
+.base-top-bar {
+    width: 100%;
+    height: 3.5rem;
+    padding: 0 1.5rem;
+    background: #46178f;
+    box-shadow: 0 0.125rem 0.25rem 0 rgba(0,0,0,.1);
+}
+.top-bar__inner {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 100%;
+}
+.top-bar__inner .top-bar__menu {
+    position: absolute;
+    left: 0;
+    padding: 0;
+    fill: #fff;
+}
+.icon-button {
+    margin: 0;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    vertical-align: top;
+    font-family: inherit;
+    color: inherit;
+    line-height: 1;
+}
+.icon-button__wrap {
+    display: inline-flex;
+    vertical-align: top;
+}
+.icon, .icon__svg {
+    display: inline-block;
+    vertical-align: top;
+}
+.icon {
+    width: 2rem;
+    height: 2rem;
+}
+.icon-button__icon, .icon-button__text {
+    align-self: center;
+}
+svg:not(:root) {
+    overflow: hidden;
+}
+.icon__svg {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+.icon, .icon__svg {
+    display: inline-block;
+    vertical-align: top;
+}
+svg:not(:root), symbol, image, marker, pattern, foreignObject {
+    overflow: hidden;
+}
+.kahoot-logo {
+    overflow: hidden;
+    width: 4.375rem;
+    height: 1.5rem;
+    background: url(https://create.kahoot.it/shared/theme/kahoot/img/topbar_logo.svg) no-repeat 50%/contain;
+    text-indent: 100%;
+    white-space: nowrap;
+}
+.paragraph, .text-button {
+    font-family: Montserrat,Helvetica Neue,helvetica,arial,sans-serif;
+}
+.text-button {
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+}
+.list--unordered {
+    list-style-type: none;
+}
+.list {
+    margin: 0;
+    padding: 0;
+    list-style-position: inside;
+}
+.top-bar__inner .top-bar__main-links-item {
+    vertical-align: top;
+    margin: 0 1rem 0 0;
+}
+.list--inline .list__item {
+    display: inline-block;
+}
+.top-bar-link {
+    position: relative;
+    height: 3.5rem;
+    padding: 0 .5rem;
+    font-weight: 700;
+    letter-spacing: .0125rem;
+}
+.media-link {
+    line-height: 1.25rem;
+    font-size: .875rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+}
+.top-bar-link__media, .top-bar-link__text {
+    fill: #fff;
+    color: #fff;
+}
+.media-link__media {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    margin: 0 .5rem 0 0;
+}
+.icon__svg {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+.icon, .icon__svg {
+    display: inline-block;
+    vertical-align: top;
+}
+.top-bar-link {
+    position: relative;
+    height: 3.5rem;
+    padding: 0 .5rem;
+    font-weight: 700;
+    letter-spacing: .0125rem;
+}
+.media-link {
+    line-height: 1.25rem;
+    font-size: .875rem;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+}
+.top-bar__inner .top-bar__actions, .top-bar__inner .top-bar__primary-button {
+    align-items: center;
+}
+.top-bar__inner .top-bar__actions {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+.top-bar__inner .top-bar__upgrade-now-button {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    padding: .5rem 1rem;
+    border-radius: .25rem;
+    color: #fff;
+    font-weight: 700;
+}
+.icon, .icon__svg {
+    display: inline-block;
+    vertical-align: top;
+}
+.icon-button__icon, .icon-button__text {
+    align-self: center;
+}
+.icon-button__text {
+    line-height: 1.5rem;
+    display: inline-block;
+}
+.icon-button__icon, .icon-button__text {
+    align-self: center;
+}
+.top-bar__inner .top-bar__primary-button {
+    display: inline-flex;
+    padding: .5rem 1.5rem;
+}
+.bar__primary-button {
+    align-items: center;
+}
+.button--white {
+    background-color: #fff!important;
+    color: #333;
+}
+.button {
+    margin: 0;
+    border: 0;
+    cursor: pointer;
+    vertical-align: bottom;
+    min-width: 6.25rem;
+    height: 2.625rem;
+    background: #45a3e5;
+    border-radius: 4px;
+    box-shadow: inset 0 -4px rgba(0,0,0,.25);
+    font-family: Montserrat,Helvetica Neue,helvetica,arial,sans-serif;
+    font-size: .875rem;
+    font-weight: 700;
+    line-height: 2.5rem;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.icon-button__wrap {
+    display: inline-flex;
+    vertical-align: top;
+}
+.icon, .icon__svg {
+    display: inline-block;
+    vertical-align: top;
+}
+.icon-button__icon, .icon-button__text {
+    align-self: center;
+}
+.icon__svg {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+.icon, .icon__svg {
+    display: inline-block;
+    vertical-align: top;
+}
+.top-bar__inner .top-bar__primary-button .icon-button__text {
+    font-weight: 700;
+}
+.icon-button__text {
+    line-height: 1.5rem;
+    font-size: 1rem;
+    display: inline-block;
+}
+.icon-button__icon, .icon-button__text {
+    align-self: center;
+}
+.action-menu--static {
+    flex: 0 0 1.5rem;
+    position: relative;
+}
+.action-menu {
+    line-height: 1.5rem;
+    font-size: 1rem;
+    top: 0;
+    right: 0;
+    color: #000;
+}
+.icon-button {
+    margin: 0;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    vertical-align: top;
+    padding: .5rem;
+    font-family: inherit;
+    color: inherit;
+    position: relative;
+    fill: currentColor;
+    line-height: 1;
+}
+.top-bar-action-menu__icon {
+    padding: 0;
+    fill: #fff;
+    color: #fff;
+    transition: opacity .2s;
+}
+.icon, .icon__svg {
+    display: inline-block;
+    vertical-align: top;
+}
+.icon {
+    width: 2rem;
+    height: 2rem;
+}
+.visibly-hidden {
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    clip: rect(0,0,0,0);
+}
