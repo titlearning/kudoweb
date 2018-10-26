@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
-import firebaseApp from '../containers/firebase';
+import {initFirebase} from '../containers/firebase';
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 
   const uiConfig = {
@@ -32,12 +32,10 @@ export class LoginBody extends Component {
     }
 
     componentDidMount = () => {
-        firebaseApp.auth().onAuthStateChanged(user => {
+        firebase.auth().onAuthStateChanged(user => {
             user.getIdToken().then(function(idToken){
                 localStorage.setItem('accessToken',idToken);
             });
-            
-            this.setState({isSignedIn: !!user})
         })
     }    
     
