@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
-import {initFirebase} from '../containers/firebase';
+import {database} from '../containers/firebase';
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 
   const uiConfig = {
     // Popup signin flow rather than redirect flow.
     signInFlow: 'popup',
     // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-    signInSuccessUrl: '/',
+    // signInSuccessUrl: '/',
     // We will display Google and Facebook as auth providers.
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -18,7 +18,7 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 export class LoginBody extends Component {
     
     constructor(props) {
-        super(props);
+        super(props)
     }
 
     state = {
@@ -33,10 +33,22 @@ export class LoginBody extends Component {
 
     componentDidMount = () => {
         firebase.auth().onAuthStateChanged(user => {
-            user.getIdToken().then(function(idToken){
-                localStorage.setItem('accessToken',idToken);
-            });
-        })
+            if(user){
+                let userObj = {};
+                userObj['displayName '] = user.displayName;
+                userObj['email'] = user.email;
+                userObj['phoneNumber'] = user.phoneNumber;
+                userObj['uid'] = user.uid;
+                userObj['emailVerified '] = user.emailVerified;
+                userObj['providerData '] = user.providerData;
+            user.getIdToken().then(function(accessToken){
+                localStorage.setItem('accessToken',accessToken);
+                user['accessToken'] = accessToken;
+                // database.ref().child('user').set()
+            }, error=>console.log(error))
+           database.ref('/user/').child(user.uid).set(userObj);
+        }
+    })
     }    
     
     render() {
