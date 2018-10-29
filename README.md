@@ -560,7 +560,7 @@ class Button extends Component {
 No clashes from other `.error` class names
 
 ```html
-<!-- This button has red background but not red text -->
+<!-- This button has red background but not red text  
 <button class="Button_error_ax7yz"></div>
 ```
 
