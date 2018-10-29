@@ -2,12 +2,12 @@ import firebase from 'firebase';
 
 // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyD0irL7qP_5-NU5o_7ih_rqTFpArBAtzHo",
-    authDomain: "kudo-web.firebaseapp.com",
-    databaseURL: "https://kudo-web.firebaseio.com",
-    projectId: "kudo-web",
-    storageBucket: "kudo-web.appspot.com",
-    messagingSenderId: "170288717741"
+    apiKey: "AIzaSyAawOHwwwA0XyjoIXgcDEHtZd_gVXEmEbE",
+    authDomain: "kudo-fb5b2.firebaseapp.com",
+    databaseURL: "https://kudo-fb5b2.firebaseio.com",
+    projectId: "kudo-fb5b2",
+    storageBucket: "kudo-fb5b2.appspot.com",
+    messagingSenderId: "40877212325"
 };
 firebase.initializeApp(config);
 

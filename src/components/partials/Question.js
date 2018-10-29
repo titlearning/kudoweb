@@ -7,7 +7,6 @@ class Question extends React.Component {
         super(props)
     }
     render() {
-        console.log(this.props.data)
         return (
             <div className="search-result-kahoot-card"
                  data-functional-selector="search-result-kahoot-card">

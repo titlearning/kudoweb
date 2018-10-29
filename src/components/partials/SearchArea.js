@@ -3,11 +3,18 @@ import {withStyles} from '@material-ui/core/styles';
 
 
 class SearchArea extends React.Component {
+
+    constructor(props) {
+        super(props)
+    }
     inputChangedHandler = (event) => {
         const updatedKeyword = event.target.value;
         // May be call for search result
+
+        this.props.inputChanged(updatedKeyword);
     }
     render() {
+        console.log(this.props);
         return (
             <div className="backbone-components">
                 <div className="discover-header">
