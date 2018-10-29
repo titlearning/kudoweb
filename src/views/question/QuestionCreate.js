@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM from "react-dom";
 import TextField from '@material-ui/core/TextField';
 import Header from '../../components/question/Header';
+import InputImage from '../../components/question/InputImage';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -79,13 +80,13 @@ class QuestionCreate extends Component {
                             </Grid>
                         </Grid>
                         <Grid item xs={6}>
-                            
+                             <InputImage />   
                         </Grid>
                     </Grid>
                 </div>
                 <div style={{marginTop: '5vh', marginLeft: '2vh', marginRight: '2vh', flexGrow: 1}}>
                     <Grid container spacing={40}>
-                        <Grid item xs={3}>
+                        <Grid item xs={6}>
                             <TextField
                                 id="question-group-title"
                                 label="Đáp án 1 (Bắt buộc)"
@@ -96,7 +97,7 @@ class QuestionCreate extends Component {
                                 style={{}}
                                 />
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={6}>
                             <TextField
                                 id="question-group-title"
                                 label="Đáp án 2 (Bắt buộc)"
@@ -107,7 +108,7 @@ class QuestionCreate extends Component {
                                 style={{}}
                                 />
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={6}>
                             <TextField
                                 id="question-group-title"
                                 label="Đáp án 3 (Bắt buộc)"
@@ -118,7 +119,7 @@ class QuestionCreate extends Component {
                                 style={{}}
                                 />
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={6}>
                             <TextField
                                 id="question-group-title"
                                 label="Đáp án 4 (Bắt buộc)"
