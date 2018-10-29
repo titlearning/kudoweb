@@ -8,6 +8,8 @@ import Lobby from '../views/Lobby'
 import GetReady from '../views/GetReady'
 import GameBlock from '../views/GameBlock'
 
+import LeaderBoard from '../views/result/LeaderBoard'
+import FinalResult from '../views/result/FinalResult'
 
 const AppRouter = () =>
   <Router >
@@ -16,6 +18,8 @@ const AppRouter = () =>
       <Route exact path='/lobby' component={Lobby}/>
       <Route exact path='/getready' component={GetReady}/>
       <Route exact path='/gameblock' component={GameBlock}/>
+      <Route path='/leaderboard' component={LeaderBoard}/>
+      <Route path='/finalresult/:userid' component={FinalResult}/>
     </div>
   </Router>
 
