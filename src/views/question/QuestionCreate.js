@@ -9,41 +9,137 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import Tooltip from '@material-ui/core/Tooltip';
 
 class QuestionCreate extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            age: "",
-            name: "hai",
-            labelWidth: 0
+            title: '',
+            time: 20,
+            labelWidth: 0,
+            answer1: '',
+            answer2: '',
+            answer3: '',
+            answer4: '',
+            key1: false,
+            key2: false,
+            key3: false,
+            key4: false,
+            description: ''
         };
+
+        this.handleChangeTitle = this.handleChangeTitle.bind(this);
+        this.handleChangeAns1 = this.handleChangeAns1.bind(this);
+        this.handleChangeAns2 = this.handleChangeAns2.bind(this);
+        this.handleChangeAns3 = this.handleChangeAns3.bind(this);
+        this.handleChangeAns4 = this.handleChangeAns4.bind(this);
+        this.handleChangeDes = this.handleChangeDes.bind(this);
+        this.handleChangeKey = this.handleChangeKey.bind(this);
     }
 
     componentDidMount() {
         this.setState({
-          labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth
+            labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth
         });
-      }
+    }
     
-    handleChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
+    handleChangeTitle(e) {
+        this.setState({
+            title: e.target.value
+        })
+    }
+
+    handleChangeTime = event => {
+        this.setState({
+            time: event.target.value
+        })
     };
 
-    render() {
-        const { classes } = this.props;
+    handleChangeAns1(e) {
+        this.setState({
+            answer1: e.target.value
+        })
+    }
 
+    handleChangeAns2(e) {
+        this.setState({
+            answer2: e.target.value
+        })
+    }
+
+    handleChangeAns3(e) {
+        this.setState({
+            answer3: e.target.value
+        })
+    }
+
+    handleChangeAns4(e) {
+        this.setState({
+            answer4: e.target.value
+        })
+    }
+
+    handleChangeDes(e) {
+        this.setState({
+            description: e.target.value
+        })
+    }
+
+    handleChangeKey(e) {
+        var key = e.target.value;
+       
+        this.setState({
+            key1: false,
+            key2: false,
+            key3: false,
+            key4: false
+        })
+
+        switch (parseInt(key)) {
+            case 1:
+                this.setState({
+                    key1: true
+                })
+                break;
+            case 2:
+                this.setState({
+                    key2: true
+                })
+                break;
+            case 3:
+                this.setState({
+                    key3: true
+                })
+                break;
+            case 4:
+                this.setState({
+                    key4: true
+                })
+                break;
+            default:
+                break;
+        }
+    }
+
+    render() {
         return (
             <div>
-                <Header title="Tạo câu hỏi" />
+                <Header head_title="TẠO CÂU HỎI" {...this.state} />
                 <div style={{marginTop: '20vh', marginLeft: '2vh', marginRight: '2vh', flexGrow: 1}}>
                     <Grid container spacing={40}>
                         <Grid item xs={6}>
                             <TextField
                                 id="question-group-title"
+                                // error={true}
                                 label="Nội dung câu hỏi (Bắt buộc)"
                                 margin="normal"
+                                value = {this.state.title}
+                                onChange = {this.handleChangeTitle}
                                 rowsMax="4"
                                 variant="outlined"
                                 fullWidth
@@ -60,8 +156,8 @@ class QuestionCreate extends Component {
                                         Thời gian
                                     </InputLabel>
                                     <Select
-                                        value={this.state.age}
-                                        onChange={this.handleChange}
+                                        value={this.state.time}
+                                        onChange={this.handleChangeTime}
                                         input={
                                         <OutlinedInput
                                             labelWidth={this.state.labelWidth}
@@ -70,11 +166,11 @@ class QuestionCreate extends Component {
                                         />
                                         }
                                     >
-                                        <MenuItem value={20}>20 sec</MenuItem>
-                                        <MenuItem value={30}>30 sec</MenuItem>
-                                        <MenuItem value={60}>60 sec</MenuItem>
-                                        <MenuItem value={90}>90 sec</MenuItem>
-                                        <MenuItem value={120}>120 sec</MenuItem>
+                                        <MenuItem value={20}>20 giây</MenuItem>
+                                        <MenuItem value={30}>30 giây</MenuItem>
+                                        <MenuItem value={60}>60 giây</MenuItem>
+                                        <MenuItem value={90}>90 giây</MenuItem>
+                                        <MenuItem value={120}>120 giây</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>
@@ -85,56 +181,105 @@ class QuestionCreate extends Component {
                     </Grid>
                 </div>
                 <div style={{marginTop: '5vh', marginLeft: '2vh', marginRight: '2vh', flexGrow: 1}}>
-                    <Grid container spacing={40}>
+                    <Grid container spacing={24}>
                         <Grid item xs={6}>
                             <TextField
                                 id="question-group-title"
+                                value={this.state.answer1}
+                                onChange={this.handleChangeAns1}
                                 label="Đáp án 1 (Bắt buộc)"
                                 margin="normal"
                                 rowsMax="4"
                                 variant="outlined"
-                                fullWidth
-                                style={{}}
+                                style={{width: '85%'}}
                                 />
+                            <Tooltip title="Chọn đáp án đúng" placement="right">    
+                                <Checkbox
+                                    style={{}}
+                                    onChange={this.handleChangeKey}
+                                    value={1}
+                                    checked={this.state.key1}
+                                    icon={<CheckBoxOutlineBlankIcon style={{ fontSize: 60 }} />}
+                                    checkedIcon={<CheckBoxIcon style={{ fontSize: 60 }} />}
+                                />
+                            </Tooltip>
                         </Grid>
                         <Grid item xs={6}>
                             <TextField
                                 id="question-group-title"
+                                value={this.state.answer2}
+                                onChange={this.handleChangeAns2}
                                 label="Đáp án 2 (Bắt buộc)"
                                 margin="normal"
                                 rowsMax="4"
                                 variant="outlined"
                                 fullWidth
-                                style={{}}
+                                style={{width: '85%'}}
                                 />
+                            <Tooltip title="Chọn đáp án đúng" placement="right">    
+                                <Checkbox
+                                    style={{}}
+                                    onChange={this.handleChangeKey}
+                                    value={2}
+                                    checked={this.state.key2}
+                                    icon={<CheckBoxOutlineBlankIcon style={{ fontSize: 60 }} />}
+                                    checkedIcon={<CheckBoxIcon style={{ fontSize: 60 }} />}
+                                />
+                            </Tooltip>
                         </Grid>
                         <Grid item xs={6}>
                             <TextField
                                 id="question-group-title"
+                                value={this.state.answer3}
+                                onChange={this.handleChangeAns3}
                                 label="Đáp án 3 (Bắt buộc)"
                                 margin="normal"
                                 rowsMax="4"
                                 variant="outlined"
                                 fullWidth
-                                style={{}}
+                                style={{width: '85%'}}
                                 />
+                            <Tooltip title="Chọn đáp án đúng" placement="right">    
+                                <Checkbox
+                                    style={{}}
+                                    onChange={this.handleChangeKey}
+                                    value={3}
+                                    checked={this.state.key3}
+                                    icon={<CheckBoxOutlineBlankIcon style={{ fontSize: 60 }} />}
+                                    checkedIcon={<CheckBoxIcon style={{ fontSize: 60 }} />}
+                                />
+                            </Tooltip>
                         </Grid>
                         <Grid item xs={6}>
                             <TextField
                                 id="question-group-title"
+                                value={this.state.answer4}
+                                onChange={this.handleChangeAns4}
                                 label="Đáp án 4 (Bắt buộc)"
                                 margin="normal"
                                 rowsMax="4"
                                 variant="outlined"
                                 fullWidth
-                                style={{}}
+                                style={{width: '85%'}}
                                 />
+                            <Tooltip title="Chọn đáp án đúng" placement="right">    
+                                <Checkbox
+                                    style={{}}
+                                    onChange={this.handleChangeKey}
+                                    value={4}
+                                    checked={this.state.key4}
+                                    icon={<CheckBoxOutlineBlankIcon style={{ fontSize: 60 }} />}
+                                    checkedIcon={<CheckBoxIcon style={{ fontSize: 60 }} />}
+                                />
+                            </Tooltip>
                         </Grid>
                     </Grid>                         
                 </div>
                 <div style={{marginTop: '5vh', marginLeft: '2vh', marginRight: '2vh', flexGrow: 1}}>
                     <TextField
                         id="question-group-title"
+                        value={this.state.description}
+                        onChange={this.handleChangeDes}
                         label="Ghi chú"
                         margin="normal"
                         rows="4"
