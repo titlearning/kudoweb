@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Navbar, Table} from 'reactstrap';
-import { database } from '../../containers/firebase';
+import { database } from '../../config/firebase';
 
 class LeaderBoard extends Component {
     constructor(props) {
@@ -23,36 +23,38 @@ class LeaderBoard extends Component {
     componentDidMount() {
         database.ref("/").on('value', (snapshot) => {
             var result = snapshot.val();
-            var listActivities = result.room.activities;
+            var params = this.props.match.params;
+            var roomid = params.roomid;
+            var listActivities = result.rooms[roomid].activities;
             
             var sortPoint = listActivities.sort(this.compare);
             if(sortPoint[0]) {
                 this.setState({
-                    rank1_name: sortPoint[0].username,
+                    rank1_name: sortPoint[0].playername,
                     rank1_score: sortPoint[0].totalpoint
                 });
             }
             if(sortPoint[1]) {
                 this.setState({
-                    rank2_name: sortPoint[1].username,
+                    rank2_name: sortPoint[1].playername,
                     rank2_score: sortPoint[1].totalpoint
                 });
             }
             if(sortPoint[2]) {
                 this.setState({
-                    rank3_name: sortPoint[2].username,
+                    rank3_name: sortPoint[2].playername,
                     rank3_score: sortPoint[2].totalpoint
                 });
             }
             if(sortPoint[3]) {
                 this.setState({
-                    rank4_name: sortPoint[3].username,
+                    rank4_name: sortPoint[3].playername,
                     rank4_score: sortPoint[3].totalpoint
                 });
             }
             if(sortPoint[4]) {
                 this.setState({
-                    rank5_name: sortPoint[4].username,
+                    rank5_name: sortPoint[4].playername,
                     rank5_score: sortPoint[4].totalpoint
                 });
             }
