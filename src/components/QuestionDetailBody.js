@@ -5,7 +5,7 @@ import { task } from 'react-icons-kit/iconic/task'
 import { ic_star_border } from 'react-icons-kit/md/ic_star_border'
 import { bookmark } from 'react-icons-kit/entypo/bookmark'
 import { cross } from 'react-icons-kit/entypo/cross'
-import { database } from '../containers/firebase'
+import { database } from '../config/firebase'
 
 
 export class QuestionDetailBody extends Component {
@@ -75,7 +75,7 @@ export class QuestionDetailBody extends Component {
         room.status = 0;
         let result = database.ref('/rooms/').push(room);
         let key = result.key;
-        window.location('/')
+        window.location = '/getready/'+key;
     }
 
     render() {
