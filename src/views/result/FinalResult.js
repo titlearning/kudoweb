@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Navbar, Nav} from 'reactstrap';
-import {database} from '../../containers/firebase';
+import {database} from '../../config/firebase';
 
 class FinalResult extends Component {
     constructor(props) {
@@ -18,22 +18,22 @@ class FinalResult extends Component {
         var params = this.props.match.params;
         var userid = params.userid;
 
-        database.ref("/").on('value', (snapshot) => {
-            var result = snapshot.val();
-            var listActivities = result.room.activities;
-            var rankInfo = result.rank;
+        // database.ref("/").on('value', (snapshot) => {
+        //     var result = snapshot.val();
+        //     var listActivities = result.rooms[0].activities;
+        //     var rankInfo = result.rank;
             
-            var sortPoint = listActivities.sort(this.compare);
+        //     var sortPoint = listActivities.sort(this.compare);
 
-            var userActivityIndex = sortPoint.findIndex( x => x.userid == userid);
+        //     var userActivityIndex = sortPoint.findIndex( x => x.userid == userid);
 
-            this.setState({
-                rank: userActivityIndex + 1,
-                totalPoint: sortPoint[userActivityIndex].totalpoint,
-                rankText: rankInfo.ranktext[userActivityIndex + 1],
-                contentText: rankInfo.rankcontent[userActivityIndex + 1]
-            })
-        })
+        //     this.setState({
+        //         rank: userActivityIndex + 1,
+        //         totalPoint: sortPoint[userActivityIndex].totalpoint,
+        //         rankText: rankInfo.ranktext[userActivityIndex + 1],
+        //         contentText: rankInfo.rankcontent[userActivityIndex + 1]
+        //     })
+        // })
     }
 
     compare(a,b) {

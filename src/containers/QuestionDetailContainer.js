@@ -4,6 +4,13 @@ import {QuestionDetailBody} from '../components/QuestionDetailBody';
 
 export class QuestionDetailContainer extends Component{
 
+    constructor(props){
+        super(props);
+        this.state={
+            listQuestionId : this.props.listQuestionId
+        }
+    }
+
     render(){
         return(
             <div data-reactroot="" data-functional-selector="details-app">
@@ -11,7 +18,7 @@ export class QuestionDetailContainer extends Component{
                     <div id="layout" className="layout__inner">
                         <div className="layout__body-wrapper">
                             <QuestionDetailHeader />
-                            <QuestionDetailBody />
+                            <QuestionDetailBody listQuestionId = {this.state.listQuestionId}/>
                         </div>
                     </div>
                 </div>

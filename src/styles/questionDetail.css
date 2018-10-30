@@ -687,3 +687,66 @@ svg:not(:root), symbol, image, marker, pattern, foreignObject {
 .layout__inner {
     position: relative;
 }
+.question__more-details {
+    box-shadow: none;
+}
+.choices {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.choices__choice:first-child, .choices__choice:nth-child(2), .choices__choice:nth-child(3), .choices__choice:nth-child(4) {
+    background-color: #fff;
+    color: #000;
+}
+.choices__choice {
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 6.25rem;
+    min-height: 2.5rem;
+    padding: 1rem;
+    border-bottom: 1px solid #f2f2f2;
+    line-height: 2rem;
+    color: #fff;
+}
+.choices__choice-icon--triangle {
+    fill: #e21b3c;
+}
+.choices__choice-icon {
+    margin-right: 1rem;
+}
+.icon, .icon__svg {
+    display: inline-block;
+    vertical-align: top;
+}
+.icon {
+    width: 2rem;
+    height: 2rem;
+}
+.choices__choice--false {
+    fill: #e21b3c;
+}
+.visibly-hidden {
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    clip: rect(0,0,0,0);
+}
+.icon, .icon__svg {
+    display: inline-block;
+    vertical-align: top;
+}
+.icon {
+    width: 2rem;
+    height: 2rem;
+}
+.choices__choice--correct, .choices__choice-icon--square {
+    fill: #298f0d;
+}

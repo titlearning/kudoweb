@@ -9,9 +9,8 @@ var config = {
     storageBucket: "kudo-fb5b2.appspot.com",
     messagingSenderId: "40877212325"
 };
+firebase.initializeApp(config);
 
-const firebaseApp = firebase.initializeApp(config);
-
-export default firebaseApp;
+export default firebase;
 
 export const database = firebase.database();
