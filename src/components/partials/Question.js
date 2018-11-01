@@ -4,7 +4,11 @@ import {withStyles} from '@material-ui/core/styles';
 
 class Question extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.state ={
+            data: this.props.data,
+            id: this.props.id
+        }    
     }
     render() {
         return (
@@ -23,8 +27,8 @@ class Question extends React.Component {
                                         focusable="false"><use className="icon__use"
                                                                href="#logo-shapes"></use></svg></span>
                                     </div>
-                                    <span className="kahoot-card__number-of-questions"><span>20<span
-                                        className="kahoot-card__number-of-questions--desktop"> Questions</span><span
+                                    <span className="kahoot-card__number-of-questions"><span>{this.state.data.questionList ? this.state.data.questionList.length : 0}<span
+                                        className="kahoot-card__number-of-questions--desktop"> questions</span><span
                                         className="kahoot-card__number-of-questions--mobile">Qs</span></span></span>
                                 </div>
                                 <a tabIndex="-1" className="kahoot-card__link"
@@ -37,8 +41,8 @@ class Question extends React.Component {
                                     <div className="kahoot-card__title-group"><h1
                                         className="kahoot-card__title kahoot-card__title--list-view"><a
                                         className="kahoot-card__title-link"
-                                        href="/details/viet-nam/ad6a929d-f9a0-476c-85ea-4fa3debfbba1"
-                                        data-functional-selector="kahoot-card__title-link">Viet Nam</a>
+                                        href={'/question_detail/' + (this.state.id!= null ? this.state.id : 0)}
+                                        data-functional-selector="kahoot-card__title-link">{this.state.data.title}</a>
                                     </h1>
                                         <button type="button" role="button"
                                                 data-functional-selector="kahoot-card-favorite-button"

@@ -3,11 +3,10 @@ import {withRouter} from 'react-router'
 import Header from '../components/partials/Header'
 import SearchArea from '../components/partials/SearchArea'
 import ListQuestions from '../components/ListQuestions'
-import {database} from '../containers/firebase';
+import {database} from '../config/firebase';
 
 
 class ListQuestion extends Component {
-    å
 
     constructor(props) {
         super(props)
@@ -19,8 +18,8 @@ class ListQuestion extends Component {
     }
 
     componentDidMount() {
-        database.ref("/").on('value', (snapshot) => {
-            var questionList = snapshot.val().questionGroups;
+        database.ref("/").child("questionGroups").on('value', (snapshot) => {
+            var questionList = snapshot.val();
             this.setState({
                 data: questionList
             });
