@@ -7,7 +7,7 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
     // Popup signin flow rather than redirect flow.
     signInFlow: 'popup',
     // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-    // signInSuccessUrl: '/',
+    signInSuccessUrl: '/',
     // We will display Google and Facebook as auth providers.
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
@@ -35,12 +35,12 @@ export class LoginBody extends Component {
         firebase.auth().onAuthStateChanged(user => {
             if(user){
                 let userObj = {};
-                userObj['displayName '] = user.displayName;
+                userObj['displayName'] = user.displayName;
                 userObj['email'] = user.email;
                 userObj['phoneNumber'] = user.phoneNumber;
                 userObj['uid'] = user.uid;
-                userObj['emailVerified '] = user.emailVerified;
-                userObj['providerData '] = user.providerData;
+                userObj['emailVerified'] = user.emailVerified;
+                userObj['providerData'] = user.providerData;
             user.getIdToken().then(function(accessToken){
                 localStorage.setItem('accessToken',accessToken);
                 user['accessToken'] = accessToken;
@@ -49,7 +49,7 @@ export class LoginBody extends Component {
            database.ref('/user/').child(user.uid).set(userObj);
         }
     })
-    }    
+    }   
     
     render() {
         return (
