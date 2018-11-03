@@ -14,8 +14,9 @@
 
 .mydiv {
     flex: 5;
-    display: flex;
-    flex-direction: row;
+    /* display: flex; */
+    flex-direction: 'column';
+    /* flex-direction: row; */
     height: 100vh;
     color: black;
     font-weight: bold;
@@ -35,14 +36,6 @@
     right: -1200px;
     z-index: 100;
 }
-
-
-/* .col {
-    flex: 1;
-    margin-left: 200px;
-    justify-content: center;
-    align-items: center
-} */
 
 .title {
     text-align: center;
