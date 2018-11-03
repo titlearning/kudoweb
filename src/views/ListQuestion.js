@@ -7,7 +7,6 @@ import {database} from '../config/firebase';
 
 
 class ListQuestion extends Component {
-    å
 
     constructor(props) {
         super(props)
@@ -19,8 +18,8 @@ class ListQuestion extends Component {
     }
 
     componentDidMount() {
-        database.ref("/").on('value', (snapshot) => {
-            var questionList = snapshot.val().questionGroups;
+        database.ref("/").child("questionGroups").on('value', (snapshot) => {
+            var questionList = snapshot.val();
             this.setState({
                 data: questionList
             });

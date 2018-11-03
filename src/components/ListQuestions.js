@@ -17,7 +17,7 @@ class ListQuestions extends React.Component {
                         <b>2,204</b><span>results</span>
                     </div>
                     {
-                        this.props.data && this.props.data.map((object, i) => <Question data={object} key={i}/>)
+                        this.props.data && this.props.data.map((object, i) => <Question data={object} key={i} id={i}/>)
                     }
                 </div>
                 <button type="button" role="button" data-functional-selector="load-more-button"
