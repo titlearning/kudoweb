@@ -43,9 +43,9 @@ class QuestionCreate extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth
-        });
+        // this.setState({
+        //     labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth
+        // });
     }
     
     handleChangeTitle(e) {
@@ -141,29 +141,32 @@ class QuestionCreate extends Component {
                                 value = {this.state.title}
                                 onChange = {this.handleChangeTitle}
                                 rowsMax="4"
-                                variant="outlined"
+                                // variant="outlined"
                                 fullWidth
                                 style={{}}
                                 />
                             <Grid item xs={6} style={{marginTop: '3vh'}}>                         
                                 <FormControl variant="outlined" style={{width: '100%'}}>
                                     <InputLabel
-                                        ref={ref => {
-                                        this.InputLabelRef = ref;
-                                        }}
-                                        htmlFor="outlined-age-simple"
+                                        // ref={ref => {
+                                        // this.InputLabelRef = ref;
+                                        // }}
+                                        htmlFor="outlined-simple"
                                     >
                                         Thời gian
                                     </InputLabel>
                                     <Select
                                         value={this.state.time}
                                         onChange={this.handleChangeTime}
-                                        input={
-                                        <OutlinedInput
-                                            labelWidth={this.state.labelWidth}
-                                            name="age"
-                                            id="outlined-age-simple"
-                                        />
+                                        inputProps={{
+                                            name: 'time',
+                                            id: "outlined-simple"
+                                        }
+                                        // <OutlinedInput
+                                        //     labelWidth={this.state.labelWidth}
+                                        //     name="age"
+                                        //     id="outlined-age-simple"
+                                        // />
                                         }
                                     >
                                         <MenuItem value={20}>20 giây</MenuItem>
@@ -190,7 +193,7 @@ class QuestionCreate extends Component {
                                 label="Đáp án 1 (Bắt buộc)"
                                 margin="normal"
                                 rowsMax="4"
-                                variant="outlined"
+                                // variant="outlined"
                                 style={{width: '85%'}}
                                 />
                             <Tooltip title="Chọn đáp án đúng" placement="right">    
@@ -212,7 +215,7 @@ class QuestionCreate extends Component {
                                 label="Đáp án 2 (Bắt buộc)"
                                 margin="normal"
                                 rowsMax="4"
-                                variant="outlined"
+                                // variant="outlined"
                                 fullWidth
                                 style={{width: '85%'}}
                                 />
@@ -235,7 +238,7 @@ class QuestionCreate extends Component {
                                 label="Đáp án 3 (Bắt buộc)"
                                 margin="normal"
                                 rowsMax="4"
-                                variant="outlined"
+                                // variant="outlined"
                                 fullWidth
                                 style={{width: '85%'}}
                                 />
@@ -258,7 +261,7 @@ class QuestionCreate extends Component {
                                 label="Đáp án 4 (Bắt buộc)"
                                 margin="normal"
                                 rowsMax="4"
-                                variant="outlined"
+                                // variant="outlined"
                                 fullWidth
                                 style={{width: '85%'}}
                                 />
@@ -284,7 +287,7 @@ class QuestionCreate extends Component {
                         margin="normal"
                         rows="4"
                         rowsMax="4"
-                        variant="outlined"
+                        // variant="outlined"
                         fullWidth
                         style={{}}
                         />

@@ -15,8 +15,9 @@ class Header extends Component {
 
     createQuestion() {
         if(this.props.head_title == "TẠO CÂU HỎI") {
-            database.ref("/")
-                .set(this.props);
+            var postData = {
+                
+            }
         }
     }
 
