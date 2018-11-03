@@ -3,7 +3,7 @@ import {withRouter} from 'react-router'
 import Header from '../components/partials/Header'
 import SearchArea from '../components/partials/SearchArea'
 import ListQuestions from '../components/ListQuestions'
-import {database} from '../containers/firebase';
+import {database} from '../config/firebase';
 
 
 class ListQuestion extends Component {

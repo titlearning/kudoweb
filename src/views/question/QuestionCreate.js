@@ -128,7 +128,7 @@ class QuestionCreate extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{overflowX: "hidden"}}>
                 <Header head_title="TẠO CÂU HỎI" {...this.state} />
                 <div style={{marginTop: '20vh', marginLeft: '2vh', marginRight: '2vh', flexGrow: 1}}>
                     <Grid container spacing={40}>
