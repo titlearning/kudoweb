@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
 import {database} from '../config/firebase';
+import { withRouter } from 'react-router'
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 
   const uiConfig = {
@@ -15,7 +16,7 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
     ]
   };
 
-export class LoginBody extends Component {
+class LoginBody extends Component {
     
     constructor(props) {
         super(props)
@@ -27,7 +28,7 @@ export class LoginBody extends Component {
 
     componentWillMount= () => {
         if(localStorage.getItem("accessToken") !== null){
-            window.location='/';
+            this.props.history.push('/')
         }
     }
 
@@ -99,3 +100,5 @@ export class LoginBody extends Component {
             )
         }
 }
+
+export default withRouter(LoginBody)

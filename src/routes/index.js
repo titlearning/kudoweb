@@ -11,23 +11,23 @@ import GameBlock from '../views/GameBlock'
 import LeaderBoard from '../views/result/LeaderBoard'
 import RankResult from '../views/result/RankResult'
 import ListQuestion from '../views/ListQuestion';
-
+import { PrivateRoute } from '../auth/PrivateRoute'
 import QuestionGroupCreate from '../views/question/QuestionGroupCreate'
 import QuestionCreate from '../views/question/QuestionCreate'
 
 const AppRouter = () =>
   <Router >
     <div>
-      <Route exact path='/' component={ListQuestion} />
       <Route exact path='/login' component={Login} />
-      <Route exact path='/question_detail/:id' component={QuestionDetail} />
-      <Route exact path='/lobby' component={Lobby}/>
-      <Route exact path='/getready' component={GetReady}/>
-      <Route exact path='/gameblock' component={GameBlock}/>
-      <Route path='/question/creategroup' component={QuestionGroupCreate}/>
-      <Route path='/question/create/:questiongroupid' component={QuestionCreate}/>
-      <Route path='/leaderboard/:roomid' component={LeaderBoard}/>
-      <Route path='/finalresult/:roomid' component={RankResult}/>
+      <PrivateRoute exact path='/' component={ListQuestion} />
+      <PrivateRoute exact path='/question_detail/:id' component={QuestionDetail} />
+      <PrivateRoute exact path='/lobby/:id' component={Lobby}/>
+      <PrivateRoute exact path='/getready' component={GetReady}/>
+      <PrivateRoute exact path='/gameblock' component={GameBlock}/>
+      <PrivateRoute path='/question/creategroup' component={QuestionGroupCreate}/>
+      <PrivateRoute path='/question/create/:questiongroupid' component={QuestionCreate}/>
+      <PrivateRoute path='/leaderboard/:roomid' component={LeaderBoard}/>
+      <PrivateRoute path='/finalresult/:roomid' component={RankResult}/>
     </div>
   </Router>
 

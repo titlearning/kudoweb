@@ -21,10 +21,13 @@ class LobbyContainer extends Component {
 
     componentWillMount() {
         var roomPin = 1
+        // var roomPin = this.props.match.params.id
         this.itemRef.ref('/rooms').on('value', (snapshot) => {
             var data = Object.values(snapshot.val()).map(function (obj) {
                 return obj;
             });
+            
+
             const roomInfo = data.filter(item => item.roomPin === roomPin);
             var activities = Object.values(roomInfo[0].activities).map(function (obj) {
                 return obj;
