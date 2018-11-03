@@ -1,4 +1,6 @@
 import firebase from 'firebase';
+
+// Initialize Firebase
 var config = {
     apiKey: "AIzaSyAawOHwwwA0XyjoIXgcDEHtZd_gVXEmEbE",
     authDomain: "kudo-fb5b2.firebaseapp.com",
@@ -7,9 +9,9 @@ var config = {
     storageBucket: "kudo-fb5b2.appspot.com",
     messagingSenderId: "40877212325"
 };
-export const firebaseApp = firebase.initializeApp(config);
-// firebase.initializeApp(config);
 
-// export default firebase;
+const firebaseApp = firebase.initializeApp(config);
+
+export default firebaseApp;
 
 export const database = firebase.database();

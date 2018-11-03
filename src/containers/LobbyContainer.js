@@ -11,6 +11,7 @@ class LobbyContainer extends Component {
     constructor(props) {
         super(props);
         this.itemRef = firebaseApp.database()
+        this.inputOpenFileRef = React.createRef()
         this.state = {
             roomInfo: {},
             activities: [],
@@ -33,14 +34,16 @@ class LobbyContainer extends Component {
                 return obj;
             });
 
-            console.log('=-========================', questionList)
-
             this.setState({
                 roomInfo: roomInfo[0],
                 activities: activities,
                 questionList: questionList
             })
         })
+    }
+
+    showOpenFileDlg = () => {
+        this.inputOpenFileRef.current.click()
     }
     
     render() {
@@ -68,6 +71,12 @@ class LobbyContainer extends Component {
                             <div style={{margin: '0 auto', width: 100}}>
                                 <Button  variant="contained" onClick={() => this.props.history.push('/getready')}>
                                     Start
+                                </Button>
+                            </div>
+                            <div>
+                                <Button onClick={this.showOpenFileDlg}>
+                                <input ref={this.inputOpenFileRef} type="file" style={{display:"none"}}/>
+                                
                                 </Button>
                             </div>
                         </div>
