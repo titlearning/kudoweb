@@ -21,27 +21,29 @@
 .answer {
     flex: 2;
     height: 100vh;
-    display: -webkit-flex;
     -webkit-box-flex: 1;
     -webkit-flex-wrap: wrap;
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: center
 }
 
 .answerItem {
     -webkit-box-flex: 1;
     flex: 1 1 calc(50% - 2 * .3125rem);
-    -webkit-box-pack: start;
-    justify-content: flex-start;
     width: calc(50% - 2 * .3125rem);
+    height: 45%;
+    justify-content: center;
+    align-items: center;
     margin: .3125rem;
-    background-color: #1368ce;
     border-radius: 5px
 }
 
 .answerText {
     color: #fff;
     font-size: 1.75rem;
+    margin: 20px
 }
 
 .bottomTitleWrapper {

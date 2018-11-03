@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {QuestionDetailHeader} from '../components/QuestionDetailHeader';
-import {QuestionDetailBody} from '../components/QuestionDetailBody';
+import QuestionDetailBody from '../components/QuestionDetailBody';
 
 export class QuestionDetailContainer extends Component{
 

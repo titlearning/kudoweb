@@ -6,9 +6,9 @@ import { ic_star_border } from 'react-icons-kit/md/ic_star_border'
 import { bookmark } from 'react-icons-kit/entypo/bookmark'
 import { cross } from 'react-icons-kit/entypo/cross'
 import { database } from '../config/firebase'
+import { withRouter } from 'react-router'
 
-
-export class QuestionDetailBody extends Component {
+class QuestionDetailBody extends Component {
 
     constructor(props) {
         super(props);
@@ -75,7 +75,7 @@ export class QuestionDetailBody extends Component {
         room.status = 0;
         let result = database.ref('/rooms/').push(room);
         let key = result.key;
-        window.location = '/getready/'+key;
+        this.props.history.push(`/lobby/${key}`);
     }
 
     render() {
@@ -242,3 +242,5 @@ export class QuestionDetailBody extends Component {
         );
     }
 }
+
+export default withRouter(QuestionDetailBody)
