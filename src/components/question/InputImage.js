@@ -1,9 +1,5 @@
 import React, {Component} from 'react' 
-import ReactDOM from "react-dom";
 import Button from '@material-ui/core/Button'
-import Input from '@material-ui/core/Input'
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import Image from '@material-ui/icons/Image';
 
 class InputImage extends Component {
@@ -21,11 +17,11 @@ class InputImage extends Component {
     }
 
     handleImageChange(e) {
-      e.preventDefault();
-  
-      this.setState({
-        file: URL.createObjectURL(e.target.files[0])
-      })
+      if(e.target.files[0]) {
+        this.setState({
+          file: URL.createObjectURL(e.target.files[0])
+        })
+      }
     }
   
     render() {

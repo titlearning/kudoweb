@@ -25,7 +25,7 @@ const AppRouter = () =>
       <Route exact path='/getready' component={GetReady}/>
       <Route exact path='/gameblock' component={GameBlock}/>
       <Route path='/question/creategroup' component={QuestionGroupCreate}/>
-      <Route path='/question/create' component={QuestionCreate}/>
+      <Route path='/question/create/:questiongroupid' component={QuestionCreate}/>
       <Route path='/leaderboard/:roomid' component={LeaderBoard}/>
       <Route path='/finalresult/:roomid' component={RankResult}/>
     </div>

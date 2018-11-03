@@ -15,9 +15,48 @@ class Header extends Component {
 
     createQuestion() {
         if(this.props.head_title == "TẠO CÂU HỎI") {
-            var postData = {
-                
-            }
+            var questionGroupId = this.props.question_group_id;
+            var no_question;
+
+            database.ref(`/questionGroups/${questionGroupId}/questionList`).on('value', (snapshot) => {
+                var result = snapshot.val();
+                no_question = result.length + 1;
+
+                var rightAnswer = 0;
+                if(this.props.key1) { rightAnswer = 1 };
+                if(this.props.key2) { rightAnswer = 2 };
+                if(this.props.key3) { rightAnswer = 3 };
+                if(this.props.key4) { rightAnswer = 4 };
+
+                var postData = {
+                    content: this.props.title,
+                    position: no_question,
+                    id: no_question,
+                    description: this.props.description,
+                    timeout: this.props.time,
+                    rightAnswer: rightAnswer,
+                    answerList: [
+                        {
+                            content: this.props.answer1,
+                            position: 1
+                        },
+                        {
+                            content: this.props.answer2,
+                            position: 2
+                        },
+                        {
+                            content: this.props.answer3,
+                            position: 3
+                        },
+                        {
+                            content: this.props.answer4,
+                            position: 4
+                        }
+                    ]
+                }
+
+                database.ref(`/questionGroups/${questionGroupId}/questionList`).push(postData);
+            })
         }
     }
 
