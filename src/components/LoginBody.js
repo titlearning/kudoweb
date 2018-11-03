@@ -43,7 +43,7 @@ class LoginBody extends Component {
                 userObj['emailVerified'] = user.emailVerified;
                 userObj['providerData'] = user.providerData;
             user.getIdToken().then(function(accessToken){
-                localStorage.setItem('user',user);
+                localStorage.setItem('user',JSON.stringify(user));
                 user['accessToken'] = accessToken;
                 // database.ref().child('user').set()
             }, error=>console.log(error))

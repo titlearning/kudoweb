@@ -25,7 +25,7 @@ const AppRouter = () =>
       <PrivateRoute exact path='/getready' component={GetReady}/>
       <PrivateRoute exact path='/gameblock' component={GameBlock}/>
       <PrivateRoute path='/question/creategroup' component={QuestionGroupCreate}/>
-      <PrivateRoute path='/question/create' component={QuestionCreate}/>
+      <PrivateRoute path='/question/create/:questiongroupid' component={QuestionCreate}/>
       <PrivateRoute path='/leaderboard/:roomid' component={LeaderBoard}/>
       <PrivateRoute path='/finalresult/:roomid' component={RankResult}/>
     </div>

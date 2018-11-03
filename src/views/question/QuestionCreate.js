@@ -43,9 +43,6 @@ class QuestionCreate extends Component {
     }
 
     componentDidMount() {
-        // this.setState({
-        //     labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth
-        // });
     }
     
     handleChangeTitle(e) {
@@ -129,7 +126,7 @@ class QuestionCreate extends Component {
     render() {
         return (
             <div style={{overflowX: "hidden"}}>
-                <Header head_title="TẠO CÂU HỎI" {...this.state} />
+                <Header head_title="TẠO CÂU HỎI" {...this.state} question_group_id={this.props.match.params.questiongroupid} />
                 <div style={{marginTop: '20vh', marginLeft: '2vh', marginRight: '2vh', flexGrow: 1}}>
                     <Grid container spacing={40}>
                         <Grid item xs={6}>
