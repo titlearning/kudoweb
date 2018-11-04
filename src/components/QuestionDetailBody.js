@@ -74,11 +74,23 @@ class QuestionDetailBody extends Component {
         });   
     }
 
+    makeid = () => {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      
+        for (var i = 0; i < 6; i++) {
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }    
+        
+        return text;
+    }
+
     onPlayClick = ()=>{
         let room = {};
         room.activities = [];
         room.questionGroup = {id:this.state.listQuestionId}
         room.status = 0;
+        room.roomPin = this.makeid();
         let result = database.ref('/rooms/').push(room);
         let key = result.key;
         this.props.history.push(`/lobby/${key}`);
