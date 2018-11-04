@@ -4,63 +4,103 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
-import { database } from '../../config/firebase'
+import { database } from '../../config/firebase';
+import { Redirect } from 'react-router-dom';
+import { link } from 'fs';
 
 class Header extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            redirectGroupDetail: false,
+            no_question: 0,
+            linkRedirect: ''
+        };
+
         this.createQuestion = this.createQuestion.bind(this);
     }
 
-    createQuestion() {
+    createQuestion(e) {
+        e.preventDefault();
         if(this.props.head_title == "TẠO CÂU HỎI") {
             var questionGroupId = this.props.question_group_id;
-            var no_question;
 
             database.ref(`/questionGroups/${questionGroupId}/questionList`).on('value', (snapshot) => {
                 var result = snapshot.val();
-                no_question = result.length + 1;
+                this.setState({
+                    no_question: result.length + 1
+                })
+            })
 
-                var rightAnswer = 0;
-                if(this.props.key1) { rightAnswer = 1 };
-                if(this.props.key2) { rightAnswer = 2 };
-                if(this.props.key3) { rightAnswer = 3 };
-                if(this.props.key4) { rightAnswer = 4 };
+            var rightAnswer = 0;
+            if(this.props.key1) { rightAnswer = 1 };
+            if(this.props.key2) { rightAnswer = 2 };
+            if(this.props.key3) { rightAnswer = 3 };
+            if(this.props.key4) { rightAnswer = 4 };
 
-                var postData = {
-                    content: this.props.title,
-                    position: no_question,
-                    id: no_question,
-                    description: this.props.description,
-                    timeout: this.props.time,
-                    rightAnswer: rightAnswer,
-                    answerList: [
-                        {
-                            content: this.props.answer1,
-                            position: 1
-                        },
-                        {
-                            content: this.props.answer2,
-                            position: 2
-                        },
-                        {
-                            content: this.props.answer3,
-                            position: 3
-                        },
-                        {
-                            content: this.props.answer4,
-                            position: 4
-                        }
-                    ]
-                }
+            var questionRefKey = database.ref(`/questionGroups/${questionGroupId}/questionList`).push().key;
+            
+            database.ref(`/questionGroups/${questionGroupId}/questionList/${questionRefKey}`).update({
+                id: questionRefKey,
+                content: this.props.title,
+                description: this.props.description,
+                timeout: this.props.time,
+                rightAnswer: rightAnswer,
+                position: this.state.no_question,
+                answerList: [
+                    {
+                        content: this.props.answer1,
+                        position: 1
+                    },
+                    {
+                        content: this.props.answer2,
+                        position: 2
+                    },
+                    {
+                        content: this.props.answer3,
+                        position: 3
+                    },
+                    {
+                        content: this.props.answer4,
+                        position: 4
+                    }
+                ]
+            });
+            
+            this.setState({
+                linkRedirect: `/question_detail/${this.props.question_group_id}`,
+                redirectGroupDetail: true
+            })
+        } else if (this.props.head_title == "TẠO BỘ CÂU HỎI") {
+            var user = JSON.parse(localStorage.getItem('user'));
+            
+            var key = database.ref(`/questionGroups`).push({
+                questionList: [],
+                type: 1,
+                title: this.props.title,
+                description: this.props.description,
+                useridCreated: user.uid,
+                usernameCreated: user.displayName
+            }).key;
+            
+            database.ref(`/questionGroups/${key}`).update({
+                id: key
+            })
 
-                database.ref(`/questionGroups/${questionGroupId}/questionList`).push(postData);
+            this.setState({
+                linkRedirect: `/`,
+                redirectGroupDetail: true
             })
         }
     }
 
     render() {
+        var linkRedirect = this.state.linkRedirect;
+        if(this.state.redirectGroupDetail) {
+            return <Redirect to={linkRedirect} />
+        }
+
         return (
             <AppBar absolute='fixed' style={{flexGrow: 1, backgroundColor: '#333'}}>
                 <Toolbar>
