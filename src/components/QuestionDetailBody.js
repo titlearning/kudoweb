@@ -24,7 +24,13 @@ class QuestionDetailBody extends Component {
             // })
             let result = snapshot.val();
             if (result.questionList != null){
-                this.setState({ lisQuestion: result.questionList });
+                var questionList = result.questionList;
+                
+                questionList = Object.keys(questionList).map(function(key) {
+                    return questionList[key];
+                });
+            
+                this.setState({ lisQuestion: questionList });
             }
         })
     }

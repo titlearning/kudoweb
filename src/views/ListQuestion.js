@@ -20,6 +20,9 @@ class ListQuestion extends Component {
     componentDidMount() {
         database.ref("/").child("questionGroups").on('value', (snapshot) => {
             var questionList = snapshot.val();
+            questionList = Object.keys(questionList).map(function(key) {
+                return questionList[key];
+            });
             this.setState({
                 data: questionList
             });
