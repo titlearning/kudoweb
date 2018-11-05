@@ -22,7 +22,6 @@ class GetReadyContainer extends Component {
             questionList: [],
             activities: [],
             showQuestionTitle: true,
-            endRoom: false,
             timeStart: Date.now(),
             endUpdate: false
         }
@@ -36,26 +35,22 @@ class GetReadyContainer extends Component {
             });
 
             var question = {}
-            var end = true;
 
             for (var i = 0; i < questionList.length; i++) {
-                if (questionList[i].status == 0) {
+                if (questionList[i].status == 3 || questionList[i].status == 1) {
                     question = questionList[i];
-                    end = false;
                     break;
                 }
             }
-
-            if(end) {
-                this.setState({
-                    endRoom: true
-                })
+            var activities = [];
+            if(roomInfo.activities) {
+                activities = roomInfo.activities
             }
 
             this.setState({
                 question: question,
                 questionList: questionList,
-                activities: roomInfo.activities
+                activities: activities
             })
         })
     }
@@ -72,16 +67,16 @@ class GetReadyContainer extends Component {
 
     progress = () => {
         const { completed } = this.state;
+        
         if (completed === 100) {
             if(!this.state.endUpdate) {
                 var activities = this.state.activities.map((obj, index) => {
                     var answers = obj.answers.map((ansObj, i) =>{
-                        if(ansObj.status == 3) {
+                        if(ansObj.timestart == 0) {
                             var newAns = {
                                 answer: -1,
                                 point: 0,
                                 questionId: this.state.question.id,
-                                status: 1,
                                 timestart: this.state.timeStart,
                                 timesubmit: 0
                             }
@@ -98,17 +93,23 @@ class GetReadyContainer extends Component {
                         answers: answers
                     }
                 })
-        
+               
                 this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
                     activities: activities,
                     status: 1
                 });
-            }
 
-            this.setState({
-                showQuestionTitle: false,
-                endUpdate: true
-            })
+                if(this.state.question) {
+                    this.itemRef.ref(`/rooms/${this.props.match.params.id}/questionGroup/questionList/${this.state.question.id}`).update({
+                        status: 1
+                    })
+                } 
+
+                this.setState({
+                    showQuestionTitle: false,
+                    endUpdate: true
+                })
+            }
         } else {
             const diff = 10;
             this.setState({ completed: Math.min(completed + diff, 100) });
@@ -116,21 +117,14 @@ class GetReadyContainer extends Component {
     };
 
     onFinish = () => {
+        const questionId = this.state.question.id;
         this.itemRef.ref(`/rooms/${this.props.match.params.id}/questionGroup/questionList/${this.state.question.id}`).update({
-            status: 1
-        }); 
-        this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
             status: 2
-        });
-        this.props.history.push(`/gameblock/${this.props.match.params.id}`);
+        }); 
+        this.props.history.push(`/gameblock/${this.props.match.params.id}/${questionId}`);
     }
 
     render() {
-        var linkRedirect = `/finalresult/${this.props.match.params.id}`;
-        if(this.state.endRoom) {
-            return <Redirect to={linkRedirect} />
-        }
-
         return (
             <div className='container'>
                 <div className='header'>
@@ -168,7 +162,7 @@ class GetReadyContainer extends Component {
                         </div>
                         <div style={{flex: 1, display: 'flex', flexWrap: 'wrap'}}>
                         {
-                            this.state.question.answerList.length > 0 &&
+                            this.state.question && this.state.question.answerList && this.state.question.answerList.length > 0 &&
                             this.state.question.answerList.map((answer, i) => {
                                 return (
                                     <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], width: '300px', height: '45%', margin: 'auto'}}>

@@ -7,6 +7,7 @@ class LeaderBoard extends Component {
         super(props);
 
         this.state = {
+            question: {},
             rank1_name: '',
             rank2_name: '',
             rank3_name: '',
@@ -32,8 +33,20 @@ class LeaderBoard extends Component {
                 listActivities = result.rooms[roomid].activities;
             }
 
+            var questionList = Object.values(result.rooms[roomid].questionGroup.questionList).map(function (obj) {
+                return obj;
+            });
+            var question = {}
+            for (var i = 0; i < questionList.length; i++) {
+                if (questionList[i].status == 0) {
+                    question = questionList[i];
+                    break;
+                }
+            }
+        
             this.setState({
-                activities: listActivities
+                activities: listActivities,
+                question: question
             })
 
             var sortPoint = listActivities.sort(this.compare);
@@ -84,7 +97,6 @@ class LeaderBoard extends Component {
                 answer: -1,
                 point: 0,
                 questionId: '',
-                status: 3,
                 timestart: 0,
                 timesubmit: 0        
             })
@@ -95,13 +107,32 @@ class LeaderBoard extends Component {
                 answers: obj.answers
             }
         })
+    
+        if(!this.isEmpty(this.state.question)) {
+            database.ref(`/rooms/${this.props.match.params.roomid}`).update({
+                activities: activities
+            }); 
 
-        database.ref(`/rooms/${this.props.match.params.roomid}`).update({
-            activities: activities,
-            status: 3
-        }); 
+            database.ref(`/rooms/${this.props.match.params.roomid}/questionGroup/questionList/${this.state.question.id}`).update({
+                status: 3
+            })
 
-        this.props.history.push(`/getready/${this.props.match.params.roomid}`);
+            this.props.history.push(`/getready/${this.props.match.params.roomid}`);
+        } else {
+            database.ref(`/rooms/${this.props.match.params.roomid}`).update({
+                status: 2
+            }); 
+
+            this.props.history.push(`/finalresult/${this.props.match.params.roomid}`);
+        }
+    }
+
+    isEmpty = (obj) => {
+        for(var key in obj) {
+            if(obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
     }
 
     render() {

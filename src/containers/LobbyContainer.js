@@ -12,6 +12,7 @@ class LobbyContainer extends Component {
         super(props);
         this.itemRef = firebaseApp.database()
         this.state = {
+            question: {},
             roomInfo: {},
             activities: [],
             questionList: []
@@ -22,18 +23,30 @@ class LobbyContainer extends Component {
         this.itemRef.ref(`/rooms/${this.props.match.params.id}`).on('value', (snapshot) => {
             const roomInfo = snapshot.val();
 
+            var questionList = Object.values(roomInfo.questionGroup.questionList).map(function (obj) {
+                return obj;
+            });
+            var question = {}
+            for (var i = 0; i < questionList.length; i++) {
+                if (questionList[i].status == 0) {
+                    question = questionList[i];
+                    break;
+                }
+            }
+
             var activities = [];
             if(roomInfo.activities) {
                 activities = Object.values(roomInfo.activities).map(function (obj) {
                     return obj;
                 });
             }
-         
+
             var questionList = Object.values(roomInfo.questionGroup.questionList).map(function (obj) {
                 return obj;
             });
 
             this.setState({
+                question: question,
                 roomInfo: roomInfo,
                 activities: activities,
                 questionList: questionList
@@ -42,6 +55,12 @@ class LobbyContainer extends Component {
     }
 
     startRoom = () => {
+        if(this.state.question) {
+            this.itemRef.ref(`/rooms/${this.props.match.params.id}/questionGroup/questionList/${this.state.question.id}`).update({
+                status: 3
+            })
+        } 
+
         var activities = this.state.activities.map((obj, index) => {
             return {
                 playername: obj.playername,
@@ -51,7 +70,6 @@ class LobbyContainer extends Component {
                         answer: -1,
                         point: 0,
                         questionId: '',
-                        status: 3,
                         timestart: 0,
                         timesubmit: 0
                     }
@@ -60,7 +78,7 @@ class LobbyContainer extends Component {
         })
 
         this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
-            status: 3,
+            status: 1,
             activities: activities
         });
         this.props.history.push(`/getready/${this.props.match.params.id}`);

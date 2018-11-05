@@ -25,21 +25,21 @@ class GameBlockContainer extends Component {
                 return obj;
             });
             var activities = roomInfo.activities;
-            var question = {}
-
-            for (var i = 0; i < questionList.length; i++) {
-                if(questionList[i].status == 1) {
-                    question = questionList[i];
-                    break;
-                }
-            }
            
             this.setState({
-                question: question,
                 questionList: questionList,
                 activities: activities
             })
         })
+
+        this.itemRef.ref(`/rooms/${this.props.match.params.id}/questionGroup/questionList/${this.props.match.params.questionid}`).on('value', (snapshot) => {
+            var question = snapshot.val();
+
+            this.setState({
+                question: question
+            })
+        })
+
     }
 
     setPoint = () => {
