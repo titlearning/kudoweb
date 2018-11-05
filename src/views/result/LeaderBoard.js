@@ -18,7 +18,7 @@ class LeaderBoard extends Component {
             rank3_score: 0,
             rank4_score: 0,
             rank5_score: 0,
-            activities: []
+            activities: {}
         }
     }
     
@@ -28,7 +28,7 @@ class LeaderBoard extends Component {
             var params = this.props.match.params;
             var roomid = params.roomid;
 
-            var listActivities = [];
+            var listActivities = {};
             if(result.rooms[roomid].activities) {
                 listActivities = result.rooms[roomid].activities;
             }
@@ -49,7 +49,7 @@ class LeaderBoard extends Component {
                 question: question
             })
 
-            var sortPoint = listActivities.sort(this.compare);
+            var sortPoint = Object.values(listActivities).sort(this.compare);
             if(sortPoint[0]) {
                 this.setState({
                     rank1_name: sortPoint[0].playername,
@@ -92,23 +92,18 @@ class LeaderBoard extends Component {
     }      
 
     nextQuestion = () => {
-        var activities = this.state.activities.map((obj, index) => {
-            obj.answers.push({
-                answer: -1,
-                point: 0,
-                questionId: '',
-                timestart: 0,
-                timesubmit: 0        
-            })
-          
-            return {
-                playername: obj.playername,
-                totalpoint: obj.totalpoint,
-                answers: obj.answers
-            }
-        })
-    
         if(!this.isEmpty(this.state.question)) {
+            var activities = this.state.activities;
+            var keys = Object.keys(this.state.activities);
+            keys.forEach(element => {
+                activities[element].answers.push({
+                    answer: -1,
+                    point: 0,
+                    questionId: this.state.question.id,
+                    timestart: 0,
+                    timesubmit: 0        
+                })
+            });
             database.ref(`/rooms/${this.props.match.params.roomid}`).update({
                 activities: activities
             }); 

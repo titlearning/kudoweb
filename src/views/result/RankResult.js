@@ -24,12 +24,12 @@ class FinalResult extends Component {
             var params = this.props.match.params;
             var roomid = params.roomid;
 
-            var listActivities = [];
+            var listActivities = {};
             if(result.rooms[roomid].activities) {
                 listActivities = result.rooms[roomid].activities;
             }
             
-            var sortPoint = listActivities.sort(this.compare);
+            var sortPoint = Object.values(listActivities).sort(this.compare);
             if(sortPoint[0]) {
                 this.setState({
                     rank1_name: sortPoint[0].playername,

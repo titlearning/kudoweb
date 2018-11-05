@@ -20,7 +20,7 @@ class GetReadyContainer extends Component {
             completed: 0,
             question: {},
             questionList: [],
-            activities: [],
+            activities: {},
             showQuestionTitle: true,
             timeStart: Date.now(),
             endUpdate: false
@@ -42,7 +42,7 @@ class GetReadyContainer extends Component {
                     break;
                 }
             }
-            var activities = [];
+            var activities = {};
             if(roomInfo.activities) {
                 activities = roomInfo.activities
             }
@@ -70,8 +70,9 @@ class GetReadyContainer extends Component {
         
         if (completed === 100) {
             if(!this.state.endUpdate) {
-                var activities = this.state.activities.map((obj, index) => {
-                    var answers = obj.answers.map((ansObj, i) =>{
+                var keys = Object.keys(this.state.activities);
+                keys.forEach(element => {
+                    var answers = this.state.activities[element].answers.map((ansObj, i) =>{
                         if(ansObj.timestart == 0) {
                             var newAns = {
                                 answer: -1,
@@ -87,15 +88,11 @@ class GetReadyContainer extends Component {
                         }
                     })
 
-                    return {
-                        playername: obj.playername,
-                        totalpoint: obj.totalpoint,
-                        answers: answers
-                    }
-                })
+                    this.state.activities[element].answers = answers;
+                });
                
                 this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
-                    activities: activities,
+                    activities: this.state.activities,
                     status: 1
                 });
 

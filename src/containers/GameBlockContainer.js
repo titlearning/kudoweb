@@ -43,7 +43,10 @@ class GameBlockContainer extends Component {
     }
 
     setPoint = () => {
-        var activities = this.state.activities.map((obj, index) => {
+        var activities = this.state.activities;
+        var keys = Object.keys(activities);
+        keys.forEach(element => {
+            var obj = activities[element];
             var totalPoint = obj.totalpoint;
             var answers = obj.answers.map((ansObj, index) => {
                 if(ansObj.questionId == this.state.question.id) {
@@ -65,13 +68,10 @@ class GameBlockContainer extends Component {
                     return ansObj;
                 }
             })
-            
-            return {
-                ...obj,
-                totalpoint: totalPoint,
-                answers: answers
-            }
-        })
+
+            activities[element].totalpoint = totalPoint;
+            activities[element].answers = answers;
+        });
 
         this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
             activities: activities
@@ -80,9 +80,7 @@ class GameBlockContainer extends Component {
 
     showLeaderboard = () => {
         this.setPoint();
-        // this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
-        //     status: 2
-        // }); 
+     
         this.props.history.push(`/leaderboard/${this.props.match.params.id}`);
     }
 
