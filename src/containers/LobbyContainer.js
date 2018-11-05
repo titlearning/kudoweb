@@ -15,7 +15,8 @@ class LobbyContainer extends Component {
             question: {},
             roomInfo: {},
             activities: [],
-            questionList: []
+            questionList: [],
+            keys: [],
         }
     }
 
@@ -28,19 +29,23 @@ class LobbyContainer extends Component {
             });
             var question = {}
             for (var i = 0; i < questionList.length; i++) {
-                if (questionList[i].status == 0) {
+                if (questionList[i].status == 0 || questionList[i].status == 3) {
                     question = questionList[i];
                     break;
                 }
             }
 
             var activities = [];
+            var keys = [];
+           
             if(roomInfo.activities) {
-                activities = Object.values(roomInfo.activities).map(function (obj) {
-                    return obj;
+                activities = Object.keys(roomInfo.activities).map(function (key) {
+                    return { ...roomInfo.activities[key]};
                 });
-            }
 
+                keys = Object.keys(roomInfo.activities);
+            }
+            
             var questionList = Object.values(roomInfo.questionGroup.questionList).map(function (obj) {
                 return obj;
             });
@@ -49,7 +54,8 @@ class LobbyContainer extends Component {
                 question: question,
                 roomInfo: roomInfo,
                 activities: activities,
-                questionList: questionList
+                questionList: questionList,
+                keys: keys
             })
         })
     }
@@ -59,27 +65,25 @@ class LobbyContainer extends Component {
             this.itemRef.ref(`/rooms/${this.props.match.params.id}/questionGroup/questionList/${this.state.question.id}`).update({
                 status: 3
             })
+
+            this.state.keys.forEach(element => {
+                this.itemRef.ref(`/rooms/${this.props.match.params.id}/activities/${element}`).update({
+                    totalpoint: 0,
+                    answers: [
+                        {
+                            answer: -1,
+                            point: 0,
+                            questionId: this.state.question.id,
+                            timestart: 0,
+                            timesubmit: 0
+                        }
+                    ]
+                })            
+            });
         } 
 
-        var activities = this.state.activities.map((obj, index) => {
-            return {
-                playername: obj.playername,
-                totalpoint: 0,
-                answers: [
-                    {
-                        answer: -1,
-                        point: 0,
-                        questionId: '',
-                        timestart: 0,
-                        timesubmit: 0
-                    }
-                ]
-            }
-        })
-
         this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
-            status: 1,
-            activities: activities
+            status: 1
         });
         this.props.history.push(`/getready/${this.props.match.params.id}`);
     }
