@@ -1,20 +1,13 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
-<<<<<<< HEAD
             "name": "Chrome",
             "type": "chrome",
             "request": "launch",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceRoot}/src"
-=======
-            "type": "chrome",
-            "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:3006",
-            "webRoot": "${workspaceFolder}"
->>>>>>> 2cd3bb45e942370108e35357c38e15679dd3870a
         }
     ]
 }

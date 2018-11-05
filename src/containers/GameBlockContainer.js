@@ -17,7 +17,8 @@ class GameBlockContainer extends Component {
     }
 
     componentWillMount() {
-        var roomPin = 1
+        var roomPin = 'abcxyz'
+        // var roomPin = 1
         this.itemRef.ref('/rooms').on('value', (snapshot) => {
             var data = Object.values(snapshot.val()).map(function (obj) {
                 return obj;

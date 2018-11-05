@@ -24,7 +24,8 @@ class GetReadyContainer extends Component {
     }
 
     componentWillMount() {
-        var roomPin = 1
+        // var roomPin = 1
+        var roomPin = 'abcxyz'
         this.itemRef.ref('/rooms').on('value', (snapshot) => {
             var data = Object.values(snapshot.val()).map(function (obj) {
                 return obj;
@@ -33,6 +34,7 @@ class GetReadyContainer extends Component {
             var questionList = Object.values(roomInfo[0].questionGroup.questionList).map(function (obj) {
                 return obj;
             });
+            console.log('-------------------hahaha', questionList)
 
             var question = {}
 
@@ -72,10 +74,12 @@ class GetReadyContainer extends Component {
     };
 
     onFinish = () => {
+
         this.props.history.push('/gameblock')
     }
 
     render() {
+        console.log('=-================aquestin', this.state.question)
         return (
             <div className='container'>
                 <div className='header'>
@@ -116,7 +120,7 @@ class GetReadyContainer extends Component {
                             this.state.question.answerList.length > 0 &&
                             this.state.question.answerList.map((answer, i) => {
                                 return (
-                                    <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], width: '300px', height: '45%', margin: 'auto'}}>
+                                    <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], width: '300px', height: '45%', margin: 'auto', marginLeft: 10}}>
                                         <span className='answerText'>{answer.content}</span>
                                     </div>
                                 )
