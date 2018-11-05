@@ -14,14 +14,15 @@ class QuestionDetailBody extends Component {
         super(props);
         this.state = {
             lisQuestion: [],
+            questionGroup: {},
             showAllAnswer: false,
             show: false,
             listQuestionId: this.props.listQuestionId
         }
+    }
+
+    componentDidMount() {
         database.ref('/questionGroups').child(this.state.listQuestionId).on('value', (snapshot) => {
-            // var questionList = Object.values(snapshot.val().questionList).map((obj) => {
-            //     return obj
-            // })
             let result = snapshot.val();
             if (result.questionList != null){
                 var questionList = result.questionList;
@@ -29,8 +30,11 @@ class QuestionDetailBody extends Component {
                 questionList = Object.keys(questionList).map(function(key) {
                     return questionList[key];
                 });
-            
-                this.setState({ lisQuestion: questionList });
+                
+                this.setState({ 
+                    lisQuestion: questionList,
+                    questionGroup: result
+                });
             }
         })
     }
@@ -88,7 +92,7 @@ class QuestionDetailBody extends Component {
     onPlayClick = ()=>{
         let room = {};
         room.activities = [];
-        room.questionGroup = {id:this.state.listQuestionId}
+        room.questionGroup = this.state.questionGroup;
         room.status = 0;
         room.roomPin = this.makeid();
         let result = database.ref('/rooms/').push(room);

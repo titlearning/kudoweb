@@ -17,7 +17,7 @@ export class QuestionDetailContainer extends Component{
                 <div className="layout layout--details layout--new-topbar-active">
                     <div id="layout" className="layout__inner">
                         <div className="layout__body-wrapper">
-                            <QuestionDetailHeader />
+                            <QuestionDetailHeader listQuestionId = {this.state.listQuestionId}/>
                             <QuestionDetailBody listQuestionId = {this.state.listQuestionId}/>
                         </div>
                     </div>

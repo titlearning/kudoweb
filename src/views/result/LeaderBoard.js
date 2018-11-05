@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Navbar, Table} from 'reactstrap';
+import {Button, AppBar, Table} from '@material-ui/core';
 import { database } from '../../config/firebase';
 
 class LeaderBoard extends Component {
@@ -16,7 +16,8 @@ class LeaderBoard extends Component {
             rank2_score: 0,
             rank3_score: 0,
             rank4_score: 0,
-            rank5_score: 0
+            rank5_score: 0,
+            activities: []
         }
     }
     
@@ -25,8 +26,16 @@ class LeaderBoard extends Component {
             var result = snapshot.val();
             var params = this.props.match.params;
             var roomid = params.roomid;
-            var listActivities = result.rooms[roomid].activities;
-            
+
+            var listActivities = [];
+            if(result.rooms[roomid].activities) {
+                listActivities = result.rooms[roomid].activities;
+            }
+
+            this.setState({
+                activities: listActivities
+            })
+
             var sortPoint = listActivities.sort(this.compare);
             if(sortPoint[0]) {
                 this.setState({
@@ -69,17 +78,43 @@ class LeaderBoard extends Component {
         return 0;
     }      
 
+    nextQuestion = () => {
+        var activities = this.state.activities.map((obj, index) => {
+            obj.answers.push({
+                answer: -1,
+                point: 0,
+                questionId: '',
+                status: 3,
+                timestart: 0,
+                timesubmit: 0        
+            })
+          
+            return {
+                playername: obj.playername,
+                totalpoint: obj.totalpoint,
+                answers: obj.answers
+            }
+        })
+
+        database.ref(`/rooms/${this.props.match.params.roomid}`).update({
+            activities: activities,
+            status: 3
+        }); 
+
+        this.props.history.push(`/getready/${this.props.match.params.roomid}`);
+    }
+
     render() {
         return(
             <div style={{minWidth: '40vw'}}>
-               <Navbar color="light" light expand="md" style={{height: '10vh', borderBottom: 'solid 5px #ccc'}}>
-                    <div style={{margin: '0 auto', }}>
+               <div color="light" light expand="md" style={{height: '10vh', borderBottom: 'solid 5px #ccc'}}>
+                    <div style={{margin: '0 auto', textAlign: 'center'}}>
                         <span style={{fontSize: '30px', fontWeight: 700}}>Xếp hạng kết quả</span> 
                     </div>
-               </Navbar>
+               </div>
                <div style={{backgroundColor: '#FF9900', height: '75vh'}}>
                     <div style={{height: '12vh', padding: '2vh'}}>
-                        <Button color="primary" style={{float: 'right', height: '40px'}}>Câu hỏi tiếp theo</Button>
+                        <Button variant="contained" color="primary" style={{float: 'right', height: '40px', fontWeight: 500}} onClick={this.nextQuestion}>Tiếp theo</Button>
                     </div>
                     <div style={{width: '60vw', margin: '0 auto', height: '55vh'}}>
                         <Table borderless style={{}}>
@@ -119,7 +154,7 @@ class LeaderBoard extends Component {
                     </div>
                     <div style={{height: '10vh', padding: '2vh'}}>
                         <div style={{float: 'right', height: '10vh'}}>
-                            <a href="/" style={{fontSize: '15px', color: 'white', fontWeight: 600}} >Kết thúc</a>
+                            <Button style={{fontSize: '15px', color: 'white', fontWeight: 600}} >Kết thúc</Button>
                         </div>
                     </div>
                </div>

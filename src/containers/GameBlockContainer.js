@@ -6,42 +6,84 @@ import { Icon } from 'react-icons-kit'
 import {ic_check} from 'react-icons-kit/md/ic_check'
 import {ic_close} from 'react-icons-kit/md/ic_close'
 import '../styles/gameblock.css'
+import Button from '@material-ui/core/Button'
 
 class GameBlockContainer extends Component {
     constructor(props) {
         super(props);
         this.itemRef = firebaseApp.database()
         this.state = {
-            question: {}
+            question: {},
+            activities: []
         }
     }
 
-    componentWillMount() {
-        var roomPin = 1
-        this.itemRef.ref('/rooms').on('value', (snapshot) => {
-            var data = Object.values(snapshot.val()).map(function (obj) {
+    componentDidMount() {
+        this.itemRef.ref(`/rooms/${this.props.match.params.id}`).on('value', (snapshot) => {
+            const roomInfo = snapshot.val();
+            var questionList = Object.values(roomInfo.questionGroup.questionList).map(function (obj) {
                 return obj;
             });
-            const roomInfo = data.filter(item => item.roomPin === roomPin);
-            var questionList = Object.values(roomInfo[0].questionGroup.questionList).map(function (obj) {
-                return obj;
-            });
-
+            var activities = roomInfo.activities;
             var question = {}
 
             for (var i = 0; i < questionList.length; i++) {
-                if(questionList[i].id == 1) {
-                    question = questionList[i]
+                if(questionList[i].status == 1) {
+                    question = questionList[i];
+                    break;
                 }
             }
-
-            console.log('----------------quesonlist', question)
-
+           
             this.setState({
                 question: question,
-                questionList: questionList
+                questionList: questionList,
+                activities: activities
             })
         })
+    }
+
+    setPoint = () => {
+        var activities = this.state.activities.map((obj, index) => {
+            var totalPoint = obj.totalpoint;
+            var answers = obj.answers.map((ansObj, index) => {
+                if(ansObj.questionId == this.state.question.id) {
+                    var point = 0;
+                    
+                    if(ansObj.answer == this.state.question.rightAnswer) {
+                        var timeAnswer = ansObj.timesubmit - ansObj.timestart;
+                        if(this.state.question.timeout > (timeAnswer / 1000) && timeAnswer > 0) {
+                            point = Math.round((this.state.question.timeout * 1000 - timeAnswer)/100);
+                        }
+                    }
+                    totalPoint += point;
+
+                    return {
+                        ...ansObj,
+                        point: point 
+                    }
+                } else {
+                    return ansObj;
+                }
+            })
+            
+            return {
+                ...obj,
+                totalpoint: totalPoint,
+                answers: answers
+            }
+        })
+
+        this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
+            activities: activities
+        }); 
+    }
+
+    showLeaderboard = () => {
+        this.setPoint();
+        // this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
+        //     status: 2
+        // }); 
+        this.props.history.push(`/leaderboard/${this.props.match.params.id}`);
     }
 
     render() {
@@ -51,6 +93,7 @@ class GameBlockContainer extends Component {
                     <p className='title'>{this.state.question.content}</p>
                 </div>
                 <div className="content">
+                    <Button variant="contained" color="secondary" onClick={this.showLeaderboard} style={{float: 'right', height: '40px'}}>Xếp hạng</Button>
                 </div>
                 <div className="answer">
                     {

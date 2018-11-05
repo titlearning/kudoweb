@@ -11,7 +11,6 @@ class LobbyContainer extends Component {
     constructor(props) {
         super(props);
         this.itemRef = firebaseApp.database()
-        this.inputOpenFileRef = React.createRef()
         this.state = {
             roomInfo: {},
             activities: [],
@@ -20,33 +19,51 @@ class LobbyContainer extends Component {
     }
 
     componentWillMount() {
-        var roomPin = 1
-        // var roomPin = this.props.match.params.id
-        this.itemRef.ref('/rooms').on('value', (snapshot) => {
-            var data = Object.values(snapshot.val()).map(function (obj) {
-                return obj;
-            });
-            
+        this.itemRef.ref(`/rooms/${this.props.match.params.id}`).on('value', (snapshot) => {
+            const roomInfo = snapshot.val();
 
-            const roomInfo = data.filter(item => item.roomPin === roomPin);
-            var activities = Object.values(roomInfo[0].activities).map(function (obj) {
-                return obj;
-            });
-
-            var questionList = Object.values(roomInfo[0].questionGroup.questionList).map(function (obj) {
+            var activities = [];
+            if(roomInfo.activities) {
+                activities = Object.values(roomInfo.activities).map(function (obj) {
+                    return obj;
+                });
+            }
+         
+            var questionList = Object.values(roomInfo.questionGroup.questionList).map(function (obj) {
                 return obj;
             });
 
             this.setState({
-                roomInfo: roomInfo[0],
+                roomInfo: roomInfo,
                 activities: activities,
                 questionList: questionList
             })
         })
     }
 
-    showOpenFileDlg = () => {
-        this.inputOpenFileRef.current.click()
+    startRoom = () => {
+        var activities = this.state.activities.map((obj, index) => {
+            return {
+                playername: obj.playername,
+                totalpoint: 0,
+                answers: [
+                    {
+                        answer: -1,
+                        point: 0,
+                        questionId: '',
+                        status: 3,
+                        timestart: 0,
+                        timesubmit: 0
+                    }
+                ]
+            }
+        })
+
+        this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
+            status: 3,
+            activities: activities
+        });
+        this.props.history.push(`/getready/${this.props.match.params.id}`);
     }
     
     render() {
@@ -54,7 +71,7 @@ class LobbyContainer extends Component {
             <div className='container'>
                 <div className='header'>
                     <div>
-                        <p className='title'>Join at Kudo with Game PIN: 6872750</p>
+                        <p className='title'>Join at Kudo with Game PIN: {this.state.roomInfo.roomPin}</p>
                     </div>
                 </div>
                 <div className="mydiv">
@@ -72,14 +89,8 @@ class LobbyContainer extends Component {
                         <div style={{flex: 8}}></div>
                         <div style={{flex: 1}}>
                             <div style={{margin: '0 auto', width: 100}}>
-                                <Button  variant="contained" onClick={() => this.props.history.push('/getready')}>
+                                <Button  variant="contained" onClick={this.startRoom}>
                                     Start
-                                </Button>
-                            </div>
-                            <div>
-                                <Button onClick={this.showOpenFileDlg}>
-                                <input ref={this.inputOpenFileRef} type="file" style={{display:"none"}}/>
-                                
                                 </Button>
                             </div>
                         </div>

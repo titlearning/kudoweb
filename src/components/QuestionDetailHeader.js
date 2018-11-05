@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Redirect } from 'react-router-dom';
 import { Icon } from 'react-icons-kit'
 import {ic_settings} from 'react-icons-kit/md/ic_settings'
 import {helpCircle} from 'react-icons-kit/feather/helpCircle'
@@ -8,8 +9,24 @@ export class QuestionDetailHeader extends Component{
 
     constructor(props){
         super(props);
+
+        this.state = {
+            redirectCreateQuestion: false
+        }
     }
+
+    createQuestion = () => {
+        this.setState({
+            redirectCreateQuestion: true
+        })
+    }
+
     render(){
+        var linkRedirect = `/question/create/${this.props.listQuestionId}`;
+        if(this.state.redirectCreateQuestion) {
+            return <Redirect to={linkRedirect} />
+        }
+
         return(
             <header role="heading" className="layout__head">
                 <div className="">
@@ -70,7 +87,7 @@ export class QuestionDetailHeader extends Component{
                                 </button>
                                 <button type="button" role="button" data-functional-selector="button" className="icon-button top-bar__primary-button button button--white">
                                     <span className="icon-button__wrap">
-                                        <span className="icon-button__text">Create</span>
+                                        <span className="icon-button__text" onClick={this.createQuestion}>Create</span>
                                     </span>
                                 </button>
                                 <div className="top-bar__action-menu">

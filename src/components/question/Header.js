@@ -4,7 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
-import { database } from '../../config/firebase';
+import { firebaseApp, database } from '../../config/firebase';
 import { Redirect } from 'react-router-dom';
 import { link } from 'fs';
 
@@ -25,9 +25,14 @@ class Header extends Component {
         e.preventDefault();
         if(this.props.head_title == "TẠO CÂU HỎI") {
             var questionGroupId = this.props.question_group_id;
-
+           
             database.ref(`/questionGroups/${questionGroupId}/questionList`).on('value', (snapshot) => {
                 var result = snapshot.val();
+
+                result = Object.values(result).map(function (obj) {
+                    return obj;
+                });
+
                 this.setState({
                     no_question: result.length + 1
                 })
@@ -46,6 +51,7 @@ class Header extends Component {
                 content: this.props.title,
                 description: this.props.description,
                 timeout: this.props.time,
+                status: 0,
                 rightAnswer: rightAnswer,
                 position: this.state.no_question,
                 answerList: [
@@ -67,6 +73,15 @@ class Header extends Component {
                     }
                 ]
             });
+
+            var image = this.props.image;
+
+            if(image) {
+                firebaseApp.storage().ref(`/question/images/${questionGroupId}/${questionRefKey}`).put(image).then(function(snapshot) {
+                    console.log('Uploaded a blob or file!');
+                });
+            }
+
             
             this.setState({
                 linkRedirect: `/question_detail/${this.props.question_group_id}`,

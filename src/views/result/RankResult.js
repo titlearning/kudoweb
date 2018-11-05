@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Navbar} from 'reactstrap';
+// import {Navbar} from 'reactstrap';
 import Grid from '@material-ui/core/Grid';
 import {database} from '../../config/firebase';
 import Button from '@material-ui/core/Button';
@@ -23,8 +23,11 @@ class FinalResult extends Component {
             var result = snapshot.val();
             var params = this.props.match.params;
             var roomid = params.roomid;
-            var listActivities = result.rooms[roomid].activities;
-            
+
+            var listActivities = [];
+            if(result.rooms[roomid].activities) {
+                listActivities = result.rooms[roomid].activities;
+            }
             
             var sortPoint = listActivities.sort(this.compare);
             if(sortPoint[0]) {
@@ -56,15 +59,26 @@ class FinalResult extends Component {
         return 0;
     }      
 
+    endGame = () => {
+        this.props.history.push(`/`);
+    }
+
+    showResult = () => {
+        this.props.history.push(`/totalresult/${this.props.match.params.roomid}`);
+    }
+
     render() {
         return(
             <div style={{minWidth: '40vw', backgroundColor: '#46178f'}}>
-               <Navbar color="#333'" light expand="md" style={{height: '15vh', backgroundColor: '#333', justifyContent: 'center'}}>
-                    <span style={{color: 'white', fontWeight: '700', fontSize: 50}}>Xếp hạng kết quả</span>
-               </Navbar>
+               <div color="#333'" light expand="md" style={{height: '15vh', backgroundColor: '#333', textAlign: 'center'}}>
+                    <span style={{color: 'white', fontWeight: '700', fontSize: 30, lineHeight: '100%'}}>Xếp hạng kết quả</span>
+               </div>
                <div style={{backgroundColor: '#46178f', height: '85vh'}}>
+                    <div style={{padding: '5px', float: 'left'}}>
+                        <Button variant="contained" color="secondary" style={{fontWeight: 700, height: '100%'}} onClick={this.showResult}>Chi tiết</Button>
+                    </div>
                     <div style={{padding: '5px', float: 'right'}}>
-                        <Button variant="contained" color="secondary" style={{fontWeight: 700, height: '100%'}}>Kết thúc</Button>
+                        <Button variant="contained" color="secondary" style={{fontWeight: 700, height: '100%'}} onClick={this.endGame}>Kết thúc</Button>
                     </div>
                     <div style={{height: '65vh', color: 'white', textAlign: 'center', fontWeight: 800, justifyContent: 'center'}}>
                         <Grid container style={{justifyContent: 'center'}}>

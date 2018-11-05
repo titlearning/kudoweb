@@ -6,7 +6,8 @@ import _ from 'lodash';
 import ReactCountdownClock from 'react-countdown-clock'
 import { Icon } from 'react-icons-kit'
 import {ic_check} from 'react-icons-kit/md/ic_check'
-import '../styles/getready.css'
+import '../styles/getready.css';
+import { Redirect } from 'react-router-dom';
 
 
 const arrColor = ['#f4e842', '#4562a5', '#6b1187', '#cc0623']
@@ -19,32 +20,42 @@ class GetReadyContainer extends Component {
             completed: 0,
             question: {},
             questionList: [],
+            activities: [],
             showQuestionTitle: true,
+            endRoom: false,
+            timeStart: Date.now(),
+            endUpdate: false
         }
     }
 
     componentWillMount() {
-        var roomPin = 1
-        this.itemRef.ref('/rooms').on('value', (snapshot) => {
-            var data = Object.values(snapshot.val()).map(function (obj) {
-                return obj;
-            });
-            const roomInfo = data.filter(item => item.roomPin === roomPin);
-            var questionList = Object.values(roomInfo[0].questionGroup.questionList).map(function (obj) {
+        this.itemRef.ref(`/rooms/${this.props.match.params.id}`).on('value', (snapshot) => {
+            const roomInfo = snapshot.val();
+            var questionList = Object.values(roomInfo.questionGroup.questionList).map(function (obj) {
                 return obj;
             });
 
             var question = {}
+            var end = true;
 
             for (var i = 0; i < questionList.length; i++) {
-                if (questionList[i].status == 3) {
-                    question = questionList[i]
+                if (questionList[i].status == 0) {
+                    question = questionList[i];
+                    end = false;
+                    break;
                 }
+            }
+
+            if(end) {
+                this.setState({
+                    endRoom: true
+                })
             }
 
             this.setState({
                 question: question,
-                questionList: questionList
+                questionList: questionList,
+                activities: roomInfo.activities
             })
         })
     }
@@ -62,8 +73,41 @@ class GetReadyContainer extends Component {
     progress = () => {
         const { completed } = this.state;
         if (completed === 100) {
+            if(!this.state.endUpdate) {
+                var activities = this.state.activities.map((obj, index) => {
+                    var answers = obj.answers.map((ansObj, i) =>{
+                        if(ansObj.status == 3) {
+                            var newAns = {
+                                answer: -1,
+                                point: 0,
+                                questionId: this.state.question.id,
+                                status: 1,
+                                timestart: this.state.timeStart,
+                                timesubmit: 0
+                            }
+
+                            return newAns;
+                        } else {
+                            return ansObj;
+                        }
+                    })
+
+                    return {
+                        playername: obj.playername,
+                        totalpoint: obj.totalpoint,
+                        answers: answers
+                    }
+                })
+        
+                this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
+                    activities: activities,
+                    status: 1
+                });
+            }
+
             this.setState({
-                showQuestionTitle: false
+                showQuestionTitle: false,
+                endUpdate: true
             })
         } else {
             const diff = 10;
@@ -72,10 +116,21 @@ class GetReadyContainer extends Component {
     };
 
     onFinish = () => {
-        this.props.history.push('/gameblock')
+        this.itemRef.ref(`/rooms/${this.props.match.params.id}/questionGroup/questionList/${this.state.question.id}`).update({
+            status: 1
+        }); 
+        this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
+            status: 2
+        });
+        this.props.history.push(`/gameblock/${this.props.match.params.id}`);
     }
 
     render() {
+        var linkRedirect = `/finalresult/${this.props.match.params.id}`;
+        if(this.state.endRoom) {
+            return <Redirect to={linkRedirect} />
+        }
+
         return (
             <div className='container'>
                 <div className='header'>

@@ -22,11 +22,12 @@ class InputImage extends Component {
           file: URL.createObjectURL(e.target.files[0])
         })
       }
+
+      this.props.onChangeImage(e.target.files[0]);
     }
-  
+
     render() {
       let content;
-
       if(this.state.file) {
         content = <img src={this.state.file} width='100%'/>;
       } else {
@@ -41,7 +42,7 @@ class InputImage extends Component {
                 onClick={this.handleClick}
             >
                 {content}
-                <input ref={this.inputImage } type="file" onChange={this.handleImageChange} style={{display: "none"}}/>
+                <input ref={this.inputImage } accept="image/*" type="file" onChange={this.handleImageChange} style={{display: "none"}}/>
             </Button>
         </div>
       )

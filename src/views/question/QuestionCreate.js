@@ -30,7 +30,8 @@ class QuestionCreate extends Component {
             key2: false,
             key3: false,
             key4: false,
-            description: ''
+            description: '',
+            image: null
         };
 
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
@@ -123,6 +124,12 @@ class QuestionCreate extends Component {
         }
     }
 
+    onInputImage = (file) => {
+        this.setState({
+            image: file
+        })
+    }
+
     render() {
         return (
             <div style={{overflowX: "hidden"}}>
@@ -176,7 +183,7 @@ class QuestionCreate extends Component {
                             </Grid>
                         </Grid>
                         <Grid item xs={6}>
-                             <InputImage />   
+                             <InputImage onChangeImage={this.onInputImage}/>   
                         </Grid>
                     </Grid>
                 </div>
