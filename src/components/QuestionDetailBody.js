@@ -92,6 +92,7 @@ class QuestionDetailBody extends Component {
         room.status = 0;
         room.roomPin = this.makeid();
         let result = database.ref('/rooms/').push(room);
+        console.log('============================rews', result)
         let key = result.key;
         this.props.history.push(`/lobby/${key}`);
     }
