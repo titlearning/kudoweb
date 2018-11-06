@@ -115,10 +115,48 @@ class GetReadyContainer extends Component {
 
     onFinish = () => {
         const questionId = this.state.question.id;
+        const questionOnNow = this.state.question;
+        this.setPoint(questionOnNow);
+     
         this.itemRef.ref(`/rooms/${this.props.match.params.id}/questionGroup/questionList/${this.state.question.id}`).update({
             status: 2
         }); 
         this.props.history.push(`/gameblock/${this.props.match.params.id}/${questionId}`);
+    }
+
+    setPoint = (questionOnNow) => {
+        var activities = this.state.activities;
+        var keys = Object.keys(activities);
+        keys.forEach(element => {
+            var obj = activities[element];
+            var totalPoint = obj.totalpoint;
+            var answers = obj.answers.map((ansObj, index) => {
+                if(ansObj.questionId == questionOnNow.id) {
+                    var point = 0;
+                    if(ansObj.answer == questionOnNow.rightAnswer) {
+                        var timeAnswer = ansObj.timesubmit - ansObj.timestart;
+                        if(questionOnNow.timeout > (timeAnswer / 1000) && timeAnswer > 0) {
+                            point = Math.round((questionOnNow.timeout * 1000 - timeAnswer)/100);
+                        }
+                    }
+                    totalPoint += point;
+
+                    return {
+                        ...ansObj,
+                        point: point 
+                    }
+                } else {
+                    return ansObj;
+                }
+            })
+
+            activities[element].totalpoint = totalPoint;
+            activities[element].answers = answers;
+        });
+
+        this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
+            activities: activities
+        }); 
     }
 
     render() {

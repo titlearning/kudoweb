@@ -42,45 +42,7 @@ class GameBlockContainer extends Component {
 
     }
 
-    setPoint = () => {
-        var activities = this.state.activities;
-        var keys = Object.keys(activities);
-        keys.forEach(element => {
-            var obj = activities[element];
-            var totalPoint = obj.totalpoint;
-            var answers = obj.answers.map((ansObj, index) => {
-                if(ansObj.questionId == this.state.question.id) {
-                    var point = 0;
-                    
-                    if(ansObj.answer == this.state.question.rightAnswer) {
-                        var timeAnswer = ansObj.timesubmit - ansObj.timestart;
-                        if(this.state.question.timeout > (timeAnswer / 1000) && timeAnswer > 0) {
-                            point = Math.round((this.state.question.timeout * 1000 - timeAnswer)/100);
-                        }
-                    }
-                    totalPoint += point;
-
-                    return {
-                        ...ansObj,
-                        point: point 
-                    }
-                } else {
-                    return ansObj;
-                }
-            })
-
-            activities[element].totalpoint = totalPoint;
-            activities[element].answers = answers;
-        });
-
-        this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
-            activities: activities
-        }); 
-    }
-
     showLeaderboard = () => {
-        this.setPoint();
-     
         this.props.history.push(`/leaderboard/${this.props.match.params.id}`);
     }
 
