@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
@@ -16,6 +17,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import logoKudo from '../../images/kudo.png';
 
 const styles = theme => ({
     root: {
@@ -163,36 +165,21 @@ class PrimarySearchAppBar extends React.Component {
         );
 
         return (
-            <div className={classes.root}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                            Kudo
-                        </Typography>
-                        <div className={classes.grow} />
-                        <div className={classes.sectionDesktop}>
-                            <IconButton
-                                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                                aria-haspopup="true"
-                                onClick={this.handleProfileMenuOpen}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
+           
+            <header role="heading" className="layout__head">
+                <div className="kahoot-registration">
+                    <div id="navbar">
+                        <div className="limit-width center-block">
+                            <Button><img src={logoKudo} height="50px"/></Button>
+                            <a href="/question/creategroup" data-bypass="true" className="btn register">
+                                <span className="no-display column-layout-width-display">Tạo bộ câu hỏi</span>
+                            </a>
                         </div>
-                        <div className={classes.sectionMobile}>
-                            <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                                <MoreIcon />
-                            </IconButton>
-                        </div>
-                    </Toolbar>
-                </AppBar>
-                {renderMenu}
-                {renderMobileMenu}
-            </div>
+                    </div>
+                    <div className="divider navbar hidden-phone no-display column-layout-width-display">
+                    </div>
+                </div>
+            </header>
         );
     }
 }

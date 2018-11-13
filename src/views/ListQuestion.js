@@ -13,6 +13,7 @@ class ListQuestion extends Component {
         this.inputKeyword = this.inputKeyword.bind(this)
         this.state = {
             data: null,
+            noQues: 0,
             keyword: ''
         };
     }
@@ -23,8 +24,10 @@ class ListQuestion extends Component {
             questionList = Object.keys(questionList).map(function(key) {
                 return questionList[key];
             });
+           
             this.setState({
-                data: questionList
+                data: questionList,
+                noQues: questionList.length
             });
         })
     }
@@ -55,7 +58,7 @@ class ListQuestion extends Component {
                 <Header/>
                 <main role="main" className="layout__body layout__body--discover">
                     <SearchArea inputChanged={this.inputKeyword}/>
-                    <ListQuestions data={this.state.data}/>
+                    <ListQuestions data={this.state.data} noQues={this.state.noQues}/>
                 </main>
             </div>
         )

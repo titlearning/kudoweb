@@ -29,7 +29,7 @@ class Question extends React.Component {
                                     </div>
                                     <span className="kahoot-card__number-of-questions"><span>{this.state.data.questionList ? this.state.data.questionList.length : 0}<span
                                         className="kahoot-card__number-of-questions--desktop"> questions</span><span
-                                            className="kahoot-card__number-of-questions--mobile">Qs</span></span></span>
+                                            className="kahoot-card__number-of-questions--mobile"></span></span></span>
                                 </div>
                                 <Link tabIndex="-1" className="kahoot-card__link"
                                     to={'/question_detail/' + (this.state.id != null ? this.state.id : 0)}></Link>
@@ -79,10 +79,10 @@ class Question extends React.Component {
                                                 className="kahoot-creator kahoot-card-kahoot-creator kahoot-card-kahoot-creator__details"
                                                 href="/search?filter=1&amp;creator=Thanhvan_63"><span
                                                     data-functional-selector="kahoot-card-creator-text"
-                                                    className="kahoot-creator__text">Thanhvan_63</span></a></span>
-                                        <div><span><span className="kahoot-card__information-desktop">Created almost 3 years ago</span><span
-                                            className="kahoot-card__information-mobile">almost 3 years ago</span></span><b> •
-                                            104 plays</b></div>
+                                                    className="kahoot-creator__text"></span></a></span>
+                                        <div><span><span className="kahoot-card__information-desktop"></span><span
+                                            className="kahoot-card__information-mobile"></span></span><b>
+                                            </b></div>
                                     </div>
                                 </main>
                                 <footer
@@ -92,8 +92,8 @@ class Question extends React.Component {
                                             className="kahoot-creator kahoot-card-kahoot-creator kahoot-card-kahoot-creator__footer"
                                             href="/search?filter=1&amp;creator=Thanhvan_63"><span
                                                 data-functional-selector="kahoot-card-creator-text"
-                                                className="kahoot-creator__text">Thanhvan_63</span></a></span><span
-                                                    className="kahoot-card__example-question"><b>Example question: </b><span>Đây là ruộng bậc thang o tỉnh nào?</span></span>
+                                                className="kahoot-creator__text"></span></a></span><span
+                                                    className="kahoot-card__example-question"><b></b><span></span></span>
                                     <div className="kahoot-card__action-buttons"></div>
                                 </footer>
                             </div>

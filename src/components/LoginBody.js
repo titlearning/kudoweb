@@ -58,7 +58,7 @@ class LoginBody extends Component {
                 <div className="gutter-1">
                     <form>
                         <div className="text-align--center kahoot-registration margin-bottom--2">
-                            <h2>Log in</h2>
+                            <h2>Đăng nhập</h2>
                         </div>
                         <div className="margin-bottom--1">
                             {/* <button type="button" role="button" data-functional-selector="sign-in-google-button" className="auth-button auth-button--google-auth">
@@ -81,16 +81,16 @@ class LoginBody extends Component {
                         </button> */}
                         <div className="text-align--center">
                             <p>
-                                <em>
+                                {/* <em>
                                     <a className="" data-functional-selector="login__forgot-password-url" href="/l/#forgotpassword">Lost your password?</a>
-                                </em>
+                                </em> */}
                             </p>
                         </div>
                         <div className="text-align--center">
                             <p>
-                                <em>
+                                {/* <em>
                                     <a href="https://kahoot.uservoice.com" data-bypass="true">let us know</a>
-                                </em>
+                                </em> */}
                             </p>
                         </div>
                     </form>

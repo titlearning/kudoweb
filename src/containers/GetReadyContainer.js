@@ -16,6 +16,7 @@ class GetReadyContainer extends Component {
     constructor(props) {
         super(props);
         this.itemRef = firebaseApp.database()
+        this.storageRef = firebaseApp.storage()
         this.state = {
             completed: 0,
             question: {},
@@ -45,6 +46,10 @@ class GetReadyContainer extends Component {
             var activities = {};
             if(roomInfo.activities) {
                 activities = roomInfo.activities
+            }
+
+            if(question.id) {
+                this.storageRef.ref(`/question/images/${roomInfo.questionGroupId}/${question.id}.jpg`)
             }
 
             this.setState({
@@ -184,8 +189,8 @@ class GetReadyContainer extends Component {
                 {
                     this.state.showQuestionTitle == false &&
                     <div style={{flex: 5, display: 'flex', flexDirection: 'column'}}>
-                        <div style={{flex: 1, backgroundColor: '#c2c6ce', alignItems: 'center'}}>
-                        <div style={{margin: 50}}>
+                        <div style={{flex: 1, backgroundColor: '#c2c6ce', alignItems: 'center', position: 'relative', textAlign: 'center'}}>
+                        <div style={{margin: 50, display: 'inline-block', position: 'absolute', left: '0px'}}>
                         <ReactCountdownClock 
                             seconds={this.state.question.timeout}
                             color="#000"
@@ -193,6 +198,9 @@ class GetReadyContainer extends Component {
                             size={100}
                             onComplete={this.onFinish}
                             />
+                        </div>
+                        <div style={{display: 'inline-block'}}>
+                            <img src="https://www.gettyimages.ca/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg" width="500px" ></img>
                         </div>
                         </div>
                         <div style={{flex: 1, display: 'flex', flexWrap: 'wrap'}}>
