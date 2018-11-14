@@ -93,6 +93,7 @@ class QuestionDetailBody extends Component {
         let room = {};
         room.activities = [];
         room.questionGroup = this.state.questionGroup;
+        room.questionGroupId = this.state.questionGroup.id;
         room.status = 0;
         room.roomPin = this.makeid();
         let result = database.ref('/rooms/').push(room);
@@ -104,23 +105,23 @@ class QuestionDetailBody extends Component {
         return (
             <main role="main" className="layout__body details-main-wrapper">
                 <div className="details-content-block-wrapper">
-                    <section className="details-content-block" data-functional-selector="details-content-block">
+                    <section className="details-content-block" data-functional-selector="details-content-block" style={{width: '500px'}}>
                         <div data-functional-selector="details-kahoot-image" aria-label="Cover image" role="img" className="details-kahoot-image" style={{ backgroundImage: `url(https://images-cdn.kahoot.it/d884f403-e7c5-4540-a01a-b2a0bdff52c6?auto=webp&amp;crop=3%3A2%2Csmart&amp;width=500)`, height: '305.1px' }}></div>
                         <div className="details-content-block__kahoot-title-and-details-wrapper">
                             <div className="kahoot-title" data-functional-selector="kahoot-title">
-                                <h1 data-functional-selector="kahoot-title__heading" className="kahoot-title__heading">United Nations Day</h1>
+                                <h1 data-functional-selector="kahoot-title__heading" className="kahoot-title__heading"></h1>
                             </div>
                             <div className="details-action-buttons">
                                 <div className="details-action-buttons__wrapper" data-functional-selector="details-action-buttons">
                                     <div className="details-action-buttons__group">
                                         <button type="button" role="button" data-functional-selector="play-button" className="button button button--spacer details-action-buttons__play-button" onClick={this.onPlayClick}>
-                                            Play
-                                </button>
-                                        <button type="button" role="button" data-functional-selector="challenge-button" className="button button button--spacer details-action-buttons__challenge-button">
+                                            Chơi
+                                        </button>
+                                        {/* <button type="button" role="button" data-functional-selector="challenge-button" className="button button button--spacer details-action-buttons__challenge-button">
                                             Challenge
-                                </button>
+                                </button> */}
                                     </div>
-                                    <div className="details-action-buttons__group">
+                                    {/* <div className="details-action-buttons__group">
                                         <button type="button" role="button" data-functional-selector="button" className="icon-button favorite-button details-favourite-button favorite-button--desktop" aria-label="Toggle favorite Kahoot">
                                             <span className="icon-button__wrap">
                                                 <span className="icon icon-button__icon icon" title="Favorite Kahoot">
@@ -138,18 +139,18 @@ class QuestionDetailBody extends Component {
                                                 </span>
                                             </button>
                                         </div>
-                                    </div>
-                                </div>
+                                    </div> */}
+                                </div> 
                             </div>
                             <span className="kahoot-type-description">
-                                A public quiz for social occasions
+                               
                         </span>
-                            <div className="details-kahoot-details">
+                            {/* <div className="details-kahoot-details">
                                 <div>
                                     <span>
                                         <span className="details-content-block__component--hidden-small-medium">
                                             <span>
-                                                Why do we celebrate the United Nations Day? Play this quiz to find out!
+                                          
                                     <a className="inline-tag" href="/search?filter=1&amp;tags=%23UnitedNations">#UnitedNations</a>
                                             </span>
                                             <span>… </span>
@@ -180,9 +181,9 @@ class QuestionDetailBody extends Component {
                                 </span>
                             </div>
                             <div className="details-kahoot-share-link-wrapper">
-                                <span className="details-kahoot-share-link-wrapper__share-text">Copy and share this playable link</span>
-                                <span className="details-kahoot-share-link-wrapper__share-link">https://play.kahoot.it/#/k/48d0f730-ba84-4195-a1bd-996a276f1db1</span>
-                            </div>
+                                {/* <span className="details-kahoot-share-link-wrapper__share-text">Copy and share this playable link</span>
+                                <span className="details-kahoot-share-link-wrapper__share-link">https://play.kahoot.it/#/k/48d0f730-ba84-4195-a1bd-996a276f1db1</span> */}
+                            {/* </div>  */}
                         </div>
                     </section>
                 </div>
@@ -253,12 +254,12 @@ class QuestionDetailBody extends Component {
                             }
                         </ol>
                     </section>
-                    <section className="kahoot-resources">
+                    {/* <section className="kahoot-resources">
                         <header className="kahoot-resources__header">Resource credits</header>
                         <p className="kahoot-resources__body">Description:
                         <span className="kahoot-resources__main">@ Mariano Sayno / husayno.com/Moment/Getty Images</span>
                         </p>
-                    </section>
+                    </section> */}
                 </div>
             </main>
         );

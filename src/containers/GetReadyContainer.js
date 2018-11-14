@@ -24,7 +24,9 @@ class GetReadyContainer extends Component {
             activities: {},
             showQuestionTitle: true,
             timeStart: Date.now(),
-            endUpdate: false
+            endUpdate: false,
+            countQuestion: 0,
+            image: ''
         }
     }
 
@@ -43,21 +45,36 @@ class GetReadyContainer extends Component {
                     break;
                 }
             }
+
+            var count = 0;
+            for (var i = 0; i < questionList.length; i++) {
+                if (questionList[i].status == 2) {
+                    count ++;
+                }
+            }
+
             var activities = {};
             if(roomInfo.activities) {
                 activities = roomInfo.activities
             }
 
             if(question.id) {
-                this.storageRef.ref(`/question/images/${roomInfo.questionGroupId}/${question.id}.jpg`)
+                this.storageRef.ref(`/question/images/${roomInfo.questionGroupId}/${question.id}`).getDownloadURL().then((url) => {
+                    this.setState({
+                        image: url
+                    })
+                })
             }
 
             this.setState({
                 question: question,
                 questionList: questionList,
-                activities: activities
+                activities: activities,
+                countQuestion: count + 1 
             })
         })
+
+
     }
 
     componentDidMount() {
@@ -168,7 +185,7 @@ class GetReadyContainer extends Component {
         return (
             <div className='container'>
                 <div className='header'>
-                    <p className='title'>Question 1 of {this.state.questionList.length} </p>
+                    <p className='title'>Question {this.state.countQuestion} of {this.state.questionList.length} </p>
                 </div>
                 {
                     this.state.showQuestionTitle && 
@@ -199,9 +216,10 @@ class GetReadyContainer extends Component {
                             onComplete={this.onFinish}
                             />
                         </div>
-                        <div style={{display: 'inline-block'}}>
-                            <img src="https://www.gettyimages.ca/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg" width="500px" ></img>
-                        </div>
+                        { this.state.image && <div style={{display: 'inline-block'}}>
+                            <img src={this.state.image} width="500px" ></img>
+                        </div>}
+                        <div><span style={{fontSize: '40px', fontWeight: 600}}>{this.state.question.content}</span></div>
                         </div>
                         <div style={{flex: 1, display: 'flex', flexWrap: 'wrap'}}>
                         {
@@ -216,25 +234,6 @@ class GetReadyContainer extends Component {
                         }
                         </div>
                     </div>
-                //     <div className="questionContent">
-                //         <ReactCountdownClock seconds={1000}
-                //             color="#000"
-                //             alpha={0.9}
-                //             size={100}
-                //             onComplete={this.onFinish} />
-                //     <div className="answer" style={{flex: 1}}>
-                //         {
-                //             this.state.question.answerList.length > 0 &&
-                //             this.state.question.answerList.map((answer, i) => {
-                //                 return (
-                //                     <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], height: '30vh'}}>
-                //                         <span className='answerText'>{answer.content}</span>
-                //                     </div>
-                //                 )
-                //             })
-                //         }
-                //     </div>
-                // </div>
                 }
 
                 <div className='bottomTitleWrapper'>
