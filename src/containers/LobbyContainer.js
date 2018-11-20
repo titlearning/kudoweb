@@ -6,6 +6,10 @@ import '../styles/lobby.css'
 import Button from '@material-ui/core/Button';
 import { firebaseApp } from '../config/firebase'
 import randomColor from 'randomcolor'
+import Grid from '@material-ui/core/Grid'
+import Key from '@material-ui/icons/VpnKeyRounded';
+import Forward from '@material-ui/icons/ForwardRounded';
+import moment from 'moment';
 
 class LobbyContainer extends Component {
     constructor(props) {
@@ -92,9 +96,11 @@ class LobbyContainer extends Component {
         return(
             <div className='container'>
                 <div className='header'>
-                    <div>
-                        <p className='title'>Join at Kudo with Game PIN: {this.state.roomInfo.roomPin}</p>
-                    </div>
+                    <Grid container>
+                        <Grid item xs={12} style={{paddingTop: '30px'}}>
+                            <p className='title'>{this.state.roomInfo.questionGroup && this.state.roomInfo.questionGroup.title}</p>
+                        </Grid>
+                    </Grid>
                 </div>
                 <div className="mydiv">
                     <div style={{flex: 1, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
@@ -102,19 +108,16 @@ class LobbyContainer extends Component {
                             // className='playerCount'
                             style={{flex: 1}}
                         >
-                            <div style={{margin: '0 auto', width: 100}}>
+                            <div style={{margin: '0 auto', width: 200, paddingLeft: 20}}>
                             <i className='number'>{this.state.activities.length}</i> <br />
-                            <i className='countLabel'>player</i>
+                            <i className='countLabel'>người chơi</i>
                             </div>
                             
                         </div>
-                        <div style={{flex: 8}}></div>
+                        <div style={{flex: 8}}>
+                            <p className='title' style={{fontSize: '70px', fontWeight: 900, fontStyle: 'italic'}}> <a style={{fontSize: '50px'}}>Mã PIN: </a> {this.state.roomInfo.roomPin}</p>
+                        </div>
                         <div style={{flex: 1}}>
-                            <div style={{margin: '0 auto', width: 100}}>
-                                <Button  variant="contained" onClick={this.startRoom}>
-                                    Start
-                                </Button>
-                            </div>
                         </div>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'row', flex: 5, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap'}}>
@@ -131,8 +134,15 @@ class LobbyContainer extends Component {
                         </div>
                 </div>
                 <div className='waiting'>
-                        <Icon icon={info} size={60} color style={{marginLeft: 30, color: 'white'}} />
-                        <p className='wating-text'>Waiting for players...</p>
+                    <div style={{flex: 5}}>
+                        <Icon icon={info} size={50} color style={{marginLeft: 30, color: 'white'}} />
+                        <p className='wating-text'><i style={{fontWeight: 600}}>Chờ người chơi tham gia...</i></p>
+                    </div>
+                    <div style={{margin: '0 auto', width: 100, flex: 5}}>
+                        <Button variant="outlined" onClick={this.startRoom} style={{float: "right", marginRight: '20px'}}>
+                            <p style={{fontWeight: 900, fontSize: 30, fontStyle: 'italic', color: 'white', paddingRight: '10px', marginBottom: 0}}>Start</p><Forward style={{color: 'white', fontSize: '40px'}}></Forward>
+                        </Button>
+                    </div>
                 </div>
             </div>
         )
