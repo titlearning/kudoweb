@@ -237,7 +237,7 @@ class GetReadyContainer extends Component {
                 }
 
                 <div className='bottomTitleWrapper'>
-                    <p className='bottomTitleText'>Final question! Think hard - you could win up to 1,000 points!</p>
+                    <p className='bottomTitleText'></p>
                 </div>
             </div>
         )

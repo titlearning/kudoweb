@@ -186,7 +186,7 @@ class LeaderBoard extends Component {
                </div>
                <div style={{backgroundColor: '#660099', height: '15vh'}}>
                     <div style={{margin: '0 auto', width: '40vw', textAlign: 'center'}}>
-                        <span style={{lineHeight: '15vh', color: 'white', fontWeight: '500', fontSize: '25px'}}>Từ top 5, Jack đã vượt lên dẫn đầu</span>
+                        <span style={{lineHeight: '15vh', color: 'white', fontWeight: '500', fontSize: '25px'}}></span>
                     </div>
                </div>
             </div>
