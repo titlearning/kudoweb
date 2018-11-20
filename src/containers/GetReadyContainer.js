@@ -8,9 +8,15 @@ import { Icon } from 'react-icons-kit'
 import {ic_check} from 'react-icons-kit/md/ic_check'
 import '../styles/getready.css';
 import { Redirect } from 'react-router-dom';
+import rhomb from '../images/rhomb.png';
+import circle from '../images/circle.png';
+import triangle from '../images/triangle.png';
+import square from '../images/square.png';
+import moment from 'moment';
 
 
-const arrColor = ['#f4e842', '#4562a5', '#6b1187', '#cc0623']
+const arrColor = ['#ff365b', '#46a1e7', '#ffbf0a', '#67be3c']
+const arrShape = [triangle, rhomb, circle, square]
 
 class GetReadyContainer extends Component {
     constructor(props) {
@@ -23,7 +29,7 @@ class GetReadyContainer extends Component {
             questionList: [],
             activities: {},
             showQuestionTitle: true,
-            timeStart: Date.now(),
+            timeStart: moment().tz("Asia/Ho_Chi_Minh").valueOf(),
             endUpdate: false,
             countQuestion: 0,
             image: ''
@@ -185,7 +191,7 @@ class GetReadyContainer extends Component {
         return (
             <div className='container'>
                 <div className='header'>
-                    <p className='title'>Question {this.state.countQuestion} of {this.state.questionList.length} </p>
+                    <p className='title' style={{paddingTop: '30px'}}>Câu hỏi thứ {this.state.countQuestion} / {this.state.questionList.length} </p>
                 </div>
                 {
                     this.state.showQuestionTitle && 
@@ -196,7 +202,7 @@ class GetReadyContainer extends Component {
                         <div>
                             {
                                 !_.isEmpty(this.state.question) &&
-                                <p className='questionText'>
+                                <p className='questionText' style={{marginTop: '60px'}}>
                                     {this.state.question.content}
                                 </p>
                             }
@@ -216,8 +222,8 @@ class GetReadyContainer extends Component {
                             onComplete={this.onFinish}
                             />
                         </div>
-                        { this.state.image && <div style={{display: 'inline-block'}}>
-                            <img src={this.state.image} width="500px" ></img>
+                        { this.state.image && <div style={{display: 'inline-block', marginTop: '10px'}}>
+                            <img src={this.state.image} width="490px" ></img>
                         </div>}
                         <div><span style={{fontSize: '40px', fontWeight: 600}}>{this.state.question.content}</span></div>
                         </div>
@@ -226,8 +232,8 @@ class GetReadyContainer extends Component {
                             this.state.question && this.state.question.answerList && this.state.question.answerList.length > 0 &&
                             this.state.question.answerList.map((answer, i) => {
                                 return (
-                                    <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], width: '300px', height: '45%', margin: 'auto'}}>
-                                        <span className='answerText'>{answer.content}</span>
+                                    <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], width: '300px', height: '45%', margin: 'auto 5px'}}>
+                                        <span className='answerText' style={{fontSize: 40}}><img src={arrShape[i]} width="40"></img> {answer.content}</span>
                                     </div>
                                 )
                             })
@@ -235,10 +241,11 @@ class GetReadyContainer extends Component {
                         </div>
                     </div>
                 }
-
+                { !this.state.endUpdate &&
                 <div className='bottomTitleWrapper'>
                     <p className='bottomTitleText'></p>
                 </div>
+                }
             </div>
         )
     }
