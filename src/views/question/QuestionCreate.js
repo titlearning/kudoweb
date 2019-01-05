@@ -20,7 +20,7 @@ class QuestionCreate extends Component {
 
         this.state = {
             title: '',
-            time: 20,
+            time: 5,
             labelWidth: 0,
             answer1: '',
             answer2: '',
@@ -173,11 +173,12 @@ class QuestionCreate extends Component {
                                         // />
                                         }
                                     >
+                                        <MenuItem value={3}>3 giây</MenuItem>
+                                        <MenuItem value={5}>5 giây</MenuItem>
+                                        <MenuItem value={10}>10 giây</MenuItem>
                                         <MenuItem value={20}>20 giây</MenuItem>
                                         <MenuItem value={30}>30 giây</MenuItem>
-                                        <MenuItem value={60}>60 giây</MenuItem>
-                                        <MenuItem value={90}>90 giây</MenuItem>
-                                        <MenuItem value={120}>120 giây</MenuItem>
+                                        <MenuItem value={40}>40 giây</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>

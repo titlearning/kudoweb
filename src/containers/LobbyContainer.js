@@ -73,6 +73,7 @@ class LobbyContainer extends Component {
             this.state.keys.forEach(element => {
                 this.itemRef.ref(`/rooms/${this.props.match.params.id}/activities/${element}`).update({
                     totalpoint: 0,
+                    bonus: 0,
                     answers: [
                         {
                             answer: -1,

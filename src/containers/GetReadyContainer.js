@@ -29,16 +29,18 @@ class GetReadyContainer extends Component {
             questionList: [],
             activities: {},
             showQuestionTitle: true,
-            timeStart: moment().tz("Asia/Ho_Chi_Minh").valueOf(),
+            timeStart: moment().valueOf(),
             endUpdate: false,
             countQuestion: 0,
-            image: ''
+            image: '',
+            is_complete: false
         }
     }
 
     componentWillMount() {
         this.itemRef.ref(`/rooms/${this.props.match.params.id}`).on('value', (snapshot) => {
             const roomInfo = snapshot.val();
+
             var questionList = Object.values(roomInfo.questionGroup.questionList).map(function (obj) {
                 return obj;
             });
@@ -64,6 +66,25 @@ class GetReadyContainer extends Component {
                 activities = roomInfo.activities
             }
 
+            var is_complete = true;
+            var list_answer_question = [];
+  
+            if(activities) {
+                list_answer_question = Object.values(activities).map(function(obj) {
+                    var answers = obj.answers;
+                    
+                    return answers.find(function(element) {
+                        return element.questionId == question.id;
+                    })
+                })
+            } 
+
+            list_answer_question.forEach(element => {
+                if(!element || element.answer <= 0) {
+                    is_complete = false;
+                }
+            });
+         
             if(question.id) {
                 this.storageRef.ref(`/question/images/${roomInfo.questionGroupId}/${question.id}`).getDownloadURL().then((url) => {
                     this.setState({
@@ -76,17 +97,15 @@ class GetReadyContainer extends Component {
                 question: question,
                 questionList: questionList,
                 activities: activities,
-                countQuestion: count + 1 
+                countQuestion: count + 1, 
+                is_complete: is_complete
             })
         })
-
-
     }
 
     componentDidMount() {
         this.timer = setInterval(this.progress, 500);
         const timeout = this.state.question.timeout
-        console.log('-------------------time', timeout)
     }
 
     componentWillUnmount() {
@@ -155,18 +174,30 @@ class GetReadyContainer extends Component {
     setPoint = (questionOnNow) => {
         var activities = this.state.activities;
         var keys = Object.keys(activities);
+        var count_question = this.state.questionList.length;
         keys.forEach(element => {
             var obj = activities[element];
+            var bonus = obj.bonus;
             var totalPoint = obj.totalpoint;
+         
             var answers = obj.answers.map((ansObj, index) => {
                 if(ansObj.questionId == questionOnNow.id) {
                     var point = 0;
                     if(ansObj.answer == questionOnNow.rightAnswer) {
                         var timeAnswer = ansObj.timesubmit - ansObj.timestart;
                         if(questionOnNow.timeout > (timeAnswer / 1000) && timeAnswer > 0) {
-                            point = Math.round((questionOnNow.timeout * 1000 - timeAnswer)/100);
+                            point = Math.round(( 1 - timeAnswer / (questionOnNow.timeout * 1000))*100);
+                            bonus ++;
+                        } else {
+                            bonus = 0;
                         }
+                    } else {
+                        bonus = 0;
                     }
+
+                    var bonus_point =  Math.round(bonus * 100 * 0.5 / count_question);
+                    point += bonus_point;
+
                     totalPoint += point;
 
                     return {
@@ -179,6 +210,7 @@ class GetReadyContainer extends Component {
             })
 
             activities[element].totalpoint = totalPoint;
+            activities[element].bonus = bonus;
             activities[element].answers = answers;
         });
 
@@ -190,6 +222,7 @@ class GetReadyContainer extends Component {
     render() {
         return (
             <div className='container'>
+                {this.state.is_complete && this.onFinish()}
                 <div className='header'>
                     <p className='title' style={{paddingTop: '30px'}}>Câu hỏi thứ {this.state.countQuestion} / {this.state.questionList.length} </p>
                 </div>

@@ -23,21 +23,41 @@ class GameBlockContainer extends Component {
         this.itemRef = firebaseApp.database()
         this.state = {
             question: {},
-            activities: []
+            activities: [],
+            no_answers: [0, 0, 0, 0]
         }
     }
 
     componentDidMount() {
         this.itemRef.ref(`/rooms/${this.props.match.params.id}`).on('value', (snapshot) => {
+            var $this = this;
+
             const roomInfo = snapshot.val();
             var questionList = Object.values(roomInfo.questionGroup.questionList).map(function (obj) {
                 return obj;
             });
             var activities = roomInfo.activities;
-           
+
+            var list_answer_question = [];
+            if(activities) {
+                list_answer_question = Object.values(activities).map(function(obj) {
+                    var answers = obj.answers;
+                    
+                    return answers.find(function(element) {
+                        return element.questionId == $this.props.match.params.questionid;
+                    })
+                })
+            } 
+
+            var no_answers = [0, 0, 0, 0];
+            list_answer_question.forEach(element => {
+                no_answers[element.answer-1] ++;
+            });
+        
             this.setState({
                 questionList: questionList,
-                activities: activities
+                activities: activities,
+                no_answers: no_answers
             })
         })
 
@@ -72,7 +92,7 @@ class GameBlockContainer extends Component {
                             this.state.question.answerList.map((answer, i) => {
                                 return(
                                 <div style={{width: '25%', display: 'inline-block', paddingLeft: '60px', paddingRight: '60px'}}>
-                                    <div><span style={{color: arrColor[i], fontSize: '40px', fontWeight: 600}}>{ answer.position == this.state.question.rightAnswer && <Icon icon={ic_check} size="40px"></Icon>} 0</span></div>
+                                    <div><span style={{color: arrColor[i], fontSize: '40px', fontWeight: 600}}>{ answer.position == this.state.question.rightAnswer ? <Icon icon={ic_check} size="40px"></Icon> : <Icon icon={ic_close} size="40px"></Icon>} {this.state.no_answers[i]}</span></div>
                                     <div style={{width: '100%', height: '3px', backgroundColor: arrColor[i], margin: '5px' }}></div>
                                     <div style={{width: '100%', height: '50px', backgroundColor: arrColor[i], margin: '5px', paddingTop: '10px'}}>
                                         <img src={arrShape[i]} width='30px'></img>
