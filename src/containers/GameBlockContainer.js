@@ -28,12 +28,24 @@ class GameBlockContainer extends Component {
         }
     }
 
+<<<<<<< HEAD
     componentDidMount() {
         this.itemRef.ref(`/rooms/${this.props.match.params.id}`).on('value', (snapshot) => {
             var $this = this;
 
             const roomInfo = snapshot.val();
             var questionList = Object.values(roomInfo.questionGroup.questionList).map(function (obj) {
+=======
+    componentWillMount() {
+        var roomPin = 'abcxyz'
+        // var roomPin = 1
+        this.itemRef.ref('/rooms').on('value', (snapshot) => {
+            var data = Object.values(snapshot.val()).map(function (obj) {
+                return obj;
+            });
+            const roomInfo = data.filter(item => item.roomPin === roomPin);
+            var questionList = Object.values(roomInfo[0].questionGroup.questionList).map(function (obj) {
+>>>>>>> a230d5e9c67ff94f9155237187e68993c103d21d
                 return obj;
             });
             var activities = roomInfo.activities;

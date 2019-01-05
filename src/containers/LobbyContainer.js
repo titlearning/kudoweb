@@ -25,6 +25,7 @@ class LobbyContainer extends Component {
     }
 
     componentWillMount() {
+<<<<<<< HEAD
         this.itemRef.ref(`/rooms/${this.props.match.params.id}`).on('value', (snapshot) => {
             const roomInfo = snapshot.val();
 
@@ -56,14 +57,28 @@ class LobbyContainer extends Component {
 
             this.setState({
                 question: question,
+=======
+        // var roomId = this.props.match.params.id
+        var roomId = 0
+
+        this.itemRef.ref('/rooms').child(roomId).on('value', (snapshot) => {
+            var roomInfo = snapshot.val()
+            var questionList = roomInfo.questionGroup
+            var activities = Object.values(roomInfo.activities)
+            console.log('-------------------------------fffff', activities)
+
+            this.setState({
+>>>>>>> a230d5e9c67ff94f9155237187e68993c103d21d
                 roomInfo: roomInfo,
                 activities: activities,
                 questionList: questionList,
                 keys: keys
             })
         })
+
     }
 
+<<<<<<< HEAD
     startRoom = () => {
         if(this.state.question) {
             this.itemRef.ref(`/rooms/${this.props.match.params.id}/questionGroup/questionList/${this.state.question.id}`).update({
@@ -91,17 +106,31 @@ class LobbyContainer extends Component {
             status: 1
         });
         this.props.history.push(`/getready/${this.props.match.params.id}`);
+=======
+    updateRoomStatusAndReadyGame = () => {
+        // var roomId = this.props.match.params.id
+        var roomId = 0
+        this.itemRef.ref('rooms/' + roomId).update({status: 3});
+        this.props.history.push('/getready')
+>>>>>>> a230d5e9c67ff94f9155237187e68993c103d21d
     }
     
     render() {
+        console.log('------------------------leng', this.state.activities.length)
         return(
             <div className='container'>
                 <div className='header'>
+<<<<<<< HEAD
                     <Grid container>
                         <Grid item xs={12} style={{paddingTop: '30px'}}>
                             <p className='title'>{this.state.roomInfo.questionGroup && this.state.roomInfo.questionGroup.title}</p>
                         </Grid>
                     </Grid>
+=======
+                    <div>
+                        <p className='title'>Join at Kudo with Game PIN: { this.state.roomInfo && this.state.roomInfo.roomPin}</p>
+                    </div>
+>>>>>>> a230d5e9c67ff94f9155237187e68993c103d21d
                 </div>
                 <div className="mydiv">
                     <div style={{flex: 1, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
@@ -119,6 +148,14 @@ class LobbyContainer extends Component {
                             <p className='title' style={{fontSize: '70px', fontWeight: 900, fontStyle: 'italic'}}> <a style={{fontSize: '50px'}}>Mã PIN: </a> {this.state.roomInfo.roomPin}</p>
                         </div>
                         <div style={{flex: 1}}>
+<<<<<<< HEAD
+=======
+                            <div style={{margin: '0 auto', width: 100}}>
+                                <Button  variant="contained" onClick={this.updateRoomStatusAndReadyGame}>
+                                    Start
+                                </Button>
+                            </div>
+>>>>>>> a230d5e9c67ff94f9155237187e68993c103d21d
                         </div>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'row', flex: 5, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap'}}>
