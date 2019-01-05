@@ -38,21 +38,10 @@ class GetReadyContainer extends Component {
     }
 
     componentWillMount() {
-<<<<<<< HEAD
         this.itemRef.ref(`/rooms/${this.props.match.params.id}`).on('value', (snapshot) => {
             const roomInfo = snapshot.val();
 
             var questionList = Object.values(roomInfo.questionGroup.questionList).map(function (obj) {
-=======
-        // var roomPin = 1
-        var roomPin = 'abcxyz'
-        this.itemRef.ref('/rooms').on('value', (snapshot) => {
-            var data = Object.values(snapshot.val()).map(function (obj) {
-                return obj;
-            });
-            const roomInfo = data.filter(item => item.roomPin === roomPin);
-            var questionList = Object.values(roomInfo[0].questionGroup.questionList).map(function (obj) {
->>>>>>> a230d5e9c67ff94f9155237187e68993c103d21d
                 return obj;
             });
             console.log('-------------------hahaha', questionList)
@@ -173,7 +162,6 @@ class GetReadyContainer extends Component {
     };
 
     onFinish = () => {
-<<<<<<< HEAD
         const questionId = this.state.question.id;
         const questionOnNow = this.state.question;
         this.setPoint(questionOnNow);
@@ -230,10 +218,6 @@ class GetReadyContainer extends Component {
         this.itemRef.ref(`/rooms/${this.props.match.params.id}`).update({
             activities: activities
         }); 
-=======
-
-        this.props.history.push('/gameblock')
->>>>>>> a230d5e9c67ff94f9155237187e68993c103d21d
     }
 
     render() {
@@ -283,13 +267,8 @@ class GetReadyContainer extends Component {
                             this.state.question && this.state.question.answerList && this.state.question.answerList.length > 0 &&
                             this.state.question.answerList.map((answer, i) => {
                                 return (
-<<<<<<< HEAD
                                     <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], width: '300px', height: '45%', margin: 'auto 5px'}}>
                                         <span className='answerText' style={{fontSize: 40}}><img src={arrShape[i]} width="40"></img> {answer.content}</span>
-=======
-                                    <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], width: '300px', height: '45%', margin: 'auto', marginLeft: 10}}>
-                                        <span className='answerText'>{answer.content}</span>
->>>>>>> a230d5e9c67ff94f9155237187e68993c103d21d
                                     </div>
                                 )
                             })
