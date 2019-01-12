@@ -166,18 +166,12 @@ class PrimarySearchAppBar extends React.Component {
 
         return (
            
-            <header role="heading" className="layout__head">
-                <div className="kahoot-registration">
-                    <div id="navbar">
-                        <div className="limit-width center-block">
-                            <Button><img src={logoKudo} height="50px"/></Button>
-                            <a href="/question/creategroup" data-bypass="true" className="btn register">
-                                <span className="no-display column-layout-width-display">Tạo bộ câu hỏi</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div className="divider navbar hidden-phone no-display column-layout-width-display">
-                    </div>
+            <header style={{padding: '20px'}}>
+                <div  style={{float: 'left'}}><Button><img src={logoKudo} height="50px"/></Button></div>
+                <div style={{float: 'right'}}>
+                    <Button><a href="/question/creategroup">
+                        <span>Tạo bộ câu hỏi</span>
+                    </a></Button>
                 </div>
             </header>
         );

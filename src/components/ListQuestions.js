@@ -11,12 +11,12 @@ class ListQuestions extends React.Component {
     render() {
         return (
 
-            <div className="search-results-result-list" data-functional-selector="search-results-result-list">
+            <div className="search-results-result-list" data-functional-selector="search-results-result-list" style={{paddingTop: '200px'}}>
                 <div className="search-results-result-list__content">
-                    <div className="search-results-number-of-results">
-                        <b>{this.props.noQues}</b> <span>results</span>
+                    <div className="search-results-number-of-results" style={{fontSize: '20px'}}>
+                        <b>{this.props.noQues}</b> <span>bộ câu hỏi</span>
                     </div>
-                    {
+                    { 
                         this.props.data && this.props.data.map((object, i) => <Question data={object} key={i} id={object.id}/>)
                     }
                 </div>

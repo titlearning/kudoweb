@@ -189,17 +189,6 @@ class QuestionDetailBody extends Component {
                 </div>
                 <div className="question-list-and-resource-credits">
                     <section data-functional-selector="question-list" className="question-list">
-                        <header className="question-list__header">
-                            <h1 className="question-list__heading">
-                                Questions
-                        <span className="question-list__num-questions">
-                                    ({this.state.lisQuestion.length})
-                        </span>
-                            </h1>
-                            <button type="button" role="button" data-functional-selector="question-list__group-toggle" className="text-button question-list__group-toggle" onClick={this.showSpecificQuestionAnswer}>
-                                Show answers
-                        </button>
-                        </header>
                         <ol className="question-list__items">
                             {
                                 this.state.lisQuestion.map((question, index) => {

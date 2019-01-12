@@ -1,6 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import logoKudo from '../../images/kudo.png';
 
 class Question extends React.Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class Question extends React.Component {
                     <div className="kahoot-card__content-wrap">
                         <div className="kahoot-card__content">
                             <div
-                                className="kahoot-card__image-wrapper kahoot-card__image-wrapper--list-view">
+                                className="kahoot-card__image-wrapper kahoot-card__image-wrapper--list-view" style={{backgroundImage: `url(${logoKudo})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat'}}>
                                 <div className="kahoot-card__image-wrapper-container">
                                     <div className="kahoot-card__placeholder-image"><span
                                         className="icon kahoot-card__placeholder-image-icon"><svg
@@ -27,8 +28,8 @@ class Question extends React.Component {
                                             focusable="false"><use className="icon__use"
                                                 href="#logo-shapes"></use></svg></span>
                                     </div>
-                                    <span className="kahoot-card__number-of-questions"><span>{this.state.data.questionList ? this.state.data.questionList.length : 0}<span
-                                        className="kahoot-card__number-of-questions--desktop"> questions</span><span
+                                    <span className="kahoot-card__number-of-questions"><span>{ this.state.data.questionList ? Object.keys(this.state.data.questionList).length : 0}<span
+                                        className="kahoot-card__number-of-questions--desktop"> câu hỏi</span><span
                                             className="kahoot-card__number-of-questions--mobile"></span></span></span>
                                 </div>
                                 <Link tabIndex="-1" className="kahoot-card__link"

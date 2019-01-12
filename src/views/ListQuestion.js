@@ -57,7 +57,7 @@ class ListQuestion extends Component {
             <div>
                 <Header/>
                 <main role="main" className="layout__body layout__body--discover">
-                    <SearchArea inputChanged={this.inputKeyword}/>
+                    {/* <SearchArea inputChanged={this.inputKeyword}/> */}
                     <ListQuestions data={this.state.data} noQues={this.state.noQues}/>
                 </main>
             </div>

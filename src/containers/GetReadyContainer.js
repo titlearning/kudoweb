@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { firebaseApp } from '../config/firebase'
+import Firebase from 'firebase'
 import _ from 'lodash';
 import ReactCountdownClock from 'react-countdown-clock'
 import { Icon } from 'react-icons-kit'
@@ -29,7 +30,6 @@ class GetReadyContainer extends Component {
             questionList: [],
             activities: {},
             showQuestionTitle: true,
-            timeStart: moment().valueOf(),
             endUpdate: false,
             countQuestion: 0,
             image: '',
@@ -118,6 +118,7 @@ class GetReadyContainer extends Component {
         
         if (completed === 100) {
             if(!this.state.endUpdate) {
+                var timeStart = Firebase.database.ServerValue.TIMESTAMP;
                 var keys = Object.keys(this.state.activities);
                 keys.forEach(element => {
                     var answers = this.state.activities[element].answers.map((ansObj, i) =>{
@@ -126,7 +127,7 @@ class GetReadyContainer extends Component {
                                 answer: -1,
                                 point: 0,
                                 questionId: this.state.question.id,
-                                timestart: this.state.timeStart,
+                                timestart: timeStart,
                                 timesubmit: 0
                             }
 
@@ -187,7 +188,7 @@ class GetReadyContainer extends Component {
                     if(ansObj.answer == questionOnNow.rightAnswer) {
                         var timeAnswer = ansObj.timesubmit - ansObj.timestart;
                         if(questionOnNow.timeout > (timeAnswer / 1000) && timeAnswer > 0) {
-                            point = Math.round(( 1 - timeAnswer / (questionOnNow.timeout * 1000))*100);
+                            point = Math.round(( 1 - timeAnswer / (questionOnNow.timeout * 1000))*1000);
                             bonus ++;
                         } else {
                             bonus = 0;
@@ -196,7 +197,7 @@ class GetReadyContainer extends Component {
                         bonus = 0;
                     }
 
-                    var bonus_point =  Math.round(bonus * 100 * 0.5 / count_question);
+                    var bonus_point =  Math.round(bonus * 1000 * 0.5 / count_question);
                     point += bonus_point;
 
                     totalPoint += point;
@@ -221,7 +222,6 @@ class GetReadyContainer extends Component {
     }
 
     render() {
-        console.log('=-================aquestin', this.state.question)
         return (
             <div className='container'>
                 {this.state.is_complete && this.onFinish()}

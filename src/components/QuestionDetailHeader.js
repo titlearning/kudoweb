@@ -29,7 +29,7 @@ export class QuestionDetailHeader extends Component{
         }
 
         return(
-            <header role="heading" className="layout__head">
+            <header role="heading" className="layout__head" style={{height: '0px'}}>
                 <div className="">
                     <nav id="top-menu-bar" className="base-top-bar top-bar" data-functional-selector="topbar">
                         <div className="top-bar__inner">
