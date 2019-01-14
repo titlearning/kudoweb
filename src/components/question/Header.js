@@ -3,7 +3,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
-import Typography from '@material-ui/core/Typography';
 import { firebaseApp, database } from '../../config/firebase';
 import { Redirect } from 'react-router-dom';
 import { link } from 'fs';
@@ -123,9 +122,9 @@ class Header extends Component {
                         <Icon>close</Icon>
                         Đóng
                     </Button>
-                    <Typography variant="h6" color="inherit" style={{ flexGrow: 1, textAlign: 'center'}}>
+                    <h3 color="inherit" style={{ flexGrow: 1, textAlign: 'center'}}>
                         {this.props.head_title}
-                    </Typography>
+                    </h3>
                     <Button variant="contained" color='secondary' onClick={this.createQuestion}>Thêm câu hỏi</Button>
                 </Toolbar>
             </AppBar>

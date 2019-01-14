@@ -6,7 +6,6 @@ import logoKudo from '../../images/kudo.png';
 import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon';
 import Modal from '@material-ui/core/Modal';
-import Typography from '@material-ui/core/Typography';
 import { database } from '../../config/firebase';
 
 function getModalStyle() {
@@ -36,7 +35,13 @@ class Question extends React.Component {
     }
 
     deleteQuestionGroup = (questionGroupId) => {
-        database.ref(`/questionGroups/${questionGroupId}`).remove();
+        async function f($this) {
+            let promise = $this.props.deleteQuestionGroup(questionGroupId);
+            await promise;
+            $this.setState({ open: false });
+        }
+
+        f(this);
     }
 
     handleOpen = () => {
@@ -148,18 +153,18 @@ class Question extends React.Component {
                     onClose={this.handleClose}
                     >
                     <div style={getModalStyle()}>
-                        <Typography variant="h6" id="modal-title">
+                        <h3 id="modal-title" style={{paddingBottom: '10px'}}>
                         Xóa bộ câu hỏi
-                        </Typography>
-                        <Typography variant="subtitle1" id="simple-modal-description" style={{textAlign: 'center'}}>
+                        </h3>
+                        <span id="simple-modal-description" style={{textAlign: 'center'}}>
                         Bạn muốn xóa bộ câu hỏi này?
-                        </Typography>
-                        <Typography variant="subtitle2" id="simple-modal-description" style={{textAlign: 'right'}}>
+                        </span>
+                        <div id="simple-modal-description" style={{textAlign: 'right'}}>
                             <Button variant="contained" color="secondary" aria-label="Menu" onClick={() => this.deleteQuestionGroup(this.state.id)}>
                                 <Icon>delete</Icon>
                                 Xóa
                             </Button>
-                        </Typography>
+                        </div>
                     </div>
                 </Modal>
             </div>

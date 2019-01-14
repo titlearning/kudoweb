@@ -54,13 +54,24 @@ class ListQuestion extends Component {
         })
     }
 
+   
+    deleteQuestionGroup = (questionGroupId) => {
+        async function f($this) {
+            let promise = database.ref(`/questionGroups/${questionGroupId}`).remove();
+            await promise;
+            $this.forceUpdate();
+        }
+         
+        f(this);
+    }
+
     render() {
         return (
             <div> 
                 <Header/>
                 <main role="main" className="layout__body layout__body--discover">
                     {/* <SearchArea inputChanged={this.inputKeyword}/> */}
-                    <ListQuestions data={this.state.data} noQues={this.state.noQues}/>
+                    <ListQuestions data={this.state.data} noQues={this.state.noQues} deleteQuestionGroup={this.deleteQuestionGroup}/> 
                 </main>
             </div>
         )

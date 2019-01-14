@@ -8,6 +8,16 @@ class ListQuestions extends React.Component {
         super(props)   
     }
 
+    deleteQuestionGroup = (questionGroupId) => {
+        async function f($this) {
+            let promise = $this.props.deleteQuestionGroup(questionGroupId);
+            await promise;
+            $this.forceUpdate();
+        }
+
+        f(this);
+    }
+
     render() {
         return (
 
@@ -17,12 +27,9 @@ class ListQuestions extends React.Component {
                         <b>{this.props.noQues}</b> <span>bộ câu hỏi</span>
                     </div>
                     { 
-                        this.props.data && this.props.data.map((object, i) => <Question data={object} key={i} id={object.id}/>)
+                        this.props.data && this.props.data.map((object, i) => <Question data={object} key={i} id={object.id} deleteQuestionGroup={this.deleteQuestionGroup}/>)
                     }
                 </div>
-                {/* <button type="button" role="button" data-functional-selector="load-more-button"
-                        className="button button--flat search-results-result-list__load-more-button">Xem thêm câu hỏi
-                </button> */}
             </div>
         );
     }
