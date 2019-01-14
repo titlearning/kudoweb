@@ -1,16 +1,52 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import logoKudo from '../../images/kudo.png';
+import Button from '@material-ui/core/Button'
+import Icon from '@material-ui/core/Icon';
+import Modal from '@material-ui/core/Modal';
+import Typography from '@material-ui/core/Typography';
+import { database } from '../../config/firebase';
+
+function getModalStyle() {
+    const top = 50;
+    const left = 50;
+  
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`,
+      position: 'absolute',
+      backgroundColor: 'white',
+      width: '50%',
+      padding: '3%',
+      textAlign: 'center'
+    };
+}
 
 class Question extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             data: this.props.data,
-            id: this.props.id
+            id: this.props.id,
+            open: false
         }
     }
+
+    deleteQuestionGroup = (questionGroupId) => {
+        database.ref(`/questionGroups/${questionGroupId}`).remove();
+    }
+
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
     render() {
         return (
             <div className="search-result-kahoot-card"
@@ -85,6 +121,10 @@ class Question extends React.Component {
                                             className="kahoot-card__information-mobile"></span></span><b>
                                             </b></div>
                                     </div>
+                                    <Button variant="contained" color="secondary" aria-label="Menu" style={{position: 'absolute', right: '5px'}} onClick={() => this.handleOpen()}>
+                                        <Icon>delete</Icon>
+                                        Xóa
+                                    </Button>
                                 </main>
                                 <footer
                                     className="kahoot-card__details-footer kahoot-card__details-footer--list-view kahoot-card__details-footer--with-example-question">
@@ -101,6 +141,27 @@ class Question extends React.Component {
                         </div>
                     </div>
                 </div>
+                <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    >
+                    <div style={getModalStyle()}>
+                        <Typography variant="h6" id="modal-title">
+                        Xóa bộ câu hỏi
+                        </Typography>
+                        <Typography variant="subtitle1" id="simple-modal-description" style={{textAlign: 'center'}}>
+                        Bạn muốn xóa bộ câu hỏi này?
+                        </Typography>
+                        <Typography variant="subtitle2" id="simple-modal-description" style={{textAlign: 'right'}}>
+                            <Button variant="contained" color="secondary" aria-label="Menu" onClick={() => this.deleteQuestionGroup(this.state.id)}>
+                                <Icon>delete</Icon>
+                                Xóa
+                            </Button>
+                        </Typography>
+                    </div>
+                </Modal>
             </div>
         );
     }

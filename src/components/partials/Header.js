@@ -169,8 +169,8 @@ class PrimarySearchAppBar extends React.Component {
             <header style={{padding: '20px'}}>
                 <div  style={{float: 'left'}}><Button><img src={logoKudo} height="50px"/></Button></div>
                 <div style={{float: 'right'}}>
-                    <Button><a href="/question/creategroup">
-                        <span>Tạo bộ câu hỏi</span>
+                    <Button variant="contained" color="primary"><a href="/question/creategroup" style={{textDecoration: 'none', fontWeight: 600}}>
+                        <span style={{}}>Tạo bộ câu hỏi</span>
                     </a></Button>
                 </div>
             </header>

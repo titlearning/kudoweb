@@ -25,6 +25,8 @@ class ListQuestion extends Component {
                 return questionList[key];
             });
            
+            questionList.reverse();
+
             this.setState({
                 data: questionList,
                 noQues: questionList.length
@@ -54,7 +56,7 @@ class ListQuestion extends Component {
 
     render() {
         return (
-            <div>
+            <div> 
                 <Header/>
                 <main role="main" className="layout__body layout__body--discover">
                     {/* <SearchArea inputChanged={this.inputKeyword}/> */}

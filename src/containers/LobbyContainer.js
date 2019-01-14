@@ -54,6 +54,8 @@ class LobbyContainer extends Component {
                 return obj;
             });
 
+
+
             this.setState({
                 question: question,
                 roomInfo: roomInfo,
@@ -95,6 +97,27 @@ class LobbyContainer extends Component {
     }
     
     render() {
+        var table_elements = [];
+        for(let i = 0; i < this.state.activities.length; i += 3) {
+            table_elements.push(<tr>
+                <td style={{padding: '0 50px'}}>
+                    <div style={{width: 200, height: 80, margin: 'auto'}} key={i}>
+                        <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 30, color: randomColor(), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} >{this.state.activities[i] ? this.state.activities[i].playername : ''}</p>
+                    </div>
+                </td>
+                <td style={{padding: '0 50px'}}>
+                    <div style={{width: 200, height: 80, margin: 'auto'}} key={i+1}>
+                        <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 30, color: randomColor(), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} >{this.state.activities[i+1] ? this.state.activities[i+1].playername : ''}</p>
+                    </div>    
+                </td> 
+                <td style={{padding: '0 50px'}}>
+                    <div style={{width: 200, height: 80, margin: 'auto'}} key={i+2}>
+                        <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 30, color: randomColor(), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} >{this.state.activities[i+2] ? this.state.activities[i+2].playername : ''}</p>
+                    </div>
+                </td>
+              </tr>)
+        }
+
         return(
             <div className='container'>
                 <div className='header'>
@@ -123,17 +146,23 @@ class LobbyContainer extends Component {
                         </div>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'row', flex: 5, alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap'}}>
-                            {
-                                this.state.activities.length > 0 &&
-                                this.state.activities.map((user, i) => {
-                                    return(
-                                        <div style={{width: 200, height: 80, margin: 'auto'}} key={i}>
-                                            <p style={{ textAlign: 'center', fo5ntWeight: 'bold', fontSize: 30, color: randomColor()}} >{user.playername}</p>
-                                        </div>
-                                    )
+                        <table>
+                            {   
+                                // this.state.activities.length > 0 &&
+                                // this.state.activities.map((user, i) => {
+                                //     return(
+                                //         <div style={{width: 200, height: 80, margin: 'auto'}} key={i}>
+                                //             <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 30, color: randomColor(), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} >{user.playername}</p>
+                                //         </div>
+                                //     )
+                                // })
+                                table_elements.length > 0 &&
+                                table_elements.map((tr_element) => {
+                                    return tr_element;
                                 })
                             }
-                        </div>
+                        </table>
+                    </div>
                 </div>
                 <div className='waiting'>
                     <div style={{flex: 5}}>

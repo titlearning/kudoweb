@@ -73,6 +73,11 @@ class GetReadyContainer extends Component {
             if(activities) {
                 list_answer_question = Object.values(activities).map(function(obj) {
                     var answers = obj.answers;
+                    var isQuit = obj.quit;
+
+                    if(isQuit) {
+                        return null;
+                    }
                     
                     return answers.find(function(element) {
                         return element.questionId == question.id;
@@ -81,8 +86,10 @@ class GetReadyContainer extends Component {
             } 
 
             list_answer_question.forEach(element => {
-                if(!element || element.answer <= 0) {
-                    is_complete = false;
+                if(element !== null) {
+                    if(element.answer && element.answer <= 0) {
+                        is_complete = false;
+                    }
                 }
             });
          

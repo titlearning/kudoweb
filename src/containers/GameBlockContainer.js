@@ -92,7 +92,7 @@ class GameBlockContainer extends Component {
                             this.state.question.answerList.map((answer, i) => {
                                 return(
                                 <div style={{width: '25%', display: 'inline-block', paddingLeft: '60px', paddingRight: '60px'}}>
-                                    <div><span style={{color: arrColor[i], fontSize: '40px', fontWeight: 600}}>{ answer.position == this.state.question.rightAnswer ? <Icon icon={ic_check} size="40px"></Icon> : <Icon icon={ic_close} size="40px"></Icon>} {this.state.no_answers[i]}</span></div>
+                                    <div><span style={{color: arrColor[i], fontSize: '40px', fontWeight: 600}}>{ answer.position == this.state.question.rightAnswer ? <Icon icon={ic_check} size="60px"></Icon> : <Icon icon={ic_close} size="40px"></Icon>} {this.state.no_answers[i]}</span></div>
                                     <div style={{width: '100%', height: '3px', backgroundColor: arrColor[i], margin: '5px' }}></div>
                                     <div style={{width: '100%', height: '50px', backgroundColor: arrColor[i], margin: '5px', paddingTop: '10px'}}>
                                         <img src={arrShape[i]} width='30px'></img>
@@ -112,7 +112,10 @@ class GameBlockContainer extends Component {
                                 <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], opacity: answer.position == this.state.question.rightAnswer ? 1 : 0.5}}>
                                     <p className='answerText' style={{fontSize: 50}}>
                                         <img src={arrShape[i]} width="50"></img> {answer.content}
-                                        <Icon  style={{marginLeft: 50}} size={50} icon={answer.position == this.state.question.rightAnswer ? ic_check : ic_close}/>
+                                        { answer.position == this.state.question.rightAnswer ?
+                                            <Icon  style={{marginLeft: 50}} size={80} icon={ic_check}/>
+                                            : <Icon  style={{marginLeft: 50}} size={50} icon={ic_close}/>
+                                        }
                                     </p>
                                 </div>
                             )
