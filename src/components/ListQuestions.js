@@ -26,8 +26,8 @@ class ListQuestions extends React.Component {
                     <div className="search-results-number-of-results" style={{fontSize: '20px'}}>
                         <b>{this.props.noQues}</b> <span>bộ câu hỏi</span>
                     </div>
-                    { 
-                        this.props.data && this.props.data.map((object, i) => <Question data={object} key={i} id={object.id} deleteQuestionGroup={this.deleteQuestionGroup}/>)
+                    {  
+                        this.props.data && this.props.data.map((object, i) => <Question data={object} key={object.id} id={object.id} deleteQuestionGroup={this.deleteQuestionGroup}/>)
                     }
                 </div>
             </div>

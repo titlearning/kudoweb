@@ -133,7 +133,7 @@ class LeaderBoard extends Component {
     render() {
         return(
             <div style={{minWidth: '40vw'}}>
-               <div color="light" light expand="md" style={{height: '10vh', borderBottom: 'solid 5px #ccc'}}>
+               <div color="light" light expand="md" style={{height: '10vh', borderBottom: 'solid 5px #ccc', backgroundColor: 'white', paddingTop: '20px'}}>
                     <div style={{margin: '0 auto', textAlign: 'center'}}>
                         <span style={{fontSize: '30px', fontWeight: 700}}>Xếp hạng kết quả</span> 
                     </div>
