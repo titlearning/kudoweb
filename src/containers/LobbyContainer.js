@@ -102,17 +102,17 @@ class LobbyContainer extends Component {
             table_elements.push(<tr>
                 <td style={{padding: '0 50px'}}>
                     <div style={{width: 200, height: 80, margin: 'auto'}} key={i}>
-                        <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 30, color: randomColor(), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} >{this.state.activities[i] ? this.state.activities[i].playername : ''}</p>
+                        <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 30, color: randomColor(), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: '80px' }} >{this.state.activities[i] ? this.state.activities[i].playername : ''}</p>
                     </div>
                 </td>
                 <td style={{padding: '0 50px'}}>
                     <div style={{width: 200, height: 80, margin: 'auto'}} key={i+1}>
-                        <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 30, color: randomColor(), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} >{this.state.activities[i+1] ? this.state.activities[i+1].playername : ''}</p>
+                        <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 30, color: randomColor(), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: '80px' }} >{this.state.activities[i+1] ? this.state.activities[i+1].playername : ''}</p>
                     </div>    
                 </td> 
                 <td style={{padding: '0 50px'}}>
                     <div style={{width: 200, height: 80, margin: 'auto'}} key={i+2}>
-                        <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 30, color: randomColor(), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} >{this.state.activities[i+2] ? this.state.activities[i+2].playername : ''}</p>
+                        <p style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 30, color: randomColor(), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: '80px' }} >{this.state.activities[i+2] ? this.state.activities[i+2].playername : ''}</p>
                     </div>
                 </td>
               </tr>)
