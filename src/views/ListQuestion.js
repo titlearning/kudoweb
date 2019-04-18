@@ -19,8 +19,20 @@ class ListQuestion extends Component {
     }
 
     componentDidMount() {
+        let user = JSON.parse(localStorage.getItem("user"))
+        let uid = user.uid
         database.ref("/").child("questionGroups").on('value', (snapshot) => {
-            var questionList = snapshot.val();
+            var list = snapshot.val()
+            var filterList = [];
+            for (var prop in list) {
+                if(list[prop].useridCreated === uid || list[prop].isPublic)
+                {
+                    filterList.push(list[prop])
+                } 
+            }
+            console.log(filterList)
+            // var questionList = snapshot.val();
+            var questionList = filterList
             questionList = Object.keys(questionList).map(function(key) {
                 return questionList[key];
             });
@@ -70,7 +82,7 @@ class ListQuestion extends Component {
             <div> 
                 <Header/>
                 <main role="main" className="layout__body layout__body--discover">
-                    {/* <SearchArea inputChanged={this.inputKeyword}/> */}
+                    <SearchArea inputChanged={this.inputKeyword}/>
                     <ListQuestions data={this.state.data} noQues={this.state.noQues} deleteQuestionGroup={this.deleteQuestionGroup}/> 
                 </main>
             </div>

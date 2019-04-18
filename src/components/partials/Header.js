@@ -17,6 +17,8 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import logoKudo from '../../images/kudo.png';
+import Icon from '@material-ui/core/Icon';
+import firebase from 'firebase'
 
 const styles = theme => ({
     root: {
@@ -92,6 +94,15 @@ class PrimarySearchAppBar extends React.Component {
     state = {
         anchorEl: null,
         mobileMoreAnchorEl: null,
+    };
+
+    logout = () => {
+        firebase.auth().signOut().then(function() {
+            localStorage.clear();
+            window.location.reload()
+          }).catch(function(error) {
+            // An error happened.
+          });
     };
 
     handleProfileMenuOpen = event => {
@@ -171,6 +182,9 @@ class PrimarySearchAppBar extends React.Component {
                     <Button variant="contained" color="primary"><a href="/question/creategroup" style={{textDecoration: 'none', fontWeight: 600}}>
                         <span style={{}}>Tạo bộ câu hỏi</span>
                     </a></Button>
+                    <Button color="inherit" aria-label="Thoát" onClick={this.logout}>
+                        <Icon>logout</Icon>
+                    </Button>
                 </div>
             </header>
         );

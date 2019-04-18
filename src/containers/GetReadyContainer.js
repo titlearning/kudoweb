@@ -18,6 +18,7 @@ import moment from 'moment';
 
 const arrColor = ['#ff365b', '#46a1e7', '#ffbf0a', '#67be3c']
 const arrShape = [triangle, rhomb, circle, square]
+var ReactFitText = require('react-fittext');
 
 class GetReadyContainer extends Component {
     constructor(props) {
@@ -44,7 +45,6 @@ class GetReadyContainer extends Component {
             var questionList = Object.values(roomInfo.questionGroup.questionList).map(function (obj) {
                 return obj;
             });
-            console.log('-------------------hahaha', questionList)
 
             var question = {}
 
@@ -78,13 +78,11 @@ class GetReadyContainer extends Component {
                     if(isQuit) {
                         return null;
                     }
-                    
                     return answers.find(function(element) {
                         return element.questionId == question.id;
                     })
                 })
             } 
-
             list_answer_question.forEach(element => {
                 if(element !== null) {
                     if(element.answer && element.answer <= 0) {
@@ -274,9 +272,11 @@ class GetReadyContainer extends Component {
                             this.state.question && this.state.question.answerList && this.state.question.answerList.length > 0 &&
                             this.state.question.answerList.map((answer, i) => {
                                 return (
-                                    <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], width: '300px', height: '45%', margin: 'auto 5px'}}>
-                                        <span className='answerText' style={{fontSize: 40}}><img src={arrShape[i]} width="40"></img> {answer.content}</span>
-                                    </div>
+                                    <ReactFitText>
+                                        <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], width: '300px', height: '45%', margin: 'auto 5px'}}>
+                                            <span className='answerText' style={{}}><img src={arrShape[i]} width="40"></img> {answer.content}</span>
+                                        </div>
+                                    </ReactFitText>
                                 )
                             })
                         }
