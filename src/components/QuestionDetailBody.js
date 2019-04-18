@@ -7,6 +7,27 @@ import { bookmark } from 'react-icons-kit/entypo/bookmark'
 import { cross } from 'react-icons-kit/entypo/cross'
 import { database } from '../config/firebase'
 import { withRouter } from 'react-router'
+import Modal from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button'
+import IconCore from '@material-ui/core/Icon';
+import TextField from '@material-ui/core/TextField';
+import firebase from 'firebase'
+
+function getModalStyle() {
+    const top = 50;
+    const left = 50;
+
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+        position: 'absolute',
+        backgroundColor: 'white',
+        width: '50%',
+        padding: '3%',
+        textAlign: 'center'
+    };
+}
 
 class QuestionDetailBody extends Component {
 
@@ -17,23 +38,68 @@ class QuestionDetailBody extends Component {
             questionGroup: {},
             showAllAnswer: false,
             show: false,
-            listQuestionId: this.props.listQuestionId
+            open: false,
+            selectedDelete: '',
+            listQuestionId: this.props.listQuestionId,
+            title: '',
+            description: '',
+            isEdit: false
         }
+        this.handleChangeTitle = this.handleChangeTitle.bind(this);
+        this.handleChangeDescription = this.handleChangeDescription.bind(this);
     }
+
+    handleChangeTitle(e) {
+        this.setState({
+            title: e.target.value
+        })
+    }
+
+    handleChangeDescription(e) {
+        this.setState({
+            description: e.target.value
+        })
+    }
+
+    deleteQuestion = (questionId) => {
+        var groupId = this.state.questionGroup.id
+        async function f($this) {
+            let promise = database.ref(`/questionGroups/${groupId}/questionList/${questionId}`).remove();
+            await promise;
+            $this.forceUpdate();
+        }
+        this.handleClose()
+        f(this);
+        if(this.state.lisQuestion.length <= 1)
+        {
+            window.location.reload()
+        }
+
+    }
+
+    handleOpen = (selectedDeleteId) => {
+        this.setState({ open: true, selectedDelete: selectedDeleteId });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false, selectedDelete: '' });
+    };
 
     componentDidMount() {
         database.ref('/questionGroups').child(this.state.listQuestionId).on('value', (snapshot) => {
             let result = snapshot.val();
-            if (result.questionList != null){
+            if (result.questionList != null) {
                 var questionList = result.questionList;
-                
-                questionList = Object.keys(questionList).map(function(key) {
+
+                questionList = Object.keys(questionList).map(function (key) {
                     return questionList[key];
                 });
-                
-                this.setState({ 
+
+                this.setState({
                     lisQuestion: questionList,
-                    questionGroup: result
+                    questionGroup: result,
+                    title: result.title,
+                    description: result.description
                 });
             }
         })
@@ -59,9 +125,9 @@ class QuestionDetailBody extends Component {
                                             <div className="choices__choice--correct">
                                                 <Icon icon={task} size={25} />
                                             </div>) : (
-                                            <div className="choices__choice--false">
-                                                <Icon icon={cross} size={25} />
-                                            </div>
+                                                <div className="choices__choice--false">
+                                                    <Icon icon={cross} size={25} />
+                                                </div>
                                             )}
                                     </li>
                                 )
@@ -74,22 +140,22 @@ class QuestionDetailBody extends Component {
 
     showSpecificQuestionAnswer = () => {
         this.setState({
-            show : !this.state.show
-        });   
+            show: !this.state.show
+        });
     }
 
     makeid = () => {
         var text = "";
         var possible = "0123456789";
-      
+
         for (var i = 0; i < 6; i++) {
-          text += possible.charAt(Math.floor(Math.random() * possible.length));
-        }    
-        
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+
         return text;
     }
 
-    onPlayClick = ()=>{
+    onPlayClick = () => {
         let room = {};
         room.activities = [];
         room.questionGroup = this.state.questionGroup;
@@ -101,19 +167,63 @@ class QuestionDetailBody extends Component {
         this.props.history.push(`/lobby/${key}`);
     }
 
+    onEdit = () => {
+        if(this.state.isEdit)
+        {
+            // Update title
+            database.ref(`/questionGroups/${this.state.questionGroup.id}`).update({
+                title: this.state.title,
+                description: this.state.description
+            }); 
+        }
+        this.setState({
+            isEdit: !this.state.isEdit
+        });
+    }
+
     render() {
         return (
             <main role="main" className="layout__body details-main-wrapper">
                 <div className="details-content-block-wrapper">
-                    <section className="details-content-block" data-functional-selector="details-content-block" style={{width: '500px'}}>
+                    <section className="details-content-block" data-functional-selector="details-content-block" style={{ width: '500px' }}>
                         <div data-functional-selector="details-kahoot-image" aria-label="Cover image" role="img" className="details-kahoot-image" style={{ backgroundImage: `url(https://images-cdn.kahoot.it/d884f403-e7c5-4540-a01a-b2a0bdff52c6?auto=webp&amp;crop=3%3A2%2Csmart&amp;width=500)`, height: '305.1px' }}></div>
                         <div className="details-content-block__kahoot-title-and-details-wrapper">
                             <div className="kahoot-title" data-functional-selector="kahoot-title">
                                 <h1 data-functional-selector="kahoot-title__heading" className="kahoot-title__heading"></h1>
                             </div>
+                            {/* <span className="kahoot-creator__text">KahootStudioKahootStudioKahootStudioKahootStudioKahootStudioKahootStudioKahootStudioKahootStudioKahootStudioKahootStudioKahootStudio</span> */}
+                            <div>
+                            <TextField
+                                disabled={!this.state.isEdit}
+                                id="question-group-title"
+                                multiline
+                                fullWidth
+                                // error={true}
+                                label='Chủ đề'
+                                value={this.state.title}
+                                onChange={this.handleChangeTitle}
+                                // variant="outlined"
+                                style={{marginBottom: '3vh', marginLeft: '2vh'}}
+                            />
+                            <TextField
+                                disabled={!this.state.isEdit}
+                                id="question-group-title"
+                                // error={true}
+                                multiline
+                                fullWidth
+                                label='Mô tả'
+                                value={this.state.description}
+                                onChange={this.handleChangeDescription}
+                                // variant="outlined"
+                                style={{marginBottom: '3vh', marginLeft: '2vh'}}
+                            />
+                            </div>
                             <div className="details-action-buttons">
                                 <div className="details-action-buttons__wrapper" data-functional-selector="details-action-buttons">
                                     <div className="details-action-buttons__group">
+                                        <button type="button" role="button" data-functional-selector="play-button" className="button button button--spacer details-action-buttons__play-button" onClick={this.onEdit}>
+                                            {this.state.isEdit ? 'Lưu' : 'Chỉnh sửa'}
+                                        </button>
                                         <button type="button" role="button" data-functional-selector="play-button" className="button button button--spacer details-action-buttons__play-button" onClick={this.onPlayClick}>
                                             Chơi
                                         </button>
@@ -140,11 +250,11 @@ class QuestionDetailBody extends Component {
                                             </button>
                                         </div>
                                     </div> */}
-                                </div> 
+                                </div>
                             </div>
                             <span className="kahoot-type-description">
-                               
-                        </span>
+
+                            </span>
                             {/* <div className="details-kahoot-details">
                                 <div>
                                     <span>
@@ -202,38 +312,43 @@ class QuestionDetailBody extends Component {
                                                         </div>
                                                         <div className="question-media__image" title="Mondadori Portfolio/Mondadori Portfolio/Getty Images">
                                                             <div className="background-image" aria-label="Question image" role="img" style={{ backgroundImage: `url(https://images-cdn.kahoot.it/e323956f-7868-4165-b2f3-10519d569fd6?auto=webp&amp;crop=3%3A2%2Csmart&amp;width=181)` }}>
-                                                            <span className="question-media__duration">{question.timeout} giây</span></div>
+                                                                <span className="question-media__duration">{question.timeout} giây</span>
+                                                                <Button variant="contained" color="secondary" aria-label="Menu" style={{ position: 'absolute', right: '5px' }} onClick={() => this.handleOpen(question.id)}>
+                                                                    <IconCore>delete</IconCore>
+                                                                    Xóa
+                                                                </Button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div data-functional-selector="question__more-details" className="question__more-details">
                                                 {
-                                                    this.state.show &&         
+                                                    this.state.show &&
                                                     (<div className="question__choices">
                                                         <ul className="choices">
                                                             {
-                                                                question.answerList.sort((a,b)=> a.position > b.position).map((answer, i) => {
-                                                                return(                               
-                                                                    <li className="choices__choice" key={i}>
-                                                                        <div>
-                                                                            <span className="icon choices__choice-icon choices__choice-icon--diamond">
-                                                                                <Icon icon={bookmark} size={25}/>
-                                                                            </span>
-                                                                            <span>{answer.content}</span>
-                                                                        </div>
-                                                                        {(answer.position === question.rightAnswer)?(
-                                                                        <div className="choices__choice--correct">
-                                                                        <Icon icon={task} size={25}/>
-                                                                        </div>):(
-                                                                            <div className="choices__choice--false">
-                                                                            <Icon icon={cross} size={25}/>
+                                                                question.answerList.sort((a, b) => a.position > b.position).map((answer, i) => {
+                                                                    return (
+                                                                        <li className="choices__choice" key={i}>
+                                                                            <div>
+                                                                                <span className="icon choices__choice-icon choices__choice-icon--diamond">
+                                                                                    <Icon icon={bookmark} size={25} />
+                                                                                </span>
+                                                                                <span>{answer.content}</span>
                                                                             </div>
-                                                                        )}                                         
-                                                                    </li>
-                                                                )
-                                                            })}
-                                                            </ul>
+                                                                            {(answer.position === question.rightAnswer) ? (
+                                                                                <div className="choices__choice--correct">
+                                                                                    <Icon icon={task} size={25} />
+                                                                                </div>) : (
+                                                                                    <div className="choices__choice--false">
+                                                                                        <Icon icon={cross} size={25} />
+                                                                                    </div>
+                                                                                )}
+                                                                        </li>
+                                                                    )
+                                                                })}
+                                                        </ul>
                                                     </div>)
                                                 }
                                             </div>
@@ -250,6 +365,27 @@ class QuestionDetailBody extends Component {
                         </p>
                     </section> */}
                 </div>
+                <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                >
+                    <div style={getModalStyle()}>
+                        <h3 id="modal-title" style={{ paddingBottom: '10px' }}>
+                            Xóa câu hỏi
+                        </h3>
+                        <span id="simple-modal-description" style={{ textAlign: 'center' }}>
+                            Bạn muốn xóa câu hỏi này?
+                        </span>
+                        <div id="simple-modal-description" style={{ textAlign: 'right' }}>
+                            <Button variant="contained" color="secondary" aria-label="Menu" onClick={() => this.deleteQuestion(this.state.selectedDelete)}>
+                                <IconCore>delete</IconCore>
+                                Xóa
+                            </Button>
+                        </div>
+                    </div>
+                </Modal>
             </main>
         );
     }

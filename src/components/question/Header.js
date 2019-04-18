@@ -18,23 +18,33 @@ class Header extends Component {
         };
 
         this.createQuestion = this.createQuestion.bind(this);
+        this.backToHome = this.backToHome.bind(this);
     }
 
+    backToHome() {
+        this.setState({
+            linkRedirect: `/`,
+            redirectGroupDetail: true
+        })
+    }
     createQuestion(e) {
         e.preventDefault();
-        if(this.props.head_title == "TẠO CÂU HỎI") {
+        if(this.props.head_title === "TẠO CÂU HỎI") {
             var questionGroupId = this.props.question_group_id;
            
             database.ref(`/questionGroups/${questionGroupId}/questionList`).on('value', (snapshot) => {
                 var result = snapshot.val();
 
-                result = Object.values(result).map(function (obj) {
-                    return obj;
-                });
+                if(result)
+                {
+                    result = Object.values(result).map(function (obj) {
+                        return obj;
+                    });
+                    this.setState({
+                        no_question: result.length + 1
+                    })
+                }
 
-                this.setState({
-                    no_question: result.length + 1
-                })
             })
 
             var rightAnswer = 0;
@@ -86,7 +96,7 @@ class Header extends Component {
                 linkRedirect: `/question_detail/${this.props.question_group_id}`,
                 redirectGroupDetail: true
             })
-        } else if (this.props.head_title == "TẠO BỘ CÂU HỎI") {
+        } else if (this.props.head_title === "TẠO BỘ CÂU HỎI") {
             var user = JSON.parse(localStorage.getItem('user'));
             
             var key = database.ref(`/questionGroups`).push({
@@ -95,7 +105,8 @@ class Header extends Component {
                 title: this.props.title,
                 description: this.props.description,
                 useridCreated: user.uid,
-                usernameCreated: user.displayName
+                usernameCreated: user.displayName,
+                isPublic : this.props.isPublic
             }).key;
             
             database.ref(`/questionGroups/${key}`).update({
@@ -118,7 +129,7 @@ class Header extends Component {
         return (
             <AppBar absolute='fixed' style={{flexGrow: 1, backgroundColor: '#333'}}>
                 <Toolbar>
-                    <Button color="inherit" aria-label="Menu">
+                    <Button color="inherit" aria-label="Menu" onClick={this.backToHome}>
                         <Icon>close</Icon>
                         Đóng
                     </Button>

@@ -16,6 +16,7 @@ import square from '../images/square.png';
 
 const arrColor = ['#ff365b', '#46a1e7', '#ffbf0a', '#67be3c']
 const arrShape = [triangle, rhomb, circle, square]
+var ReactFitText = require('react-fittext');
 
 class GameBlockContainer extends Component {
     constructor(props) {
@@ -103,25 +104,28 @@ class GameBlockContainer extends Component {
                         </Grid>
                     </div>
                 </div>
-                <div className="answer">
-                    {
-                        !_.isEmpty(this.state.question) &&
-                        this.state.question.answerList.length > 0 &&
-                        this.state.question.answerList.map((answer, i) => {
-                            return(
-                                <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], opacity: answer.position == this.state.question.rightAnswer ? 1 : 0.5}}>
-                                    <p className='answerText' style={{fontSize: 50}}>
-                                        <img src={arrShape[i]} width="50"></img> {answer.content}
-                                        { answer.position == this.state.question.rightAnswer ?
-                                            <Icon  style={{marginLeft: 50}} size={80} icon={ic_check}/>
-                                            : <Icon  style={{marginLeft: 50}} size={50} icon={ic_close}/>
-                                        }
-                                    </p>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
+                <ReactFitText>
+                    <div className="answer">
+                        {
+                            !_.isEmpty(this.state.question) &&
+                            this.state.question.answerList.length > 0 &&
+                            this.state.question.answerList.map((answer, i) => { 
+                                return(
+                                        <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], opacity: answer.position == this.state.question.rightAnswer ? 1 : 0.5}}>
+                                                <p className='answerText' style={{}}>
+                                                        <img src={arrShape[i]} width="40" style={{marginRight: 30}}></img> {answer.content}
+                                                        { answer.position == this.state.question.rightAnswer ?
+                                                            <Icon  style={{marginLeft: 10}} size={60} icon={ic_check}/>
+                                                            : <Icon  style={{marginLeft: 10}} size={40} icon={ic_close}/>
+                                                        }
+                                                </p>
+                                        </div>
+                                    
+                                )
+                            })
+                        }
+                    </div>
+                </ReactFitText>
             </div>
         )
     }
