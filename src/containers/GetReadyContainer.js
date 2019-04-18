@@ -84,7 +84,7 @@ class GetReadyContainer extends Component {
                 })
             } 
             list_answer_question.forEach(element => {
-                if(element !== null) {
+                if(element) {
                     if(element.answer && element.answer <= 0) {
                         is_complete = false;
                     }

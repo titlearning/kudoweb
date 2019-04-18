@@ -53,6 +53,8 @@ class Question extends React.Component {
     };
 
     render() {
+        let user = JSON.parse(localStorage.getItem("user"))
+        let uid = user.uid
         return (
             <div className="search-result-kahoot-card"
                 data-functional-selector="search-result-kahoot-card">
@@ -126,10 +128,13 @@ class Question extends React.Component {
                                             className="kahoot-card__information-mobile"></span></span><b>
                                             </b></div>
                                     </div>
-                                    <Button variant="contained" color="secondary" aria-label="Menu" style={{position: 'absolute', right: '5px'}} onClick={() => this.handleOpen()}>
+                                    
+                                    {uid === this.state.data.useridCreated ? 
+                                        <Button variant="contained" color="secondary" aria-label="Menu" style={{position: 'absolute', right: '5px'}} onClick={() => this.handleOpen()}>
                                         <Icon>delete</Icon>
                                         Xóa
                                     </Button>
+                                    : null}
                                 </main>
                                 <footer
                                     className="kahoot-card__details-footer kahoot-card__details-footer--list-view kahoot-card__details-footer--with-example-question">
