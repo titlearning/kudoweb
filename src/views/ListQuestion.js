@@ -47,6 +47,8 @@ class ListQuestion extends Component {
     }
 
     inputKeyword(keyword) {
+        let user = JSON.parse(localStorage.getItem("user"))
+        let uid = user.uid
         this.setState({
             keyword: keyword
         });
@@ -54,14 +56,27 @@ class ListQuestion extends Component {
             let questionList = snapshot.val().questionGroups;
             let val = keyword.toLowerCase();
             if (val)
-                questionList = questionList.filter(function (v) {
-                    let a = v.id+'';
-                    if (a.includes(keyword)) {
-                        return v
-                    }
-                });
+            var group = []
+            for (var i in questionList) {
+                if (questionList.hasOwnProperty(i)) {
+                   if(questionList[i].title.toLowerCase().includes(val) && (questionList[i].useridCreated === uid || questionList[i].isPublic))
+                   {
+                       console.log(questionList[i].title.toLowerCase().includes(val))
+                       console.log(questionList[i].title.toLowerCase() + " - "+ val)
+                       var question = questionList[i];
+                       group.push(question)
+                   }
+                }
+            }
+                // questionList = questionList.filter(function (v) {
+                //     let a = v.id+'';
+                //     if (a.includes(keyword)) {
+                //         return v
+                //     }
+                // });
             this.setState({
-                data: questionList
+                data: group,
+                noQues: group.length
             });
         })
     }

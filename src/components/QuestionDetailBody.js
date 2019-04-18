@@ -70,8 +70,7 @@ class QuestionDetailBody extends Component {
         }
         this.handleClose()
         f(this);
-        if(this.state.lisQuestion.length <= 1)
-        {
+        if (this.state.lisQuestion.length <= 1) {
             window.location.reload()
         }
 
@@ -168,13 +167,12 @@ class QuestionDetailBody extends Component {
     }
 
     onEdit = () => {
-        if(this.state.isEdit)
-        {
+        if (this.state.isEdit) {
             // Update title
             database.ref(`/questionGroups/${this.state.questionGroup.id}`).update({
                 title: this.state.title,
                 description: this.state.description
-            }); 
+            });
         }
         this.setState({
             isEdit: !this.state.isEdit
@@ -182,6 +180,9 @@ class QuestionDetailBody extends Component {
     }
 
     render() {
+        let user = JSON.parse(localStorage.getItem("user"))
+        let uid = user.uid
+        console.log(this.state.questionGroup)
         return (
             <main role="main" className="layout__body details-main-wrapper">
                 <div className="details-content-block-wrapper">
@@ -193,37 +194,40 @@ class QuestionDetailBody extends Component {
                             </div>
                             {/* <span className="kahoot-creator__text">KahootStudioKahootStudioKahootStudioKahootStudioKahootStudioKahootStudioKahootStudioKahootStudioKahootStudioKahootStudioKahootStudio</span> */}
                             <div>
-                            <TextField
-                                disabled={!this.state.isEdit}
-                                id="question-group-title"
-                                multiline
-                                fullWidth
-                                // error={true}
-                                label='Chủ đề'
-                                value={this.state.title}
-                                onChange={this.handleChangeTitle}
-                                // variant="outlined"
-                                style={{marginBottom: '3vh', marginLeft: '2vh'}}
-                            />
-                            <TextField
-                                disabled={!this.state.isEdit}
-                                id="question-group-title"
-                                // error={true}
-                                multiline
-                                fullWidth
-                                label='Mô tả'
-                                value={this.state.description}
-                                onChange={this.handleChangeDescription}
-                                // variant="outlined"
-                                style={{marginBottom: '3vh', marginLeft: '2vh'}}
-                            />
+                                <TextField
+                                    disabled={!this.state.isEdit}
+                                    id="question-group-title"
+                                    multiline
+                                    fullWidth
+                                    // error={true}
+                                    label='Chủ đề'
+                                    value={this.state.title}
+                                    onChange={this.handleChangeTitle}
+                                    // variant="outlined"
+                                    style={{ marginBottom: '3vh', marginLeft: '2vh' }}
+                                />
+                                <TextField
+                                    disabled={!this.state.isEdit}
+                                    id="question-group-title"
+                                    // error={true}
+                                    multiline
+                                    fullWidth
+                                    label='Mô tả'
+                                    value={this.state.description}
+                                    onChange={this.handleChangeDescription}
+                                    // variant="outlined"
+                                    style={{ marginBottom: '3vh', marginLeft: '2vh' }}
+                                />
                             </div>
                             <div className="details-action-buttons">
                                 <div className="details-action-buttons__wrapper" data-functional-selector="details-action-buttons">
                                     <div className="details-action-buttons__group">
-                                        <button type="button" role="button" data-functional-selector="play-button" className="button button button--spacer details-action-buttons__play-button" onClick={this.onEdit}>
-                                            {this.state.isEdit ? 'Lưu' : 'Chỉnh sửa'}
-                                        </button>
+
+                                        {uid === this.state.questionGroup.useridCreated ?
+                                            <button type="button" role="button" data-functional-selector="play-button" className="button button button--spacer details-action-buttons__play-button" onClick={this.onEdit}>
+                                                {this.state.isEdit ? 'Lưu' : 'Chỉnh sửa'}
+                                            </button>
+                                            : null}
                                         <button type="button" role="button" data-functional-selector="play-button" className="button button button--spacer details-action-buttons__play-button" onClick={this.onPlayClick}>
                                             Chơi
                                         </button>
@@ -313,10 +317,12 @@ class QuestionDetailBody extends Component {
                                                         <div className="question-media__image" title="Mondadori Portfolio/Mondadori Portfolio/Getty Images">
                                                             <div className="background-image" aria-label="Question image" role="img" style={{ backgroundImage: `url(https://images-cdn.kahoot.it/e323956f-7868-4165-b2f3-10519d569fd6?auto=webp&amp;crop=3%3A2%2Csmart&amp;width=181)` }}>
                                                                 <span className="question-media__duration">{question.timeout} giây</span>
-                                                                <Button variant="contained" color="secondary" aria-label="Menu" style={{ position: 'absolute', right: '5px' }} onClick={() => this.handleOpen(question.id)}>
-                                                                    <IconCore>delete</IconCore>
-                                                                    Xóa
+                                                                {uid === this.state.questionGroup.useridCreated ?
+                                                                    <Button variant="contained" color="secondary" aria-label="Menu" style={{ position: 'absolute', right: '5px' }} onClick={() => this.handleOpen(question.id)}>
+                                                                        <IconCore>delete</IconCore>
+                                                                        Xóa
                                                                 </Button>
+                                                                    : null}
                                                             </div>
                                                         </div>
                                                     </div>
