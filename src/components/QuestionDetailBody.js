@@ -12,6 +12,8 @@ import Button from '@material-ui/core/Button'
 import IconCore from '@material-ui/core/Icon';
 import TextField from '@material-ui/core/TextField';
 import firebase from 'firebase'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 function getModalStyle() {
     const top = 50;
@@ -43,10 +45,12 @@ class QuestionDetailBody extends Component {
             listQuestionId: this.props.listQuestionId,
             title: '',
             description: '',
-            isEdit: false
+            isEdit: false,
+            isPublic: 1
         }
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
         this.handleChangeDescription = this.handleChangeDescription.bind(this);
+        this.handleChangeType = this.handleChangeType.bind(this);
     }
 
     handleChangeTitle(e) {
@@ -60,6 +64,12 @@ class QuestionDetailBody extends Component {
             description: e.target.value
         })
     }
+
+    handleChangeType = event => {
+        this.setState({
+            isPublic: event.target.value
+        })
+    };
 
     deleteQuestion = (questionId) => {
         var groupId = this.state.questionGroup.id
@@ -98,7 +108,8 @@ class QuestionDetailBody extends Component {
                     lisQuestion: questionList,
                     questionGroup: result,
                     title: result.title,
-                    description: result.description
+                    description: result.description,
+                    isPublic: result.isPublic
                 });
             }
         })
@@ -171,7 +182,8 @@ class QuestionDetailBody extends Component {
             // Update title
             database.ref(`/questionGroups/${this.state.questionGroup.id}`).update({
                 title: this.state.title,
-                description: this.state.description
+                description: this.state.description,
+                isPublic: this.state.isPublic
             });
         }
         this.setState({
@@ -218,6 +230,21 @@ class QuestionDetailBody extends Component {
                                     // variant="outlined"
                                     style={{ marginBottom: '3vh', marginLeft: '2vh' }}
                                 />
+                            </div>
+                            <div style={{ marginTop: '0vh', marginLeft: '2vh', marginRight: '10vh', marginBottom: '3vh', flexGrow: 1 }}>
+                                Loại chủ đề
+                                <Select
+                                    value={this.state.isPublic}
+                                    disabled={!this.state.isEdit}
+                                    onChange={this.handleChangeType}
+                                    style={{ margin: '0vh 0vw 0vh 1vw' }}
+                                    inputProps={{
+                                        name: 'time',
+                                        id: "outlined-simple"
+                                    }}>
+                                    <MenuItem value={1}>Public</MenuItem>
+                                    <MenuItem value={0}>Private</MenuItem>
+                                </Select>
                             </div>
                             <div className="details-action-buttons">
                                 <div className="details-action-buttons__wrapper" data-functional-selector="details-action-buttons">
