@@ -53,70 +53,84 @@ class Header extends Component {
             if(this.props.key3) { rightAnswer = 3 };
             if(this.props.key4) { rightAnswer = 4 };
 
-            var questionRefKey = database.ref(`/questionGroups/${questionGroupId}/questionList`).push().key;
+            if( this.props.title.trim() && rightAnswer !== 0 && this.props.answer1.trim() && this.props.answer2.trim() && this.props.answer3.trim() && this.props.answer4.trim())
+            {
+                var questionRefKey = database.ref(`/questionGroups/${questionGroupId}/questionList`).push().key;
             
-            database.ref(`/questionGroups/${questionGroupId}/questionList/${questionRefKey}`).update({
-                id: questionRefKey,
-                content: this.props.title,
-                description: this.props.description,
-                timeout: this.props.time,
-                status: 0,
-                rightAnswer: rightAnswer,
-                position: this.state.no_question,
-                answerList: [
-                    {
-                        content: this.props.answer1,
-                        position: 1
-                    },
-                    {
-                        content: this.props.answer2,
-                        position: 2
-                    },
-                    {
-                        content: this.props.answer3,
-                        position: 3
-                    },
-                    {
-                        content: this.props.answer4,
-                        position: 4
-                    }
-                ]
-            });
-
-            var image = this.props.image;
-
-            if(image) {
-                firebaseApp.storage().ref(`/question/images/${questionGroupId}/${questionRefKey}`).put(image).then(function(snapshot) {
-                    console.log('Uploaded a blob or file!');
+                database.ref(`/questionGroups/${questionGroupId}/questionList/${questionRefKey}`).update({
+                    id: questionRefKey,
+                    content: this.props.title,
+                    description: this.props.description,
+                    timeout: this.props.time,
+                    status: 0,
+                    rightAnswer: rightAnswer,
+                    position: this.state.no_question,
+                    answerList: [
+                        {
+                            content: this.props.answer1,
+                            position: 1
+                        },
+                        {
+                            content: this.props.answer2,
+                            position: 2
+                        },
+                        {
+                            content: this.props.answer3,
+                            position: 3
+                        },
+                        {
+                            content: this.props.answer4,
+                            position: 4
+                        }
+                    ]
                 });
+
+                var image = this.props.image;
+
+                if(image) {
+                    firebaseApp.storage().ref(`/question/images/${questionGroupId}/${questionRefKey}`).put(image).then(function(snapshot) {
+                        console.log('Uploaded a blob or file!');
+                    });
+                }
+
+                
+                this.setState({
+                    linkRedirect: `/question_detail/${this.props.question_group_id}`,
+                    redirectGroupDetail: true
+                })
             }
-
-            
-            this.setState({
-                linkRedirect: `/question_detail/${this.props.question_group_id}`,
-                redirectGroupDetail: true
-            })
+            else
+            {
+                alert('Vui lòng điền đầy đủ thông tin bắt buộc và không được để trống đáp án đúng!');
+            }
         } else if (this.props.head_title === "TẠO BỘ CÂU HỎI") {
-            var user = JSON.parse(localStorage.getItem('user'));
+            if(this.props.title.trim())
+            {
+                var user = JSON.parse(localStorage.getItem('user'));
             
-            var key = database.ref(`/questionGroups`).push({
-                questionList: [],
-                type: 1,
-                title: this.props.title,
-                description: this.props.description,
-                useridCreated: user.uid,
-                usernameCreated: user.displayName,
-                isPublic : this.props.isPublic
-            }).key;
-            
-            database.ref(`/questionGroups/${key}`).update({
-                id: key
-            })
+                var key = database.ref(`/questionGroups`).push({
+                    questionList: [],
+                    type: 1,
+                    title: this.props.title,
+                    description: this.props.description,
+                    useridCreated: user.uid,
+                    usernameCreated: user.displayName,
+                    isPublic : this.props.isPublic
+                }).key;
+                
+                database.ref(`/questionGroups/${key}`).update({
+                    id: key
+                })
 
-            this.setState({
-                linkRedirect: `/`,
-                redirectGroupDetail: true
-            })
+                this.setState({
+                    linkRedirect: `/`,
+                    redirectGroupDetail: true
+                })
+            }
+            else
+            {
+                alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
+            }
         }
     }
 
