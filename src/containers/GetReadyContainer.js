@@ -171,11 +171,15 @@ class GetReadyContainer extends Component {
         const questionId = this.state.question.id;
         const questionOnNow = this.state.question;
         this.setPoint(questionOnNow);
-     
-        this.itemRef.ref(`/rooms/${this.props.match.params.id}/questionGroup/questionList/${this.state.question.id}`).update({
-            status: 2
-        }); 
-        this.props.history.push(`/gameblock/${this.props.match.params.id}/${questionId}`);
+        console.log(this.props.match.params.id)
+        console.log(this.state.question.id)
+        if(this.state.question.id)
+        {
+            this.itemRef.ref(`/rooms/${this.props.match.params.id}/questionGroup/questionList/${this.state.question.id}`).update({
+                status: 2
+            }); 
+            this.props.history.push(`/gameblock/${this.props.match.params.id}/${questionId}`);
+        } 
     }
 
     setPoint = (questionOnNow) => {
