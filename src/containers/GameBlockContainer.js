@@ -52,7 +52,10 @@ class GameBlockContainer extends Component {
 
             var no_answers = [0, 0, 0, 0];
             list_answer_question.forEach(element => {
-                no_answers[element.answer-1] ++;
+                if(element)
+                {
+                    no_answers[element.answer-1] ++;
+                }
             });
         
             this.setState({
@@ -77,6 +80,24 @@ class GameBlockContainer extends Component {
     }
 
     render() {
+        let length = 0;
+        if(this.state.question.answerList)
+        {
+            length = this.state.question.answerList.length;
+        }
+        // let answerListNull = [ {
+        //     "content" : "",
+        //     "position" : 0
+        //   }, {
+        //     "content" : "",
+        //     "position" : 0
+        //   }, {
+        //     "content" : "",
+        //     "position" : 0
+        //   }, {
+        //     "content" : "",
+        //     "position" : 0
+        //   } ]
         return (
             <div className='container' style={{overflow: 'hidden'}}>
                 <div className='header'>
@@ -89,7 +110,7 @@ class GameBlockContainer extends Component {
                             <Grid item xs={8} spacing={24} style={{margin: '0 auto'}}>
                             {
                             !_.isEmpty(this.state.question) &&
-                            this.state.question.answerList.length > 0 &&
+                            length > 0 &&
                             this.state.question.answerList.map((answer, i) => {
                                 return(
                                 <div style={{width: '25%', display: 'inline-block', paddingLeft: '60px', paddingRight: '60px'}}>
@@ -101,6 +122,21 @@ class GameBlockContainer extends Component {
                                 </div> )
                             })}
                             </Grid>
+                            {/* <Grid item xs={8} spacing={24} style={{margin: '0 auto'}}>
+                            {
+                            !_.isEmpty(this.state.question) &&
+                            length === 0 &&
+                            answerListNull.map((answer, i) => {
+                                return(
+                                <div style={{width: '25%', display: 'inline-block', paddingLeft: '60px', paddingRight: '60px'}}>
+                                    <div><span style={{color: arrColor[i], fontSize: '40px', fontWeight: 600}}>{ answer.position == this.state.question.rightAnswer ? <Icon icon={ic_check} size="60px"></Icon> : <Icon icon={ic_close} size="40px"></Icon>} {this.state.no_answers[i]}</span></div>
+                                    <div style={{width: '100%', height: '3px', backgroundColor: arrColor[i], margin: '5px' }}></div>
+                                    <div style={{width: '100%', height: '50px', backgroundColor: arrColor[i], margin: '5px', paddingTop: '10px'}}>
+                                        <img src={arrShape[i]} width='30px'></img>
+                                    </div>
+                                </div> )
+                            })}
+                            </Grid> */}
                         </Grid>
                     </div>
                 </div>
@@ -108,7 +144,7 @@ class GameBlockContainer extends Component {
                     <div className="answer">
                         {
                             !_.isEmpty(this.state.question) &&
-                            this.state.question.answerList.length > 0 &&
+                            length > 0 &&
                             this.state.question.answerList.map((answer, i) => { 
                                 return(
                                         <div key={i} className='answerItem' style={{backgroundColor: arrColor[i], opacity: answer.position == this.state.question.rightAnswer ? 1 : 0.5}}>
